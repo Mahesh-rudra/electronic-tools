@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Electronics Calculator — Basics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --mask:#0E3B2E; --mask2:#134A39; --line:#2A6A53;
+  --silk:#F2F5EE; --muted:#9DB8AA; --copper:#D49A4A; --copperDim:#8C6630; --err:#F0A08C;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html,body{margin:0;background:var(--mask);color:var(--silk)}
+body{font-family:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.45;
+  background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.05) 1px,transparent 0);background-size:18px 18px}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+header h1{font-size:1.6rem;margin:4px 0 2px;font-weight:700;letter-spacing:-.01em}
+header p{margin:0 0 16px;color:var(--muted);font-size:.92rem}
+nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;font:inherit;font-size:.92rem;color:var(--muted);background:transparent;border:1.5px solid var(--line);
+  border-radius:999px;padding:7px 14px;cursor:pointer}
+nav button[aria-selected="true"]{color:var(--mask);background:var(--copper);border-color:var(--copper);font-weight:700}
+nav button:focus-visible,input:focus-visible,select:focus-visible,.btn:focus-visible{outline:2px solid var(--silk);outline-offset:2px}
+section.panel{display:none}
+section.panel.active{display:block}
+.block{background:var(--mask2);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px}
+.block h2{font-size:1.08rem;margin:0 0 4px}
+.hint{color:var(--muted);font-size:.86rem;margin:0 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+label{display:flex;flex-direction:column;gap:4px;font-size:.86rem;color:var(--muted)}
+input,select{font:inherit;font-size:1rem;color:var(--silk);background:var(--mask);border:1.5px solid var(--line);
+  border-radius:6px;padding:9px 10px;width:100%;font-variant-numeric:tabular-nums}
+input::placeholder{color:#5F8574}
+input.bad{border-color:var(--err)}
+.out{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:4px 0;font-variant-numeric:tabular-nums}
+.row span:first-child{color:var(--muted)}
+.row b{color:var(--copper);font-weight:700}
+.msg{color:var(--muted);font-size:.9rem}
+.msg.err{color:var(--err)}
+.btn{font:inherit;font-size:.9rem;background:transparent;color:var(--silk);border:1.5px solid var(--line);border-radius:6px;padding:8px 12px;cursor:pointer;margin-top:10px}
+.resistor{width:100%;height:auto;display:block;margin:6px 0 10px}
+.big{font-size:1.7rem;font-weight:700;color:var(--copper);font-variant-numeric:tabular-nums;margin:2px 0}
+.inline{display:flex;gap:8px;align-items:flex-end}
+.inline label{flex:1}
+.inline .btn{margin-top:0;white-space:nowrap}
+.dia svg{display:block;width:100%;height:auto;margin:14px auto 0;font-family:inherit}
+.dia .w{fill:none;stroke:var(--silk);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.dia .lb{fill:var(--muted);font-size:12px}
+.dia .vl{fill:var(--copper);font-size:13px;font-weight:700}
+.dia .dot{fill:var(--silk)}
+.dia .ar{fill:var(--copper)}
+.dia .cu{stroke:var(--copper)}
+.dia .sm{font-size:11px}
+.dia .dash{fill:none;stroke:var(--muted);stroke-width:1;stroke-dasharray:3 4;opacity:.7}
+.dia .dashc{fill:none;stroke:var(--copper);stroke-width:1.5;stroke-dasharray:4 3}
+.note{color:var(--muted);font-size:.84rem;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Electronics calculator</h1>
+  <p>Type values with prefixes: 4.7k, 2k2, 10m, 100n, 4R7, 1M.</p>
+</header>
+
+<nav role="tablist">
+  <button role="tab" aria-selected="true" data-tab="ohm">Ohm's law</button>
+  <button role="tab" aria-selected="false" data-tab="combine">Series / parallel</button>
+  <button role="tab" aria-selected="false" data-tab="divider">Dividers</button>
+  <button role="tab" aria-selected="false" data-tab="rc">RC time</button>
+  <button role="tab" aria-selected="false" data-tab="t555">555 timer</button>
+  <button role="tab" aria-selected="false" data-tab="led">LED designer</button>
+  <button role="tab" aria-selected="false" data-tab="pack">Battery pack</button>
+  <button role="tab" aria-selected="false" data-tab="run">Battery runtime</button>
+  <button role="tab" aria-selected="false" data-tab="wire">Wire resistance</button>
+  <button role="tab" aria-selected="false" data-tab="color">Color code</button>
+  <button role="tab" aria-selected="false" data-tab="codes">SMD &amp; cap codes</button>
+</nav>
+
+<!-- OHM'S LAW -->
+<section class="panel active" id="ohm">
+  <div class="block">
+    <h2>Ohm's law and power</h2>
+    <p class="hint">Fill in any two. The other two are calculated.</p>
+    <div class="grid">
+      <label>Voltage (V)<input id="o_v" inputmode="decimal" placeholder="12"></label>
+      <label>Current (A)<input id="o_i" inputmode="decimal" placeholder="20m"></label>
+      <label>Resistance (Ω)<input id="o_r" inputmode="decimal" placeholder="470"></label>
+      <label>Power (W)<input id="o_p" inputmode="decimal" placeholder="0.25"></label>
+    </div>
+    <div class="dia" id="o_dia"></div>
+    <div class="out" id="o_out"></div>
+    <button class="btn" id="o_clear">Clear</button>
+  </div>
+</section>
+
+<!-- SERIES / PARALLEL -->
+<section class="panel" id="combine">
+  <div class="block">
+    <h2>Series and parallel</h2>
+    <p class="hint">Enter values separated by commas or spaces.</p>
+    <div class="grid">
+      <label>Component<select id="c_type">
+        <option value="R">Resistors (Ω)</option>
+        <option value="C">Capacitors (F)</option>
+        <option value="L">Inductors (H)</option>
+      </select></label>
+    </div>
+    <label style="margin-top:10px">Values<input id="c_vals" placeholder="1k, 2.2k, 4.7k"></label>
+    <div class="dia" id="c_dia"></div>
+    <div class="out" id="c_out"></div>
+  </div>
+</section>
+
+<!-- DIVIDERS -->
+<section class="panel" id="divider">
+  <div class="block">
+    <h2>Voltage divider</h2>
+    <p class="hint">Vout is measured across R2 (the bottom resistor).</p>
+    <div class="grid">
+      <label>Vin (V)<input id="d_vin" inputmode="decimal" placeholder="12"></label>
+      <label>R1 top (Ω)<input id="d_r1" inputmode="decimal" placeholder="10k"></label>
+      <label>R2 bottom (Ω)<input id="d_r2" inputmode="decimal" placeholder="3.3k"></label>
+    </div>
+    <div class="dia" id="d_dia"></div>
+    <div class="out" id="d_out"></div>
+  </div>
+  <div class="block">
+    <h2>Find R1 for a target Vout</h2>
+    <p class="hint">Gives the exact value and the nearest E24 standard resistor.</p>
+    <div class="grid">
+      <label>Vin (V)<input id="f_vin" inputmode="decimal" placeholder="5"></label>
+      <label>Target Vout (V)<input id="f_vout" inputmode="decimal" placeholder="3.3"></label>
+      <label>R2 bottom (Ω)<input id="f_r2" inputmode="decimal" placeholder="10k"></label>
+    </div>
+    <div class="dia" id="f_dia"></div>
+    <div class="out" id="f_out"></div>
+  </div>
+  <div class="block">
+    <h2>Current divider</h2>
+    <p class="hint">Two resistors in parallel sharing a total current.</p>
+    <div class="grid">
+      <label>Total current (A)<input id="i_it" inputmode="decimal" placeholder="100m"></label>
+      <label>R1 (Ω)<input id="i_r1" inputmode="decimal" placeholder="100"></label>
+      <label>R2 (Ω)<input id="i_r2" inputmode="decimal" placeholder="220"></label>
+    </div>
+    <div class="dia" id="i_dia"></div>
+    <div class="out" id="i_out"></div>
+  </div>
+</section>
+
+
+<!-- RC -->
+<section class="panel" id="rc">
+  <div class="block">
+    <h2>RC time constant</h2>
+    <p class="hint">A capacitor charging through a resistor. Target voltage is optional.</p>
+    <div class="grid">
+      <label>Resistance (Ω)<input id="rc_r" inputmode="decimal" placeholder="10k"></label>
+      <label>Capacitance (F)<input id="rc_c" inputmode="decimal" placeholder="100u"></label>
+      <label>Supply (V)<input id="rc_vs" inputmode="decimal" value="5"></label>
+      <label>Target voltage (V)<input id="rc_vt" inputmode="decimal" placeholder="3.3"></label>
+    </div>
+    <div class="dia" id="rc_dia"></div>
+    <div class="out" id="rc_out"></div>
+  </div>
+</section>
+
+<!-- 555 -->
+<section class="panel" id="t555">
+  <div class="block">
+    <h2>555 timer</h2>
+    <p class="hint" id="t_hint"></p>
+    <div class="grid">
+      <label>Mode<select id="t_mode"><option value="a">Astable (oscillator)</option><option value="m">Monostable (one-shot)</option></select></label>
+      <label id="t_r1l">R1 (Ω)<input id="t_r1" inputmode="decimal" placeholder="1k"></label>
+      <label id="t_r2l">R2 (Ω)<input id="t_r2" inputmode="decimal" placeholder="10k"></label>
+      <label>C (F)<input id="t_c" inputmode="decimal" placeholder="10u"></label>
+    </div>
+    <div class="dia" id="t_sch"></div>
+    <div class="dia" id="t_dia"></div>
+    <div class="out" id="t_out"></div>
+  </div>
+</section>
+
+<!-- LED -->
+<section class="panel" id="led">
+  <div class="block">
+    <h2>LED series / parallel designer</h2>
+    <p class="hint">Typical Vf: red 2.0 V, yellow 2.1 V, green, blue and white 3.0–3.3 V.</p>
+    <div class="grid">
+      <label>Supply (V)<input id="l_vs" inputmode="decimal" placeholder="12"></label>
+      <label>LED forward voltage (V)<input id="l_vf" inputmode="decimal" value="2"></label>
+      <label>LED current (A)<input id="l_if" inputmode="decimal" value="20m"></label>
+      <label>Number of LEDs<input id="l_n" inputmode="numeric" placeholder="10"></label>
+      <label>LEDs per string<input id="l_per" inputmode="numeric" placeholder="auto"></label>
+    </div>
+    <div class="dia" id="l_dia"></div>
+    <div class="out" id="l_out"></div>
+  </div>
+</section>
+
+<!-- PACK -->
+<section class="panel" id="pack">
+  <div class="block">
+    <h2>Battery pack calculator</h2>
+    <p class="hint">Cells in series add voltage. Cells in parallel add capacity.</p>
+    <div class="grid">
+      <label>Cells in series (S)<input id="p_s" inputmode="numeric" placeholder="4"></label>
+      <label>Cells in parallel (P)<input id="p_p" inputmode="numeric" placeholder="2"></label>
+      <label>Cell capacity (mAh)<input id="p_cap" inputmode="decimal" placeholder="2600"></label>
+      <label>Cell nominal (V)<input id="p_v" inputmode="decimal" value="3.7"></label>
+      <label>Cell full (V)<input id="p_full" inputmode="decimal" value="4.2"></label>
+      <label>Cell empty (V)<input id="p_empty" inputmode="decimal" value="3.0"></label>
+      <label>Max cell current (A)<input id="p_imax" inputmode="decimal" placeholder="optional"></label>
+    </div>
+    <div class="dia" id="p_dia"></div>
+    <div class="out" id="p_out"></div>
+  </div>
+</section>
+
+<!-- RUNTIME -->
+<section class="panel" id="run">
+  <div class="block">
+    <h2>Li-ion battery runtime</h2>
+    <p class="hint">For devices that sleep, enter the sleep current and the share of time spent active.</p>
+    <div class="grid">
+      <label>Capacity (mAh)<input id="r_cap" inputmode="decimal" placeholder="2000"></label>
+      <label>Nominal voltage (V)<input id="r_v" inputmode="decimal" value="3.7"></label>
+      <label>Usable capacity (%)<input id="r_use" inputmode="decimal" value="80"></label>
+      <label>Active current (A)<input id="r_ia" inputmode="decimal" placeholder="120m"></label>
+      <label>Sleep current (A)<input id="r_is" inputmode="decimal" placeholder="optional, e.g. 10u"></label>
+      <label>Active time (%)<input id="r_duty" inputmode="decimal" value="100"></label>
+    </div>
+    <div class="dia" id="r_dia"></div>
+    <div class="out" id="r_out"></div>
+  </div>
+</section>
+
+<!-- WIRE -->
+<section class="panel" id="wire">
+  <div class="block">
+    <h2>Wire resistance</h2>
+    <p class="hint">AWG accepts 0–40 and 1/0 to 4/0. Round trip counts the return wire too.</p>
+    <div class="grid">
+      <label>Material<select id="w_mat">
+        <option value="cu">Copper</option><option value="al">Aluminium</option><option value="ag">Silver</option>
+        <option value="au">Gold</option><option value="w">Tungsten</option><option value="nicr">Nichrome</option>
+      </select></label>
+      <label>Size given as<select id="w_type">
+        <option value="awg">AWG</option><option value="d">Diameter (mm)</option><option value="a">Area (mm²)</option>
+      </select></label>
+      <label>Size<input id="w_size" inputmode="decimal" placeholder="18"></label>
+      <label>Length (m)<input id="w_len" inputmode="decimal" placeholder="10"></label>
+      <label>Path<select id="w_path"><option value="1">One way</option><option value="2">Round trip</option></select></label>
+      <label>Current (A)<input id="w_i" inputmode="decimal" placeholder="optional"></label>
+      <label>Supply (V)<input id="w_vs" inputmode="decimal" placeholder="optional"></label>
+      <label>Temperature (°C)<input id="w_t" inputmode="decimal" value="20"></label>
+    </div>
+    <div class="dia" id="w_dia"></div>
+    <div class="out" id="w_out"></div>
+  </div>
+</section>
+
+<!-- COLOR CODE -->
+<section class="panel" id="color">
+  <div class="block">
+    <h2>Resistor color code</h2>
+    <div class="grid">
+      <label>Bands<select id="r_n">
+        <option value="4">4 bands</option>
+        <option value="5">5 bands</option>
+        <option value="6">6 bands</option>
+      </select></label>
+    </div>
+    <svg class="resistor" id="r_svg" viewBox="0 0 320 80" aria-label="Resistor drawing"></svg>
+    <div class="big" id="r_val">—</div>
+    <div class="msg" id="r_sub"></div>
+    <div class="grid" id="r_selects" style="margin-top:12px"></div>
+  </div>
+  <div class="block">
+    <h2>Value to bands</h2>
+    <p class="hint">Uses the band count selected above (4 or 5 bands).</p>
+    <div class="inline">
+      <label>Resistance (Ω)<input id="r_rev" inputmode="decimal" placeholder="4.7k"></label>
+      <button class="btn" id="r_rev_btn">Show bands</button>
+    </div>
+    <div class="msg" id="r_rev_msg" style="margin-top:8px"></div>
+  </div>
+</section>
+
+<!-- CODES -->
+<section class="panel" id="codes">
+  <div class="block">
+    <h2>SMD resistor code</h2>
+    <p class="hint">3-digit (103), 4-digit (1002), R notation (4R7, R10) or EIA-96 (01C).</p>
+    <label>Code<input id="s_code" placeholder="472" autocapitalize="characters"></label>
+    <div class="dia" id="s_dia"></div>
+    <div class="out" id="s_out"></div>
+  </div>
+  <div class="block">
+    <h2>Capacitor code</h2>
+    <p class="hint">3-digit code in pF, with optional tolerance letter (104K, 225J, 4n7).</p>
+    <label>Code<input id="k_code" placeholder="104" autocapitalize="characters"></label>
+    <div class="dia" id="k_dia"></div>
+    <div class="out" id="k_out"></div>
+  </div>
+</section>
+</div>
+
+<script>
+/* ---------- helpers ---------- */
+const $ = id => document.getElementById(id);
+const MULT = {p:1e-12,n:1e-9,u:1e-6,'µ':1e-6,m:1e-3,'':1,k:1e3,K:1e3,M:1e6,G:1e9};
+
+function parse(raw){
+  let s = String(raw).trim().replace(/\s+/g,'');
+  if(!s) return null;
+  s = s.replace(/(ohms?|Ω|[vVaAwWfFhH])$/,'');          // strip trailing unit
+  if(/^\d*R\d*$/i.test(s) && /\d/.test(s)) return parseFloat(s.replace(/r/i,'.').replace(/^\./,'0.'));
+  let m = s.match(/^(\d+)([pnuµmkKMG])(\d+)$/);          // 4k7 style
+  if(m) return parseFloat(m[1]+'.'+m[3]) * MULT[m[2]];
+  m = s.match(/^([-+]?\d*\.?\d+(?:e[-+]?\d+)?)([pnuµmkKMG]?)$/);
+  if(!m) return NaN;
+  return parseFloat(m[1]) * MULT[m[2]];
+}
+function fmt(v, unit){
+  if(v===null || !isFinite(v)) return '—';
+  if(v===0) return '0 '+unit;
+  const pre=[[1e9,'G'],[1e6,'M'],[1e3,'k'],[1,''],[1e-3,'m'],[1e-6,'µ'],[1e-9,'n'],[1e-12,'p']];
+  const a=Math.abs(v);
+  for(const [mul,p] of pre){ if(a >= mul*0.99995) return +(v/mul).toPrecision(4)+' '+p+unit; }
+  return +(v/1e-12).toPrecision(4)+' p'+unit;
+}
+function rows(list){ return list.map(([k,v])=>`<div class="row"><span>${k}</span><b>${v}</b></div>`).join(''); }
+function msg(t,err){ return `<div class="msg${err?' err':''}">${t}</div>`; }
+function read(ids){
+  const out={}; let bad=false;
+  ids.forEach(id=>{ const el=$(id); const v=parse(el.value); el.classList.toggle('bad', Number.isNaN(v)); if(Number.isNaN(v)) bad=true; out[id]=v; });
+  return {v:out, bad};
+}
+const E24=[1.0,1.1,1.2,1.3,1.5,1.6,1.8,2.0,2.2,2.4,2.7,3.0,3.3,3.6,3.9,4.3,4.7,5.1,5.6,6.2,6.8,7.5,8.2,9.1,10];
+function nearestE24(x){
+  const dec=Math.pow(10,Math.floor(Math.log10(x)));
+  const m=x/dec; let best=E24[0];
+  for(const e of E24) if(Math.abs(e-m)<Math.abs(best-m)) best=e;
+  return +(best*dec).toPrecision(3);
+}
+
+/* ---------- diagram helpers ---------- */
+const SYM={
+  R:'M0 0H12l3 -8l6 16l6 -16l6 16l6 -16l6 16l6 -16l3 8H60',
+  C:'M0 0H26M26 -12V12M34 -12V12M34 0H60',
+  L:'M0 0H10a5 5 0 0 1 10 0a5 5 0 0 1 10 0a5 5 0 0 1 10 0a5 5 0 0 1 10 0H60',
+  B:'M0 0H24M24 -14V14M32 -7V7M32 0H60',
+  D:'M0 0H8M8 -7L22 0L8 7ZM22 -7V7M22 0H30M12 -10l5 -5M17 -15h-3M17 -15v3M17 -10l5 -5M22 -15h-3M22 -15v3'
+};
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const sym=(t,x,y,a=0)=>`<path class="w" transform="translate(${x} ${y}) rotate(${a})" d="${SYM[t]}"/>`;
+const wire=d=>`<path class="w" d="${d}"/>`;
+const txt=(x,y,t,cls='lb',anc='start')=>`<text x="${x}" y="${y}" class="${cls}" text-anchor="${anc}">${esc(t)}</text>`;
+const dot=(x,y)=>`<circle class="dot" cx="${x}" cy="${y}" r="3.5"/>`;
+const term=(x,y)=>`<circle cx="${x}" cy="${y}" r="4" fill="var(--mask2)" stroke="var(--silk)" stroke-width="2"/>`;
+const arrow=(x,y,a=0)=>`<path class="ar" transform="translate(${x} ${y}) rotate(${a})" d="M6 0L-5 -5L-5 5Z"/>`;
+const gnd=(x,y)=>wire(`M${x} ${y}V${y+8}M${x-12} ${y+8}H${x+12}M${x-7} ${y+13}H${x+7}M${x-3} ${y+18}H${x+3}`);
+const svg=(w,h,b)=>`<svg viewBox="0 0 ${w} ${h}" style="max-width:${Math.round(w*1.25)}px" role="img">${b}</svg>`;
+const fv=(v,u)=>(v===null||v===undefined||!isFinite(v))?'?':fmt(v,u);
+
+function ohmDia(V,I,R,P){
+  $('o_dia').innerHTML=svg(360,170,
+    wire('M90 60V30H230V60')+sym('B',90,60,90)+sym('R',230,60,90)+wire('M90 120V150H230V120')+
+    arrow(160,30)+txt(160,20,'I = '+fv(I,'A'),'vl','middle')+
+    txt(98,80,'+')+txt(76,94,'V = '+fv(V,'V'),'vl','end')+
+    txt(244,86,'R = '+fv(R,'Ω'),'vl')+txt(244,104,'P = '+fv(P,'W'),'vl'));
+}
+function combDia(t,vals,unit){
+  if(!vals.length){ $('c_dia').innerHTML=''; return; }
+  const v=vals.slice(0,5), k=v.length, x0=24, W=x0*2+60*k;
+  let a=txt(4,14,'Series')+term(x0,40)+term(x0+60*k,40);
+  v.forEach((x,i)=>{ a+=sym(t,x0+60*i,40)+txt(x0+60*i+30,66,fmt(x,unit),'vl','middle'); });
+  const y0=40, yN=y0+40*(k-1);
+  let b=txt(4,14,'Parallel')+wire(`M40 ${y0}V${yN+18}M160 ${y0}V${yN+18}`)+term(40,yN+22)+term(160,yN+22);
+  v.forEach((x,i)=>{ const y=y0+40*i; b+=wire(`M40 ${y}H70M130 ${y}H160`)+sym(t,70,y)+txt(170,y+4,fmt(x,unit),'vl'); });
+  $('c_dia').innerHTML=svg(Math.max(W,240),76,a)+svg(250,yN+34,b)+
+    (vals.length>5?`<div class="msg" style="text-align:center">Showing first 5 of ${vals.length}</div>`:'');
+}
+function divDia(id,Vin,R1,R2,Vout,I){
+  $(id).innerHTML=svg(320,215,
+    term(110,20)+txt(122,24,'Vin = '+fv(Vin,'V'),'vl')+wire('M110 24V40')+arrow(110,32,90)+
+    sym('R',110,40,90)+txt(96,74,'R1 = '+fv(R1,'Ω'),'vl','end')+txt(124,74,'I = '+fv(I,'A'))+
+    wire('M110 100V120M110 110H166')+dot(110,110)+term(170,110)+txt(182,114,'Vout = '+fv(Vout,'V'),'vl')+
+    sym('R',110,120,90)+txt(96,154,'R2 = '+fv(R2,'Ω'),'vl','end')+wire('M110 180V190')+gnd(110,190));
+}
+function idivDia(It,R1,R2,I1,I2){
+  $('i_dia').innerHTML=svg(280,165,
+    term(16,90)+wire('M20 90H70M70 50V130M70 50H110M70 130H110')+dot(70,90)+
+    sym('R',110,50)+sym('R',110,130)+wire('M170 50H210M170 130H210M210 50V130M210 90H260')+dot(210,90)+term(264,90)+
+    arrow(45,90)+txt(45,108,'I = '+fv(It,'A'),'vl','middle')+
+    arrow(90,50)+txt(140,34,'R1 = '+fv(R1,'Ω'),'lb','middle')+txt(140,74,'I1 = '+fv(I1,'A'),'vl','middle')+
+    arrow(90,130)+txt(140,114,'R2 = '+fv(R2,'Ω'),'lb','middle')+txt(140,154,'I2 = '+fv(I2,'A'),'vl','middle'));
+}
+function smdDia(code){
+  $('s_dia').innerHTML=svg(240,84,
+    '<rect x="40" y="20" width="16" height="44" rx="2" fill="#B9B9B9"/><rect x="184" y="20" width="16" height="44" rx="2" fill="#B9B9B9"/>'+
+    '<rect x="52" y="18" width="136" height="48" rx="3" fill="#1c1c1c"/>'+
+    `<text x="120" y="51" text-anchor="middle" fill="#F2F5EE" font-size="24" font-weight="700" letter-spacing="2">${esc(code||'—')}</text>`);
+}
+function capDia(code){
+  $('k_dia').innerHTML=svg(240,130,
+    '<path d="M108 82L100 126M132 82L140 126" stroke="#B9B9B9" stroke-width="3" fill="none" stroke-linecap="round"/>'+
+    '<circle cx="120" cy="50" r="40" fill="#C9772E" stroke="#8E4F1A" stroke-width="2"/>'+
+    `<text x="120" y="58" text-anchor="middle" fill="#2A1606" font-size="22" font-weight="700">${esc(code||'—')}</text>`);
+}
+
+/* ---------- tabs ---------- */
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('nav button').forEach(x=>x.setAttribute('aria-selected', x===b));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id===b.dataset.tab));
+}));
+
+/* ---------- Ohm's law ---------- */
+const OHM=['o_v','o_i','o_r','o_p'];
+function ohm(){
+  const {v,bad}=read(OHM);
+  ohmDia(v.o_v,v.o_i,v.o_r,v.o_p);
+  if(bad) return $('o_out').innerHTML=msg('Check the highlighted value.',true);
+  const filled=OHM.filter(k=>v[k]!==null);
+  if(filled.length!==2) return $('o_out').innerHTML=msg(filled.length<2?'Enter any two values.':'Enter only two values — clear the others.');
+  let V=v.o_v,I=v.o_i,R=v.o_r,P=v.o_p;
+  const has=k=>v[k]!==null;
+  if(has('o_v')&&has('o_i')){R=V/I;P=V*I}
+  else if(has('o_v')&&has('o_r')){I=V/R;P=V*V/R}
+  else if(has('o_v')&&has('o_p')){I=P/V;R=V*V/P}
+  else if(has('o_i')&&has('o_r')){V=I*R;P=I*I*R}
+  else if(has('o_i')&&has('o_p')){V=P/I;R=P/(I*I)}
+  else {V=Math.sqrt(P*R);I=Math.sqrt(P/R)}
+  ohmDia(V,I,R,P);
+  $('o_out').innerHTML=rows([['Voltage',fmt(V,'V')],['Current',fmt(I,'A')],['Resistance',fmt(R,'Ω')],['Power',fmt(P,'W')]]);
+}
+OHM.forEach(id=>$(id).addEventListener('input',ohm));
+$('o_clear').onclick=()=>{OHM.forEach(id=>{$(id).value='';$(id).classList.remove('bad')});ohm()};
+ohm();
+
+/* ---------- series / parallel ---------- */
+function combine(){
+  const t=$('c_type').value, unit={R:'Ω',C:'F',L:'H'}[t];
+  const parts=$('c_vals').value.split(/[,;\s]+/).filter(Boolean);
+  $('c_dia').innerHTML='';
+  if(!parts.length) return $('c_out').innerHTML=msg('Enter two or more values.');
+  const vals=parts.map(parse);
+  if(vals.some(x=>x===null||Number.isNaN(x)||x<=0)) return $('c_out').innerHTML=msg('Each value must be a positive number.',true);
+  const sum=vals.reduce((a,b)=>a+b,0), recip=1/vals.reduce((a,b)=>a+1/b,0);
+  const series = t==='C'?recip:sum, parallel = t==='C'?sum:recip;
+  combDia(t,vals,unit);
+  $('c_out').innerHTML=rows([['Count',vals.length],['Series',fmt(series,unit)],['Parallel',fmt(parallel,unit)]]);
+}
+$('c_type').addEventListener('change',combine); $('c_vals').addEventListener('input',combine); combine();
+
+/* ---------- dividers ---------- */
+function vdiv(){
+  const {v,bad}=read(['d_vin','d_r1','d_r2']);
+  divDia('d_dia',v.d_vin,v.d_r1,v.d_r2,null,null);
+  if(bad) return $('d_out').innerHTML=msg('Check the highlighted value.',true);
+  if([v.d_vin,v.d_r1,v.d_r2].includes(null)) return $('d_out').innerHTML=msg('Enter Vin, R1 and R2.');
+  const I=v.d_vin/(v.d_r1+v.d_r2), Vout=I*v.d_r2;
+  divDia('d_dia',v.d_vin,v.d_r1,v.d_r2,Vout,I);
+  $('d_out').innerHTML=rows([['Vout',fmt(Vout,'V')],['Ratio',(Vout/v.d_vin).toFixed(4)],['Current',fmt(I,'A')],['Power in R1',fmt(I*I*v.d_r1,'W')],['Power in R2',fmt(I*I*v.d_r2,'W')]]);
+}
+['d_vin','d_r1','d_r2'].forEach(id=>$(id).addEventListener('input',vdiv)); vdiv();
+
+function findR1(){
+  const {v,bad}=read(['f_vin','f_vout','f_r2']);
+  divDia('f_dia',v.f_vin,null,v.f_r2,v.f_vout,null);
+  if(bad) return $('f_out').innerHTML=msg('Check the highlighted value.',true);
+  if([v.f_vin,v.f_vout,v.f_r2].includes(null)) return $('f_out').innerHTML=msg('Enter Vin, target Vout and R2.');
+  if(!(v.f_vout>0 && v.f_vout<v.f_vin)) return $('f_out').innerHTML=msg('Vout must be between 0 and Vin.',true);
+  const R1=v.f_r2*(v.f_vin-v.f_vout)/v.f_vout, R1s=nearestE24(R1), Vreal=v.f_vin*v.f_r2/(R1s+v.f_r2);
+  divDia('f_dia',v.f_vin,R1s,v.f_r2,Vreal,v.f_vin/(R1s+v.f_r2));
+  $('f_out').innerHTML=rows([['R1 exact',fmt(R1,'Ω')],['Nearest E24',fmt(R1s,'Ω')],['Vout with E24',fmt(Vreal,'V')],['Error',((Vreal-v.f_vout)/v.f_vout*100).toFixed(2)+' %']]);
+}
+['f_vin','f_vout','f_r2'].forEach(id=>$(id).addEventListener('input',findR1)); findR1();
+
+function idiv(){
+  const {v,bad}=read(['i_it','i_r1','i_r2']);
+  idivDia(v.i_it,v.i_r1,v.i_r2,null,null);
+  if(bad) return $('i_out').innerHTML=msg('Check the highlighted value.',true);
+  if([v.i_it,v.i_r1,v.i_r2].includes(null)) return $('i_out').innerHTML=msg('Enter total current, R1 and R2.');
+  const s=v.i_r1+v.i_r2, I1=v.i_it*v.i_r2/s, I2=v.i_it*v.i_r1/s;
+  idivDia(v.i_it,v.i_r1,v.i_r2,I1,I2);
+  $('i_out').innerHTML=rows([['Current in R1',fmt(I1,'A')],['Current in R2',fmt(I2,'A')],['Voltage across both',fmt(I1*v.i_r1,'V')]]);
+}
+['i_it','i_r1','i_r2'].forEach(id=>$(id).addEventListener('input',idiv)); idiv();
+
+/* ---------- color code ---------- */
+const C=[
+ {n:'Black',  hex:'#1a1a1a',d:0,m:1,   tc:250},
+ {n:'Brown',  hex:'#7a4a22',d:1,m:10,  tol:1,   tc:100},
+ {n:'Red',    hex:'#d0312d',d:2,m:100, tol:2,   tc:50},
+ {n:'Orange', hex:'#ef7d22',d:3,m:1e3, tc:15},
+ {n:'Yellow', hex:'#f2d22e',d:4,m:1e4, tc:25},
+ {n:'Green',  hex:'#2f9e44',d:5,m:1e5, tol:0.5, tc:20},
+ {n:'Blue',   hex:'#2c6ad8',d:6,m:1e6, tol:0.25,tc:10},
+ {n:'Violet', hex:'#8a46c7',d:7,m:1e7, tol:0.1, tc:5},
+ {n:'Grey',   hex:'#8c8c8c',d:8,m:1e8, tol:0.05,tc:1},
+ {n:'White',  hex:'#f5f5f5',d:9,m:1e9},
+ {n:'Gold',   hex:'#c9a227',m:0.1, tol:5},
+ {n:'Silver', hex:'#c0c0c0',m:0.01,tol:10},
+ {n:'None',   hex:null,tol:20}
+];
+const byName=n=>C.find(c=>c.n===n);
+const digitOpts=(first)=>C.filter(c=>c.d!==undefined&&!(first&&c.d===0));
+const multOpts=C.filter(c=>c.m!==undefined);
+const tolOpts=C.filter(c=>c.tol!==undefined);
+const tcOpts=C.filter(c=>c.tc!==undefined);
+let bandState={4:['Yellow','Violet','Red','Gold'],5:['Yellow','Violet','Black','Brown','Brown'],6:['Yellow','Violet','Black','Brown','Brown','Brown']};
+
+function bandDefs(n){
+  const nd = n===4?2:3, defs=[];
+  for(let i=0;i<nd;i++) defs.push({label:`Digit ${i+1}`,opts:digitOpts(i===0)});
+  defs.push({label:'Multiplier',opts:multOpts});
+  defs.push({label:'Tolerance',opts:tolOpts});
+  if(n===6) defs.push({label:'Temp. coefficient',opts:tcOpts});
+  return defs;
+}
+function buildSelects(){
+  const n=+$('r_n').value, defs=bandDefs(n), box=$('r_selects'); box.innerHTML='';
+  defs.forEach((d,i)=>{
+    const lab=document.createElement('label'); lab.textContent=d.label;
+    const sel=document.createElement('select');
+    d.opts.forEach(o=>{const op=document.createElement('option');op.value=o.n;op.textContent=o.n;sel.appendChild(op)});
+    sel.value=bandState[n][i]; if(!sel.value) sel.selectedIndex=0;
+    sel.addEventListener('change',()=>{bandState[n][i]=sel.value;drawColor()});
+    lab.appendChild(sel); box.appendChild(lab);
+  });
+  drawColor();
+}
+function drawColor(){
+  const n=+$('r_n').value, b=bandState[n].map(byName), nd=n===4?2:3;
+  let digits=0; for(let i=0;i<nd;i++) digits=digits*10+b[i].d;
+  const R=digits*b[nd].m, tol=b[nd+1].tol;
+  $('r_val').textContent=fmt(R,'Ω')+'  ±'+tol+'%';
+  let sub=`Range ${fmt(R*(1-tol/100),'Ω')} to ${fmt(R*(1+tol/100),'Ω')}`;
+  if(n===6) sub+=` · ${b[5].tc} ppm/K`;
+  $('r_sub').textContent=sub;
+  // SVG
+  const pos = n===4?[100,124,148,210]:n===5?[96,116,136,156,210]:[96,116,136,156,206,226];
+  let s=`<line x1="0" y1="40" x2="320" y2="40" stroke="#B9B9B9" stroke-width="5"/>
+  <rect x="70" y="14" width="180" height="52" rx="22" fill="#D9C08E" stroke="#A88F5C" stroke-width="2"/>`;
+  b.forEach((c,i)=>{ if(c.hex) s+=`<rect x="${pos[i]}" y="15" width="12" height="50" fill="${c.hex}" stroke="rgba(0,0,0,.25)"/>` });
+  $('r_svg').innerHTML=s;
+}
+$('r_n').addEventListener('change',()=>{buildSelects();$('r_rev_msg').textContent=''});
+buildSelects();
+
+$('r_rev_btn').onclick=()=>{
+  const R=parse($('r_rev').value), out=$('r_rev_msg');
+  if(!(R>0)) { out.className='msg err'; return out.textContent='Enter a positive resistance.'; }
+  let n=+$('r_n').value; if(n===6) n=5;
+  const nd=n===4?2:3;
+  let e=Math.floor(Math.log10(R))-(nd-1);
+  let digits=Math.round(R/Math.pow(10,e));
+  if(digits>=Math.pow(10,nd)){digits=Math.round(digits/10);e++}
+  if(e<-2||e>9){ out.className='msg err'; return out.textContent='Out of range for color bands.'; }
+  const mult=multOpts.find(c=>Math.abs(Math.log10(c.m)-e)<1e-9);
+  const ds=String(digits).padStart(nd,'0').split('').map(Number);
+  const names=ds.map(d=>C.find(c=>c.d===d).n);
+  const state=bandState[+$('r_n').value];
+  names.forEach((nm,i)=>state[i]=nm); state[nd]=mult.n;
+  buildSelects();
+  const actual=digits*Math.pow(10,e);
+  out.className='msg';
+  out.textContent = Math.abs(actual-R)/R>1e-9 ? `Not exact with ${nd} digits — showing ${fmt(actual,'Ω')}.` : `${names.join(', ')}, ${mult.n}`;
+};
+
+/* ---------- SMD codes ---------- */
+const E96=[100,102,105,107,110,113,115,118,121,124,127,130,133,137,140,143,147,150,154,158,162,165,169,174,178,182,187,191,196,200,205,210,215,221,226,232,237,243,249,255,261,267,274,280,287,294,301,309,316,324,332,340,348,357,365,374,383,392,402,412,422,432,442,453,464,475,487,499,511,523,536,549,562,576,590,604,619,634,649,665,681,698,715,732,750,768,787,806,825,845,866,887,909,931,953,976];
+const EIA_M={Z:0.001,Y:0.01,R:0.01,X:0.1,S:0.1,A:1,B:10,H:10,C:100,D:1e3,E:1e4,F:1e5};
+function smd(){
+  const c=$('s_code').value.trim().toUpperCase(), out=$('s_out');
+  smdDia(c);
+  if(!c) return out.innerHTML=msg('Enter the code printed on the resistor.');
+  let R=null, type='';
+  if(/^\d*R\d*$/.test(c)&&/\d/.test(c)){R=parseFloat(c.replace('R','.').replace(/^\./,'0.'));type='R notation'}
+  else if(/^\d{3}$/.test(c)){R=+c.slice(0,2)*Math.pow(10,+c[2]);type='3-digit (E24, ±5%)'}
+  else if(/^\d{4}$/.test(c)){R=+c.slice(0,3)*Math.pow(10,+c[3]);type='4-digit (±1%)'}
+  else if(/^\d{2}[A-Z]$/.test(c)){
+    const idx=+c.slice(0,2), m=EIA_M[c[2]];
+    if(idx>=1&&idx<=96&&m!==undefined){R=E96[idx-1]*m;type='EIA-96 (±1%)'}
+  }
+  if(R===null) return out.innerHTML=msg('Code not recognised.',true);
+  out.innerHTML=rows([['Value',fmt(R,'Ω')],['Format',type]]) + (c==='000'||c==='0'?msg('This is a zero-ohm jumper.'):'');
+}
+$('s_code').addEventListener('input',smd); smd();
+
+/* ---------- capacitor codes ---------- */
+const CAP_TOL={B:'±0.1 pF',C:'±0.25 pF',D:'±0.5 pF',F:'±1%',G:'±2%',J:'±5%',K:'±10%',M:'±20%',Z:'+80% / −20%'};
+function capcode(){
+  const raw=$('k_code').value.trim(), out=$('k_out');
+  capDia(raw.toUpperCase());
+  if(!raw) return out.innerHTML=msg('Enter the code printed on the capacitor.');
+  let pF=null, tol='';
+  const m=raw.toUpperCase().match(/^(\d{2})(\d)([A-Z])?$/);
+  if(m){
+    const d=+m[2], mult = d===8?0.01 : d===9?0.1 : Math.pow(10,d);
+    pF=+m[1]*mult; if(m[3]) tol=CAP_TOL[m[3]]||'unknown letter';
+  } else if(/^\d{1,2}$/.test(raw)){ pF=+raw; }
+  else { const v=parse(raw.replace(/F$/i,'')); if(v>0) pF=v*1e12; }
+  if(pF===null) return out.innerHTML=msg('Code not recognised.',true);
+  const F=pF*1e-12;
+  const list=[['Value',fmt(F,'F')],['In pF',+pF.toPrecision(6)+' pF'],['In nF',+(pF/1e3).toPrecision(6)+' nF'],['In µF',+(pF/1e6).toPrecision(6)+' µF']];
+  if(tol) list.push(['Tolerance',tol]);
+  out.innerHTML=rows(list);
+}
+$('k_code').addEventListener('input',capcode); capcode();
+
+/* ---------- shared for new tools ---------- */
+function nextE24(x){
+  const dec=Math.pow(10,Math.floor(Math.log10(x)));
+  for(const e of E24) if(e*dec>=x*(1-1e-9)) return +(e*dec).toPrecision(3);
+  return 10*dec;
+}
+function human(h){
+  if(h<1) return (h*60).toFixed(1)+' min';
+  if(h<48) return h.toFixed(1)+' h';
+  const d=h/24; if(d<60) return d.toFixed(1)+' days';
+  if(d<730) return (d/30.44).toFixed(1)+' months';
+  return (d/365.25).toFixed(1)+' years';
+}
+const listen=(ids,fn)=>{ids.forEach(id=>{$(id).addEventListener('input',fn);$(id).addEventListener('change',fn)});fn();};
+
+/* ---------- RC ---------- */
+function rcDia(tau,vs,vt,tt){
+  const ox=48,oy=150,W=270,H=110,X=t=>ox+t*W/5,Y=f=>oy-f*H, pct=[63,86,95,98,99];
+  const pts=[]; for(let i=0;i<=60;i++){const t=5*i/60;pts.push(X(t).toFixed(1)+' '+Y(1-Math.exp(-t)).toFixed(1))}
+  let b=wire(`M${ox} ${oy-H-14}V${oy}H${ox+W+8}`)+`<path class="dash" d="M${ox} ${Y(1)}H${ox+W}"/>`+
+    txt(ox-6,Y(1)+4,vs?fmt(vs,'V'):'Vs','lb','end')+txt(ox-6,oy+4,'0','lb','end');
+  for(let k=1;k<=5;k++){
+    const f=1-Math.exp(-k);
+    b+=`<path class="dash" d="M${X(k)} ${oy}V${Y(f)}"/>`+txt(X(k),oy+16,k+'τ','lb','middle')+
+      (tau?txt(X(k),oy+30,fmt(k*tau,'s'),'lb sm','middle'):'')+(k<5?txt(X(k)+4,Y(f)+16,pct[k-1]+'%','lb sm'):txt(X(k)-4,Y(f)+32,'99%','lb sm','end'));
+  }
+  b+=`<path class="w cu" d="M${pts.join('L')}"/>`;
+  if(tt!==null){
+    const r=Math.min(tt/tau,5), y=Y(vt/vs);
+    b+=`<path class="dashc" d="M${ox} ${y}H${X(r)}V${oy}"/><circle cx="${X(r)}" cy="${y}" r="4" fill="var(--copper)"/>`+
+      txt(ox+6,Y(1)-10,'Time to reach '+fmt(vt,'V')+': '+fmt(tt,'s'),'vl');
+  }
+  $('rc_dia').innerHTML=svg(340,190,b);
+}
+function rc(){
+  const {v,bad}=read(['rc_r','rc_c','rc_vs','rc_vt']);
+  const R=v.rc_r,Cc=v.rc_c,vs=v.rc_vs,vt=v.rc_vt, tau=(R>0&&Cc>0)?R*Cc:null;
+  const tOk=tau&&vs>0&&vt>0&&vt<vs, tt=tOk?-tau*Math.log(1-vt/vs):null;
+  rcDia(tau,vs,vt,tt);
+  if(bad) return $('rc_out').innerHTML=msg('Check the highlighted value.',true);
+  if(!tau) return $('rc_out').innerHTML=msg('Enter R and C.');
+  const list=[['τ = R × C',fmt(tau,'s')],['63% charged (1τ)',fmt(tau,'s')],['99.3% charged (5τ)',fmt(5*tau,'s')],['Cutoff frequency',fmt(1/(2*Math.PI*tau),'Hz')]];
+  if(tOk) list.push(['Charge 0 V to target',fmt(tt,'s')],['Discharge supply to target',fmt(-tau*Math.log(vt/vs),'s')]);
+  $('rc_out').innerHTML=rows(list)+(vt!==null&&!tOk?msg('Target must be between 0 and the supply voltage.',true):'');
+}
+listen(['rc_r','rc_c','rc_vs','rc_vt'],rc);
+
+/* ---------- 555 ---------- */
+function astDia(tH,tL){
+  const ok=tH>0&&tL>0, a=ok?tH:2, c=ok?tL:1, T=a+c, P=270/3, x0=44, hi=60, lo=110, ph=P*a/T;
+  let d=`M${x0} ${lo}`; for(let i=0;i<3;i++){const x=x0+P*i; d+=`V${hi}H${x+ph}V${lo}H${x+P}`;}
+  const b=txt(4,90,'Out')+`<path class="w cu" d="${d}"/>`+
+    `<path class="dash" d="M${x0} ${hi-4}V${lo+4}M${x0+ph} ${hi-4}V${lo+4}M${x0+P} ${hi-4}V${lo+4}"/>`+
+    txt(x0+4,hi-8,'tH = '+fv(ok?tH:null,'s'),'vl')+txt(x0+ph+4,lo+18,'tL = '+fv(ok?tL:null,'s'),'vl')+
+    txt(x0,24,ok?`f = ${fmt(1/T,'Hz')}, duty ${(100*a/T).toFixed(1)}%`:'f = ?','lb');
+  $('t_dia').innerHTML=svg(330,135,b);
+}
+function monoDia(t){
+  const b=txt(4,54,'Trig')+wire('M44 40H80V60H88V40H310')+txt(4,112,'Out')+
+    `<path class="w cu" d="M44 120H84V90H260V120H310"/>`+`<path class="dash" d="M84 60V124M260 86V124"/>`+
+    txt(172,80,'t = '+fv(t,'s'),'vl','middle');
+  $('t_dia').innerHTML=svg(330,140,b);
+}
+function schDia(mode,R1,R2,C){
+  const pins=[[175,96,'4','middle'],[225,96,'8','middle'],[148,114,'7','start'],[148,174,'6','start'],
+              [175,224,'2','middle'],[225,224,'1','middle'],[252,114,'3','end'],[252,174,'5','end']];
+  let b='<rect x="140" y="80" width="120" height="150" rx="4" fill="var(--line)" stroke="var(--silk)" stroke-width="1.5"/>'+
+    txt(200,160,'NE555','vl','middle')+pins.map(p=>txt(p[0],p[1],p[2],'lb sm',p[3])).join('')+
+    wire('M213 26H237M225 26V80')+txt(225,18,'Vcc','lb','middle')+
+    wire('M80 50H225M175 50V80')+dot(175,50)+dot(225,50)+
+    wire('M80 285H310M225 230V285')+dot(225,285)+gnd(225,285)+
+    wire('M260 170H310V180')+sym('C',310,180,90)+wire('M310 240V285')+txt(322,214,'10 nF','lb')+
+    wire('M260 110H320')+term(324,110)+txt(324,98,'Output','lb','middle');
+  if(mode==='a'){
+    b+=sym('R',80,50,90)+wire('M80 110H140')+dot(80,110)+sym('R',80,110,90)+
+      wire('M80 170H140M110 170V255H175V230M80 170V175')+dot(80,170)+dot(110,170)+
+      sym('C',80,175,90)+wire('M80 235V285')+
+      txt(66,76,'R1','lb','end')+txt(66,92,fv(R1,'Ω'),'vl','end')+
+      txt(66,136,'R2','lb','end')+txt(66,152,fv(R2,'Ω'),'vl','end')+
+      txt(66,200,'C','lb','end')+txt(66,216,fv(C,'F'),'vl','end');
+  } else {
+    b+=sym('R',80,50,90)+wire('M80 110H140M110 110V170H140M80 110V150')+dot(80,110)+dot(110,110)+
+      sym('C',80,150,90)+wire('M80 210V285')+
+      wire('M175 230V255H134')+term(130,255)+txt(130,274,'Trigger','lb','middle')+
+      txt(66,76,'R','lb','end')+txt(66,92,fv(R1,'Ω'),'vl','end')+
+      txt(66,176,'C','lb','end')+txt(66,192,fv(C,'F'),'vl','end');
+  }
+  $('t_sch').innerHTML=svg(360,310,b);
+}
+function t555(){
+  const mode=$('t_mode').value;
+  $('t_r2l').style.display=mode==='a'?'':'none';
+  $('t_r1l').firstChild.nodeValue=mode==='a'?'R1 (Ω)':'R (Ω)';
+  $('t_hint').textContent=mode==='a'
+    ?'R1 from Vcc to pin 7, R2 from pin 7 to pins 6 and 2, C from pins 6 and 2 to ground.'
+    :'R from Vcc to pins 6 and 7, C from pins 6 and 7 to ground. A low pulse on pin 2 starts the timer.';
+  const {v,bad}=read(mode==='a'?['t_r1','t_r2','t_c']:['t_r1','t_c']);
+  const R1=v.t_r1,R2=v.t_r2,C=v.t_c;
+  schDia(mode,R1,R2,C);
+  if(mode==='a'){
+    const ok=R1>0&&R2>0&&C>0, tH=ok?0.693*(R1+R2)*C:null, tL=ok?0.693*R2*C:null;
+    astDia(tH,tL);
+    if(bad) return $('t_out').innerHTML=msg('Check the highlighted value.',true);
+    if(!ok) return $('t_out').innerHTML=msg('Enter R1, R2 and C.');
+    const T=tH+tL;
+    $('t_out').innerHTML=rows([['Frequency',fmt(1/T,'Hz')],['Period',fmt(T,'s')],['High time',fmt(tH,'s')],['Low time',fmt(tL,'s')],['Duty cycle',(100*tH/T).toFixed(1)+' %']])+
+      `<div class="note">Duty is always above 50% in this circuit. A diode across R2 lets it go lower.${R1<1000?' Keep R1 at 1 kΩ or more to protect pin 7.':''}</div>`;
+  } else {
+    const ok=R1>0&&C>0, t=ok?1.1*R1*C:null;
+    monoDia(t);
+    if(bad) return $('t_out').innerHTML=msg('Check the highlighted value.',true);
+    if(!ok) return $('t_out').innerHTML=msg('Enter R and C.');
+    $('t_out').innerHTML=rows([['Pulse width',fmt(t,'s')],['Formula','1.1 × R × C']]);
+  }
+}
+listen(['t_mode','t_r1','t_r2','t_c'],t555);
+
+/* ---------- LED ---------- */
+function rating(P){
+  const r=[0.125,0.25,0.5,1,2,3,5].find(x=>x>=2*P);
+  return r===undefined?'over 5 W':({0.125:'1/8 W',0.25:'1/4 W',0.5:'1/2 W'}[r]||r+' W');
+}
+function ledDia(counts,Ra,Rb){
+  if(!counts){ $('l_dia').innerHTML=''; return; }
+  const S=counts.length, draw=S>6?counts.slice(0,5):counts, slot=k=>Math.min(k,6);
+  const maxS=Math.max(...draw.map(slot)), top=34, rs=44, ls=104, yb=ls+30*maxS+12, xL=50+64*(draw.length-1);
+  let b=txt(10,top-12,'+Vs')+wire(`M24 ${top}H${xL}M24 ${yb}H${xL}`)+txt(10,yb+18,'GND');
+  draw.forEach((k,j)=>{
+    const x=50+64*j, R=(j===counts.length-1&&Rb&&k!==counts[0])?Rb:Ra;
+    b+=dot(x,top)+dot(x,yb)+wire(`M${x} ${top}V${rs}`)+sym('R',x,rs,90)+txt(x+11,rs+34,fmt(R,'Ω'),'lb sm');
+    for(let i=0;i<slot(k);i++){
+      const y=ls+30*i;
+      if(k>6&&i===4) b+=wire(`M${x} ${y}V${y+30}`)+txt(x+8,y+19,'+'+(k-5),'lb sm');
+      else b+=sym('D',x,y,90);
+    }
+    b+=wire(`M${x} ${ls+30*slot(k)}V${yb}`);
+  });
+  if(S>6) b+=txt(xL+20,(top+yb)/2,`… ${S} strings`,'lb');
+  $('l_dia').innerHTML=svg(Math.max(200,xL+(S>6?110:40)),yb+26,b);
+}
+function led(){
+  const {v,bad}=read(['l_vs','l_vf','l_if','l_n','l_per']);
+  const Vs=v.l_vs,Vf=v.l_vf,If=v.l_if,N=v.l_n?Math.round(v.l_n):null;
+  const out=$('l_out');
+  if(bad){ledDia(null);return out.innerHTML=msg('Check the highlighted value.',true);}
+  if(!(Vs>0&&Vf>0&&If>0&&N>0)){ledDia(null);return out.innerHTML=msg('Enter supply, Vf, current and number of LEDs.');}
+  const nmax=Math.floor((Vs-0.2)/Vf);
+  if(nmax<1){ledDia(null);return out.innerHTML=msg(`The supply needs to be above ${fmt(Vf+0.2,'V')} for one LED.`,true);}
+  const n=v.l_per?Math.min(Math.round(v.l_per),N):Math.min(nmax,N);
+  if(n<1||n*Vf>=Vs){ledDia(null);return out.innerHTML=msg(`That is too many per string. The most this supply can drive is ${nmax}.`,true);}
+  const full=Math.floor(N/n), rem=N%n;
+  const str=k=>{const Vr=Vs-k*Vf,Rx=Vr/If,Rs=nextE24(Rx),I=Vr/Rs;return {Rx,Rs,I,P:I*I*Rs};};
+  const A=str(n), B=rem?str(rem):null;
+  const counts=Array(full).fill(n); if(rem) counts.push(rem);
+  ledDia(counts,A.Rs,B&&B.Rs);
+  const Itot=full*A.I+(B?B.I:0), Pin=Vs*Itot, Pled=(full*n*A.I+(B?rem*B.I:0))*Vf;
+  const list=[['Strings',full+(rem?` + 1 shorter (${rem} LED${rem>1?'s':''})`:'')],['LEDs per string',n],
+    ['Resistor exact',fmt(A.Rx,'Ω')],['Resistor (E24)',`${fmt(A.Rs,'Ω')}, ${rating(A.P)}`],['String current',fmt(A.I,'A')],['Resistor power',fmt(A.P,'W')]];
+  if(B) list.push(['Shorter string resistor',`${fmt(B.Rs,'Ω')}, ${rating(B.P)}`]);
+  list.push(['Total current',fmt(Itot,'A')],['Supply power',fmt(Pin,'W')],['Efficiency',(100*Pled/Pin).toFixed(0)+' %']);
+  out.innerHTML=rows(list)+(Vs-n*Vf<1?'<div class="note">Less than 1 V across the resistor makes brightness sensitive to supply changes. Use fewer LEDs per string for steadier current.</div>':'');
+}
+listen(['l_vs','l_vf','l_if','l_n','l_per'],led);
+
+/* ---------- PACK ---------- */
+function packDia(S,P,label){
+  if(!(S>0&&P>0)){ $('p_dia').innerHTML=''; return; }
+  const s=Math.min(S,8), p=Math.min(P,5), x0=40, y0=46, cw=32, gx=44, gy=30, yN=y0+gy*(p-1), xR=x0+gx*(s-1)+cw+11;
+  let b=txt(4,20,label,'vl');
+  for(let j=0;j<p;j++){
+    const y=y0+gy*j;
+    b+=wire(`M${x0-8} ${y}H${x0}M${x0+gx*(s-1)+cw+3} ${y}H${xR}`);
+    for(let i=0;i<s;i++){
+      const x=x0+gx*i;
+      b+=`<rect x="${x}" y="${y-9}" width="${cw}" height="18" rx="3" fill="var(--line)" stroke="var(--silk)" stroke-width="1.5"/><rect x="${x+cw}" y="${y-4}" width="3" height="8" fill="var(--silk)"/>`;
+      if(i<s-1) b+=wire(`M${x+cw+3} ${y}H${x+gx}`);
+    }
+  }
+  if(p>1){
+    b+=wire(`M${x0-8} ${y0}V${yN}M${xR} ${y0}V${yN}`);
+    for(let i=0;i<s-1;i++){const xj=x0+gx*i+cw+3+(gx-cw-3)/2; b+=wire(`M${xj} ${y0}V${yN}`); for(let j=0;j<p;j++) b+=dot(xj,y0+gy*j);}
+  }
+  b+=wire(`M${x0-8} ${yN}V${yN+18}M${xR} ${yN}V${yN+18}`)+term(x0-8,yN+22)+term(xR,yN+22)+
+    txt(x0-18,yN+26,'−','vl','end')+txt(xR+10,yN+26,'+','vl');
+  if(S>8||P>5) b+=txt(4,yN+46,'Drawing shows up to 8S5P','lb sm');
+  $('p_dia').innerHTML=svg(Math.max(220,xR+30),yN+(S>8||P>5?54:40),b);
+}
+function pack(){
+  const {v,bad}=read(['p_s','p_p','p_cap','p_v','p_full','p_empty','p_imax']);
+  const S=v.p_s?Math.round(v.p_s):null,P=v.p_p?Math.round(v.p_p):null,cap=v.p_cap;
+  if(bad){packDia(null);return $('p_out').innerHTML=msg('Check the highlighted value.',true);}
+  if(!(S>0&&P>0)){packDia(null);return $('p_out').innerHTML=msg('Enter cells in series and parallel.');}
+  const Vn=S*(v.p_v||3.7), Ah=cap?P*cap/1000:null;
+  packDia(S,P,`${S}S${P}P, ${fmt(Vn,'V')}${Ah?', '+fmt(Ah,'Ah'):''}`);
+  const list=[['Configuration',`${S}S${P}P`],['Total cells',S*P],['Nominal voltage',fmt(Vn,'V')],
+    ['Fully charged',fmt(S*(v.p_full||4.2),'V')],['Empty',fmt(S*(v.p_empty||3),'V')]];
+  if(Ah) list.push(['Capacity',fmt(Ah,'Ah')],['Energy',fmt(Vn*Ah,'Wh')],['Charge current at 0.5C',fmt(0.5*Ah,'A')]);
+  if(v.p_imax) list.push(['Max continuous current',fmt(P*v.p_imax,'A')],['Max power',fmt(P*v.p_imax*Vn,'W')]);
+  $('p_out').innerHTML=rows(list)+'<div class="note">Charge at the fully charged voltage with a BMS that balances each series cell.</div>';
+}
+listen(['p_s','p_p','p_cap','p_v','p_full','p_empty','p_imax'],pack);
+
+/* ---------- RUNTIME ---------- */
+function runDia(use,duty,rt){
+  const u=Math.max(0,Math.min(100,use||0)), d=Math.max(0,Math.min(100,duty)), bw=160*d/100;
+  let b=`<rect x="14" y="30" width="96" height="46" rx="6" fill="none" stroke="var(--silk)" stroke-width="2"/><rect x="110" y="44" width="6" height="18" rx="2" fill="var(--silk)"/>`+
+    `<rect x="18" y="34" width="${88*u/100}" height="38" rx="3" fill="var(--copper)" opacity=".85"/>`+txt(62,96,u+'% usable','lb','middle')+
+    `<path class="ar" d="M136 53L128 48V58Z"/>`+wire('M120 53H128')+
+    `<rect x="150" y="40" width="160" height="26" rx="4" fill="var(--line)"/><rect x="150" y="40" width="${bw}" height="26" rx="4" fill="var(--copper)"/>`+
+    txt(150,30,'One cycle of the load','lb')+txt(150,86,`Active ${d}%`,'vl')+(d<100?txt(310,86,`Sleep ${(100-d).toFixed(d%1?1:0)}%`,'lb','end'):'')+
+    txt(14,124,'Runtime ≈ '+(rt||'?'),'vl');
+  $('r_dia').innerHTML=svg(330,134,b);
+}
+function run(){
+  const {v,bad}=read(['r_cap','r_v','r_use','r_ia','r_is','r_duty']);
+  const use=v.r_use===null?80:v.r_use, duty=v.r_duty===null?100:v.r_duty, d=duty/100, Is=v.r_is||0;
+  if(bad){runDia(use,duty);return $('r_out').innerHTML=msg('Check the highlighted value.',true);}
+  if(!(v.r_cap>0&&v.r_ia>0)){runDia(use,duty);return $('r_out').innerHTML=msg('Enter capacity and active current.');}
+  if(d<0||d>1){runDia(use,100);return $('r_out').innerHTML=msg('Active time must be 0 to 100%.',true);}
+  const Iavg=v.r_ia*d+Is*(1-d), mAh=v.r_cap*use/100, h=(mAh/1000)/Iavg;
+  runDia(use,duty,human(h));
+  const list=[['Average current',fmt(Iavg,'A')],['Usable capacity',(+mAh.toPrecision(4))+' mAh'],['Runtime',human(h)],['Runtime in hours',(+h.toPrecision(4))+' h']];
+  if(v.r_v) list.push(['Usable energy',fmt(mAh/1000*v.r_v,'Wh')]);
+  $('r_out').innerHTML=rows(list)+'<div class="note">If the load runs through a linear regulator, use the load current as is. For a switching converter, scale it by Vout ÷ (Vbat × efficiency).</div>';
+}
+listen(['r_cap','r_v','r_use','r_ia','r_is','r_duty'],run);
+
+/* ---------- WIRE ---------- */
+const MAT={cu:{r:1.68e-8,a:0.00393},al:{r:2.65e-8,a:0.00429},ag:{r:1.59e-8,a:0.0038},au:{r:2.44e-8,a:0.0034},w:{r:5.6e-8,a:0.0045},nicr:{r:1.10e-6,a:0.0004}};
+function wireDia(d,len,two,I,dV){
+  const th=Math.max(2,Math.min(10,(d||1)*4)), ys=two?[56,84]:[70];
+  let b='<rect x="14" y="44" width="40" height="52" rx="4" fill="var(--line)" stroke="var(--silk)" stroke-width="1.5"/><rect x="286" y="44" width="40" height="52" rx="4" fill="var(--line)" stroke="var(--silk)" stroke-width="1.5"/>'+
+    txt(34,74,'V','lb','middle')+txt(306,74,'Load','lb sm','middle');
+  ys.forEach(y=>b+=`<path d="M54 ${y}H286" stroke="var(--copper)" stroke-width="${th}"/>`);
+  if(I) b+=arrow(110,ys[0])+txt(110,ys[0]-th/2-8,'I = '+fmt(I,'A'),'lb','middle');
+  if(dV) b+=txt(220,ys[0]-th/2-8,'ΔV = '+fmt(dV,'V'),'vl','middle');
+  b+=wire('M54 118H286M54 112V124M286 112V124')+txt(170,138,'L = '+fv(len,'m')+(two?' each way':''),'lb','middle')+
+    `<circle cx="306" cy="22" r="${Math.max(3,th/1.4)}" fill="var(--copper)"/>`+txt(292,26,'d = '+(d?(+d.toPrecision(3))+' mm':'?'),'lb','end');
+  $('w_dia').innerHTML=svg(340,146,b);
+}
+function wireCalc(){
+  const m=MAT[$('w_mat').value], type=$('w_type').value, raw=$('w_size').value.trim(), two=$('w_path').value==='2';
+  let d=null,A=null,sizeBad=false;
+  if(raw){
+    if(type==='awg'){
+      const map={'1/0':0,'2/0':-1,'3/0':-2,'4/0':-3}, n=raw in map?map[raw]:Number(raw);
+      if(Number.isFinite(n)&&n>=-3&&n<=40){d=0.127*Math.pow(92,(36-n)/39);A=Math.PI*d*d/4}else sizeBad=true;
+    } else {
+      const x=parse(raw); if(x>0){ if(type==='d'){d=x;A=Math.PI*d*d/4}else{A=x;d=Math.sqrt(4*A/Math.PI)} } else sizeBad=true;
+    }
+  }
+  $('w_size').classList.toggle('bad',sizeBad);
+  const {v,bad}=read(['w_len','w_i','w_vs','w_t']);
+  const len=v.w_len, I=v.w_i, T=v.w_t===null?20:v.w_t;
+  let R=null,dV=null;
+  const rho=m.r*(1+m.a*(T-20));
+  if(A&&len>0){R=rho*len*(two?2:1)/(A*1e-6); if(I) dV=I*R;}
+  wireDia(d,len,two,I,dV);
+  if(bad||sizeBad) return $('w_out').innerHTML=msg('Check the highlighted value.',true);
+  if(!A) return $('w_out').innerHTML=msg('Enter the wire size.');
+  const list=[['Diameter',(+d.toPrecision(3))+' mm'],['Area',(+A.toPrecision(3))+' mm²'],['Resistance per metre',fmt(rho/(A*1e-6),'Ω')+'/m']];
+  if(R!==null){
+    list.push(['Conductor length',fmt(len*(two?2:1),'m')],['Total resistance',fmt(R,'Ω')]);
+    if(I) list.push(['Voltage drop',fmt(dV,'V')],['Power lost in wire',fmt(I*I*R,'W')],['Current density',(+(I/A).toPrecision(3))+' A/mm²']);
+    if(I&&v.w_vs) list.push(['Drop as % of supply',(100*dV/v.w_vs).toFixed(2)+' %'],['Voltage at load',fmt(v.w_vs-dV,'V')]);
+  }
+  $('w_out').innerHTML=rows(list)+(R===null?msg('Enter a length to get total resistance.'):'');
+}
+listen(['w_mat','w_type','w_size','w_len','w_path','w_i','w_vs','w_t'],wireCalc);
+</script>
+</body>
+</html>
