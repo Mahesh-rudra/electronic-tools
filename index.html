@@ -6,37 +6,49 @@
 <title>Electronics Calculator — Basics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem("eecalc-theme");if(t&&t!=="light")document.documentElement.dataset.theme=t;}catch(e){}</script>
 <style>
 :root{
-  --mask:#0E3B2E; --mask2:#134A39; --line:#2A6A53;
-  --silk:#F2F5EE; --muted:#9DB8AA; --copper:#D49A4A; --copperDim:#8C6630; --err:#F0A08C;
+  --mask:#F7F9FC; --mask2:#FFFFFF; --line:#D5DEEA;
+  --silk:#1B2A41; --muted:#5D6F87; --copper:#B45309; --copperDim:#8C4A0E; --err:#C2410C;
+  --ontab:#fff; --ph:#A0AEC0; --shadow:0 1px 3px rgba(27,42,65,.06); --pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cg fill='%23DCE4EF' font-family='Georgia%2Cserif'%3E%3Ctext x='18' y='40' font-size='30' transform='rotate%28-12 18 40%29'%3E%CE%A9%3C/text%3E%3Ctext x='120' y='30' font-size='26' transform='rotate%288 120 30%29'%3E%CF%80%3C/text%3E%3Ctext x='190' y='70' font-size='28' transform='rotate%280 190 70%29'%3E%E2%88%9A%3C/text%3E%3Ctext x='60' y='110' font-size='30' transform='rotate%28-6 60 110%29'%3E%E2%88%91%3C/text%3E%3Ctext x='150' y='140' font-size='34' transform='rotate%2810 150 140%29'%3E%E2%88%AB%3C/text%3E%3Ctext x='20' y='190' font-size='26' transform='rotate%280 20 190%29'%3E%C2%B5%3C/text%3E%3Ctext x='100' y='200' font-size='26' transform='rotate%28-8 100 200%29'%3E%CE%94%3C/text%3E%3Ctext x='200' y='195' font-size='26' transform='rotate%280 200 195%29'%3E%E2%88%9E%3C/text%3E%3Ctext x='240' y='120' font-size='24' transform='rotate%2812 240 120%29'%3E%CE%BB%3C/text%3E%3Ctext x='250' y='30' font-size='22' transform='rotate%28-10 250 30%29'%3E%CE%B8%3C/text%3E%3Ctext x='70' y='250' font-size='26' transform='rotate%280 70 250%29'%3E%E2%89%88%3C/text%3E%3Ctext x='180' y='255' font-size='22' transform='rotate%2814 180 255%29'%3E%CE%A9%3C/text%3E%3Ctext x='260' y='240' font-size='20' transform='rotate%280 260 240%29'%3E%CF%80%3C/text%3E%3C/g%3E%3C/svg%3E");
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
 *,*::before,*::after{box-sizing:inherit}
+:root[data-theme="navy"]{--mask:#0B1D36;--mask2:#11284A;--line:#28486F;--silk:#F4F7FC;--muted:#A3B5CC;--copper:#E0A458;--copperDim:#9A6A35;--err:#F19B85;--ontab:#0B1D36;--ph:#62799A;--shadow:none;--pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cg fill='%23132A4E' font-family='Georgia%2Cserif'%3E%3Ctext x='18' y='40' font-size='30' transform='rotate%28-12 18 40%29'%3E%CE%A9%3C/text%3E%3Ctext x='120' y='30' font-size='26' transform='rotate%288 120 30%29'%3E%CF%80%3C/text%3E%3Ctext x='190' y='70' font-size='28' transform='rotate%280 190 70%29'%3E%E2%88%9A%3C/text%3E%3Ctext x='60' y='110' font-size='30' transform='rotate%28-6 60 110%29'%3E%E2%88%91%3C/text%3E%3Ctext x='150' y='140' font-size='34' transform='rotate%2810 150 140%29'%3E%E2%88%AB%3C/text%3E%3Ctext x='20' y='190' font-size='26' transform='rotate%280 20 190%29'%3E%C2%B5%3C/text%3E%3Ctext x='100' y='200' font-size='26' transform='rotate%28-8 100 200%29'%3E%CE%94%3C/text%3E%3Ctext x='200' y='195' font-size='26' transform='rotate%280 200 195%29'%3E%E2%88%9E%3C/text%3E%3Ctext x='240' y='120' font-size='24' transform='rotate%2812 240 120%29'%3E%CE%BB%3C/text%3E%3Ctext x='250' y='30' font-size='22' transform='rotate%28-10 250 30%29'%3E%CE%B8%3C/text%3E%3Ctext x='70' y='250' font-size='26' transform='rotate%280 70 250%29'%3E%E2%89%88%3C/text%3E%3Ctext x='180' y='255' font-size='22' transform='rotate%2814 180 255%29'%3E%CE%A9%3C/text%3E%3Ctext x='260' y='240' font-size='20' transform='rotate%280 260 240%29'%3E%CF%80%3C/text%3E%3C/g%3E%3C/svg%3E")}
+:root[data-theme="charcoal"]{--mask:#16181B;--mask2:#1F2226;--line:#363B43;--silk:#ECEEF1;--muted:#9CA3AE;--copper:#E3A15A;--copperDim:#9A6A35;--err:#F19B85;--ontab:#16181B;--ph:#656C77;--shadow:0 1px 3px rgba(0,0,0,.3);--pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cg fill='%23262A30' font-family='Georgia%2Cserif'%3E%3Ctext x='18' y='40' font-size='30' transform='rotate%28-12 18 40%29'%3E%CE%A9%3C/text%3E%3Ctext x='120' y='30' font-size='26' transform='rotate%288 120 30%29'%3E%CF%80%3C/text%3E%3Ctext x='190' y='70' font-size='28' transform='rotate%280 190 70%29'%3E%E2%88%9A%3C/text%3E%3Ctext x='60' y='110' font-size='30' transform='rotate%28-6 60 110%29'%3E%E2%88%91%3C/text%3E%3Ctext x='150' y='140' font-size='34' transform='rotate%2810 150 140%29'%3E%E2%88%AB%3C/text%3E%3Ctext x='20' y='190' font-size='26' transform='rotate%280 20 190%29'%3E%C2%B5%3C/text%3E%3Ctext x='100' y='200' font-size='26' transform='rotate%28-8 100 200%29'%3E%CE%94%3C/text%3E%3Ctext x='200' y='195' font-size='26' transform='rotate%280 200 195%29'%3E%E2%88%9E%3C/text%3E%3Ctext x='240' y='120' font-size='24' transform='rotate%2812 240 120%29'%3E%CE%BB%3C/text%3E%3Ctext x='250' y='30' font-size='22' transform='rotate%28-10 250 30%29'%3E%CE%B8%3C/text%3E%3Ctext x='70' y='250' font-size='26' transform='rotate%280 70 250%29'%3E%E2%89%88%3C/text%3E%3Ctext x='180' y='255' font-size='22' transform='rotate%2814 180 255%29'%3E%CE%A9%3C/text%3E%3Ctext x='260' y='240' font-size='20' transform='rotate%280 260 240%29'%3E%CF%80%3C/text%3E%3C/g%3E%3C/svg%3E")}
+:root[data-theme="green"]{--mask:#0E3B2E;--mask2:#134A39;--line:#2A6A53;--silk:#F2F5EE;--muted:#9DB8AA;--copper:#D9A04F;--copperDim:#8C6630;--err:#F0A08C;--ontab:#0E3B2E;--ph:#5F8574;--shadow:none;--pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cg fill='%23144A38' font-family='Georgia%2Cserif'%3E%3Ctext x='18' y='40' font-size='30' transform='rotate%28-12 18 40%29'%3E%CE%A9%3C/text%3E%3Ctext x='120' y='30' font-size='26' transform='rotate%288 120 30%29'%3E%CF%80%3C/text%3E%3Ctext x='190' y='70' font-size='28' transform='rotate%280 190 70%29'%3E%E2%88%9A%3C/text%3E%3Ctext x='60' y='110' font-size='30' transform='rotate%28-6 60 110%29'%3E%E2%88%91%3C/text%3E%3Ctext x='150' y='140' font-size='34' transform='rotate%2810 150 140%29'%3E%E2%88%AB%3C/text%3E%3Ctext x='20' y='190' font-size='26' transform='rotate%280 20 190%29'%3E%C2%B5%3C/text%3E%3Ctext x='100' y='200' font-size='26' transform='rotate%28-8 100 200%29'%3E%CE%94%3C/text%3E%3Ctext x='200' y='195' font-size='26' transform='rotate%280 200 195%29'%3E%E2%88%9E%3C/text%3E%3Ctext x='240' y='120' font-size='24' transform='rotate%2812 240 120%29'%3E%CE%BB%3C/text%3E%3Ctext x='250' y='30' font-size='22' transform='rotate%28-10 250 30%29'%3E%CE%B8%3C/text%3E%3Ctext x='70' y='250' font-size='26' transform='rotate%280 70 250%29'%3E%E2%89%88%3C/text%3E%3Ctext x='180' y='255' font-size='22' transform='rotate%2814 180 255%29'%3E%CE%A9%3C/text%3E%3Ctext x='260' y='240' font-size='20' transform='rotate%280 260 240%29'%3E%CF%80%3C/text%3E%3C/g%3E%3C/svg%3E")}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.themes{display:flex;align-items:center;gap:8px;margin:8px 0 12px}
+.themes span{font-size:.8rem;color:var(--muted)}
+.themes button{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);cursor:pointer;padding:0}
+.themes button[aria-pressed="true"]{border-color:var(--copper);box-shadow:0 0 0 2px var(--mask),0 0 0 4px var(--copper)}
+.themes button:focus-visible{outline:2px solid var(--silk);outline-offset:3px}
+
 html,body{margin:0;background:var(--mask);color:var(--silk)}
 body{font-family:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.45;
-  background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.05) 1px,transparent 0);background-size:18px 18px}
+  background-image:var(--pat);background-size:280px 280px}
 .wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
 header h1{font-size:1.6rem;margin:4px 0 2px;font-weight:700;letter-spacing:-.01em}
 header p{margin:0 0 16px;color:var(--muted);font-size:.92rem}
 nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
 @media (min-width:640px){nav{flex-wrap:wrap;overflow-x:visible}}
-nav button{flex:0 0 auto;font:inherit;font-size:.92rem;color:var(--muted);background:transparent;border:1.5px solid var(--line);
+nav button{flex:0 0 auto;font:inherit;font-size:.92rem;color:var(--muted);background:var(--mask2);border:1.5px solid var(--line);
   border-radius:999px;padding:7px 14px;cursor:pointer}
-nav button[aria-selected="true"]{color:var(--mask);background:var(--copper);border-color:var(--copper);font-weight:700}
+nav button[aria-selected="true"]{color:var(--ontab);background:var(--copper);border-color:var(--copper);font-weight:700}
 nav button:focus-visible,input:focus-visible,select:focus-visible,.btn:focus-visible{outline:2px solid var(--silk);outline-offset:2px}
 section.panel{display:none}
 section.panel.active{display:block}
-.block{background:var(--mask2);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px}
+.block{background:var(--mask2);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
 .block h2{font-size:1.08rem;margin:0 0 4px}
 .hint{color:var(--muted);font-size:.86rem;margin:0 0 12px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
 label{display:flex;flex-direction:column;gap:4px;font-size:.86rem;color:var(--muted)}
 input,select{font:inherit;font-size:1rem;color:var(--silk);background:var(--mask);border:1.5px solid var(--line);
   border-radius:6px;padding:9px 10px;width:100%;font-variant-numeric:tabular-nums}
-input::placeholder{color:#5F8574}
+input::placeholder{color:var(--ph)}
 input.bad{border-color:var(--err)}
 .out{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
 .row{display:flex;justify-content:space-between;gap:12px;padding:4px 0;font-variant-numeric:tabular-nums}
@@ -60,26 +72,48 @@ input.bad{border-color:var(--err)}
 .dia .sm{font-size:11px}
 .dia .dash{fill:none;stroke:var(--muted);stroke-width:1;stroke-dasharray:3 4;opacity:.7}
 .dia .dashc{fill:none;stroke:var(--copper);stroke-width:1.5;stroke-dasharray:4 3}
+
+.learn details summary{cursor:pointer;font-weight:700;color:var(--copper);list-style:none;font-size:1rem}
+.learn details summary::-webkit-details-marker{display:none}
+.learn details summary::before{content:"▸ "}
+.learn details[open] summary::before{content:"▾ "}
+.learn p{margin:12px 0 0;font-size:.94rem;line-height:1.6}
+.fx{display:block;font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--mask);border:1px solid var(--line);border-radius:6px;padding:9px 11px;margin:10px 0 0;overflow-x:auto;white-space:normal;line-height:1.7;font-size:.88rem;color:var(--silk)}
 .note{color:var(--muted);font-size:.84rem;margin-top:8px}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-  <h1>Electronics calculator</h1>
-  <p>Type values with prefixes: 4.7k, 2k2, 10m, 100n, 4R7, 1M.</p>
+  <div>
+    <h1>Electronics calculator</h1>
+    <p>Type values with prefixes: 4.7k, 2k2, 10m, 100n, 4R7, 1M.</p>
+  </div>
+  <div class="themes" role="group" aria-label="Colour theme">
+    <span>Theme</span>
+    <button data-t="light" title="Light" aria-label="Light theme" style="background:linear-gradient(135deg,#F7F9FC 50%,#B45309 50%)"></button>
+    <button data-t="navy" title="Navy" aria-label="Navy theme" style="background:linear-gradient(135deg,#0B1D36 50%,#E0A458 50%)"></button>
+    <button data-t="charcoal" title="Charcoal" aria-label="Charcoal theme" style="background:linear-gradient(135deg,#16181B 50%,#E3A15A 50%)"></button>
+    <button data-t="green" title="Green" aria-label="Green theme" style="background:linear-gradient(135deg,#0E3B2E 50%,#D9A04F 50%)"></button>
+  </div>
 </header>
 
 <nav role="tablist">
   <button role="tab" aria-selected="true" data-tab="ohm">Ohm's law</button>
   <button role="tab" aria-selected="false" data-tab="combine">Series / parallel</button>
   <button role="tab" aria-selected="false" data-tab="divider">Dividers</button>
+  <button role="tab" aria-selected="false" data-tab="react">Reactance</button>
+  <button role="tab" aria-selected="false" data-tab="filt">Filters</button>
   <button role="tab" aria-selected="false" data-tab="rc">RC time</button>
   <button role="tab" aria-selected="false" data-tab="t555">555 timer</button>
+  <button role="tab" aria-selected="false" data-tab="opamp">Op-amp</button>
   <button role="tab" aria-selected="false" data-tab="led">LED designer</button>
+  <button role="tab" aria-selected="false" data-tab="zener">Zener</button>
+  <button role="tab" aria-selected="false" data-tab="lreg">Regulator heat</button>
   <button role="tab" aria-selected="false" data-tab="pack">Battery pack</button>
   <button role="tab" aria-selected="false" data-tab="run">Battery runtime</button>
   <button role="tab" aria-selected="false" data-tab="wire">Wire resistance</button>
+  <button role="tab" aria-selected="false" data-tab="trace">PCB trace</button>
   <button role="tab" aria-selected="false" data-tab="color">Color code</button>
   <button role="tab" aria-selected="false" data-tab="codes">SMD &amp; cap codes</button>
 </nav>
@@ -99,6 +133,13 @@ input.bad{border-color:var(--err)}
     <div class="out" id="o_out"></div>
     <button class="btn" id="o_clear">Clear</button>
   </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>Voltage is the electrical "pressure" that pushes charge around a circuit, current is the flow of that charge, and resistance is how strongly a component opposes the flow. Ohm's law ties the three together: double the voltage across a resistor and the current doubles too.</p>
+<code class="fx">V = I × R<br>I = V / R<br>R = V / I</code>
+<p>Whenever current flows through resistance, energy turns into heat. That power can be written three ways, depending on which two quantities you know:</p>
+<code class="fx">P = V × I = I² × R = V² / R</code>
+<p>Practical tip: choose a resistor whose power rating is at least twice the power it will dissipate. A 1/4 W resistor carrying 0.2 W will run hot and drift over time.</p>
+  </details></div>
 </section>
 
 <!-- SERIES / PARALLEL -->
@@ -117,6 +158,13 @@ input.bad{border-color:var(--err)}
     <div class="dia" id="c_dia"></div>
     <div class="out" id="c_out"></div>
   </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p><b>Resistors and inductors</b> in series simply add, because the current has to pass through each one in turn. In parallel, the current has several paths, so the total is always smaller than the smallest single part.</p>
+<code class="fx">Series: R = R1 + R2 + …<br>Parallel: 1/R = 1/R1 + 1/R2 + …</code>
+<p><b>Capacitors work the other way round.</b> In parallel their plate areas add, so capacitance adds. In series it is like moving the plates further apart, so the total drops below the smallest one.</p>
+<code class="fx">Parallel: C = C1 + C2 + …<br>Series: 1/C = 1/C1 + 1/C2 + …</code>
+<p>Two equal resistors in parallel give exactly half the value, which is a handy trick when you don't have the right part in your box.</p>
+  </details></div>
 </section>
 
 <!-- DIVIDERS -->
@@ -154,6 +202,13 @@ input.bad{border-color:var(--err)}
     <div class="dia" id="i_dia"></div>
     <div class="out" id="i_out"></div>
   </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>A <b>voltage divider</b> is two resistors in series across a supply. The same current flows through both, so the voltage splits in proportion to the resistances. The output is taken across the bottom resistor R2.</p>
+<code class="fx">Vout = Vin × R2 / (R1 + R2)</code>
+<p>The formula only holds when whatever you connect to Vout draws very little current. A load in parallel with R2 lowers the effective R2 and pulls Vout down. A common rule is to make the divider current at least ten times the load current. Dividers are great for scaling a voltage into a microcontroller's ADC or setting a bias point, but they should not be used to power anything; use a regulator for that.</p>
+<p>A <b>current divider</b> is the mirror image: two resistors in parallel share a current, and the smaller resistor takes the larger share.</p>
+<code class="fx">I1 = Itotal × R2 / (R1 + R2)</code>
+  </details></div>
 </section>
 
 
@@ -171,6 +226,12 @@ input.bad{border-color:var(--err)}
     <div class="dia" id="rc_dia"></div>
     <div class="out" id="rc_out"></div>
   </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>When a capacitor charges through a resistor, it charges quickly at first and then more and more slowly, because the voltage left across the resistor (which drives the current) keeps shrinking. The speed is set by the <b>time constant</b> τ (tau).</p>
+<code class="fx">τ = R × C<br>V(t) = Vs × (1 − e^(−t/τ))</code>
+<p>After one τ the capacitor reaches 63.2% of the supply, after 3τ about 95%, and after 5τ over 99%, which engineers treat as fully charged. Discharging follows the same curve in reverse.</p>
+<p>RC timing is used for switch debouncing, power-on reset delays, simple timers and smoothing. Note that electrolytic capacitors often have a ±20% tolerance, so the timing will be equally loose. Use film or ceramic capacitors where accuracy matters.</p>
+  </details></div>
 </section>
 
 <!-- 555 -->
@@ -188,6 +249,15 @@ input.bad{border-color:var(--err)}
     <div class="dia" id="t_dia"></div>
     <div class="out" id="t_out"></div>
   </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>The 555 contains two comparators, a flip-flop and a discharge transistor. Its comparators watch the capacitor voltage against thresholds at 1/3 and 2/3 of Vcc.</p>
+<p>In <b>astable</b> mode, C charges through R1 + R2 until it reaches 2/3 Vcc. The output then goes low and pin 7 discharges C through R2 alone, until it falls to 1/3 Vcc and the cycle repeats. This gives a continuous square wave.</p>
+<code class="fx">tHigh = 0.693 (R1 + R2) C<br>tLow = 0.693 R2 C<br>f = 1.44 / ((R1 + 2R2) C)</code>
+<p>Because charging goes through both resistors but discharging through only one, the duty cycle is always above 50%. A diode across R2 bypasses it during charging and allows lower duty cycles.</p>
+<p>In <b>monostable</b> mode, a brief low pulse on pin 2 (below 1/3 Vcc) starts one output pulse of fixed length, after which the timer waits for the next trigger.</p>
+<code class="fx">t = 1.1 R C</code>
+<p>The 10 nF capacitor on pin 5 filters noise on the internal threshold. CMOS versions like the 7555 or TLC555 draw far less current and suit battery projects.</p>
+  </details></div>
 </section>
 
 <!-- LED -->
@@ -205,6 +275,12 @@ input.bad{border-color:var(--err)}
     <div class="dia" id="l_dia"></div>
     <div class="out" id="l_out"></div>
   </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>An LED has a nearly fixed forward voltage (Vf) once it conducts, and above that point a tiny voltage increase causes a huge current increase. So an LED must always have something limiting its current. The simplest limiter is a series resistor, which drops the leftover voltage.</p>
+<code class="fx">R = (Vsupply − n × Vf) / I</code>
+<p>Putting several LEDs in <b>series</b> is efficient: they share one current and one resistor, and less power is wasted. But their Vf values add up, so the supply limits how many fit in one string. Leave some headroom across the resistor, because with very little voltage left, small supply changes cause large brightness changes.</p>
+<p>For more LEDs, use several strings in <b>parallel</b>, each with its own resistor. Never share one resistor between parallel LEDs: their Vf differs slightly, so one LED takes most of the current and burns out first. Typical indicator LEDs run at 5–20 mA. Brightness is set by current, not voltage.</p>
+  </details></div>
 </section>
 
 <!-- PACK -->
@@ -224,6 +300,12 @@ input.bad{border-color:var(--err)}
     <div class="dia" id="p_dia"></div>
     <div class="out" id="p_out"></div>
   </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>Connecting cells in <b>series</b> adds their voltages, while the capacity (Ah) stays that of one cell. Connecting them in <b>parallel</b> adds capacity and current ability, while the voltage stays that of one cell. Packs are described as "xSyP": 4S2P means two parallel groups, four of them in series, eight cells in all.</p>
+<code class="fx">V pack = S × V cell<br>Capacity = P × cell Ah<br>Energy (Wh) = V × Ah</code>
+<p>A Li-ion cell is about 3.6–3.7 V nominal, 4.2 V when full and around 3.0 V when empty. Charge current is often expressed as a <b>C-rate</b>: 0.5C on a 5 Ah pack is 2.5 A.</p>
+<p>Safety matters: use identical cells from the same batch, only connect parallel cells when they are at the same voltage, and always use a <b>BMS</b> (battery management system). It prevents over-charge, over-discharge and over-current, and balances the series groups so none drifts out of range.</p>
+  </details></div>
 </section>
 
 <!-- RUNTIME -->
@@ -242,6 +324,14 @@ input.bad{border-color:var(--err)}
     <div class="dia" id="r_dia"></div>
     <div class="out" id="r_out"></div>
   </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>Runtime is simply how much charge you can use divided by how fast you use it.</p>
+<code class="fx">Runtime (h) = usable capacity (Ah) / average current (A)</code>
+<p>Never plan on 100% of the rated capacity. Cells lose capacity with age, in cold weather and at high currents, and stopping before fully empty extends their life. 80% is a sensible planning figure.</p>
+<p>Many devices, such as sensors and Bluetooth tags, are asleep most of the time and wake briefly. Their <b>average</b> current is what matters:</p>
+<code class="fx">I avg = I active × duty + I sleep × (1 − duty)</code>
+<p>At low duty cycles the sleep current often dominates the result, which is why low-power designs focus so much on microamps of sleep current. If the load runs through a switching converter, the battery current is the load power divided by (battery voltage × efficiency).</p>
+  </details></div>
 </section>
 
 <!-- WIRE -->
@@ -267,6 +357,184 @@ input.bad{border-color:var(--err)}
     <div class="dia" id="w_dia"></div>
     <div class="out" id="w_out"></div>
   </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>A wire's resistance grows with its length and shrinks with its cross-sectional area. Each material has a <b>resistivity</b> ρ; copper is about 1.68 × 10⁻⁸ Ω·m at 20 °C.</p>
+<code class="fx">R = ρ × L / A</code>
+<p>Doubling the length doubles the resistance, while doubling the diameter quarters it, because area grows with the square of the diameter. In the <b>AWG</b> system, a smaller number means a thicker wire, and every 3 gauges roughly halves or doubles the area.</p>
+<p>Current must flow out to the load and back again, so for a DC circuit count the length both ways (round trip). Resistance also rises with temperature: copper gains about 0.39% per °C.</p>
+<p>The resistance causes a <b>voltage drop</b> (V = I × R) and wastes power as heat (P = I² × R). For low-voltage circuits like 5 V or 12 V, keep the drop under about 3–5%, otherwise the load sees noticeably less voltage.</p>
+  </details></div>
+</section>
+
+
+<!-- REACTANCE -->
+<section class="panel" id="react">
+  <div class="block">
+    <h2>Reactance and impedance</h2>
+    <p class="hint">Series circuit. Leave R, L or C blank to leave it out. Voltage is optional.</p>
+    <div class="grid">
+      <label>Frequency (Hz)<input id="x_f" inputmode="decimal" placeholder="1k"></label>
+      <label>Resistance (Ω)<input id="x_r" inputmode="decimal" placeholder="100"></label>
+      <label>Inductance (H)<input id="x_l" inputmode="decimal" placeholder="10m"></label>
+      <label>Capacitance (F)<input id="x_c" inputmode="decimal" placeholder="1u"></label>
+      <label>Voltage (V rms)<input id="x_v" inputmode="decimal" placeholder="optional"></label>
+    </div>
+    <div class="dia" id="x_dia"></div>
+    <div class="out" id="x_out"></div>
+  </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>Inductors and capacitors oppose alternating current, but unlike resistors, how much they oppose it depends on frequency. This opposition is called <b>reactance</b> (X), measured in ohms.</p>
+<code class="fx">XL = 2πfL  (rises with frequency)<br>XC = 1 / (2πfC)  (falls with frequency)</code>
+<p>An inductor resists changes in current, so it blocks high frequencies. A capacitor passes changes easily, so it blocks low frequencies and DC. Their reactances also push the current out of step with the voltage: an inductor makes current lag by 90°, a capacitor makes it lead by 90°. So resistance and reactance combine like the sides of a right-angled triangle, not by simple addition.</p>
+<code class="fx">|Z| = √(R² + (XL − XC)²)<br>φ = atan((XL − XC) / R)</code>
+<p>When XL equals XC they cancel. This is <b>resonance</b>, at f0 = 1 / (2π√LC). The impedance drops to just R and current peaks. At resonance the voltages across L and C can be many times the supply voltage, even though they cancel each other out.</p>
+  </details></div>
+</section>
+
+<!-- FILTERS -->
+<section class="panel" id="filt">
+  <div class="block">
+    <h2>Filter designer</h2>
+    <p class="hint" id="fl_hint"></p>
+    <div class="grid">
+      <label>Filter type<select id="fl_type">
+        <option value="rclp">RC low-pass</option><option value="rchp">RC high-pass</option>
+        <option value="rllp">RL low-pass</option><option value="rlhp">RL high-pass</option>
+        <option value="rlc">RLC band-pass / LC resonance</option>
+      </select></label>
+      <label id="fl_rl">Resistance (Ω)<input id="fl_r" inputmode="decimal" placeholder="1k"></label>
+      <label id="fl_ll">Inductance (H)<input id="fl_l" inputmode="decimal" placeholder="10m"></label>
+      <label id="fl_cl">Capacitance (F)<input id="fl_c" inputmode="decimal" placeholder="100n"></label>
+      <label id="fl_tl">Target cutoff (Hz)<input id="fl_t" inputmode="decimal" placeholder="optional"></label>
+    </div>
+    <div class="dia" id="fl_dia"></div>
+    <div class="out" id="fl_out"></div>
+  </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>A filter lets some frequencies through and weakens others. In an <b>RC low-pass</b> filter, the capacitor acts as an open circuit at low frequencies (signal passes) and as a short to ground at high frequencies (signal is shunted away). Swap R and C and you get a <b>high-pass</b> filter.</p>
+<code class="fx">RC: fc = 1 / (2πRC)<br>RL: fc = R / (2πL)</code>
+<p>The <b>cutoff frequency</b> fc is where the output has fallen to 70.7% of the input voltage, which is −3 dB or half the power. Beyond it, a single-stage filter falls by 20 dB per decade, meaning ten times the frequency gives one tenth of the voltage. For a steeper drop, stack stages or use an active filter.</p>
+<p>A series <b>RLC band-pass</b> filter peaks at its resonant frequency. Its sharpness is the quality factor Q: a high Q means a narrow, selective peak, as used in radio tuning.</p>
+<code class="fx">f0 = 1 / (2π√LC)<br>Q = (1/R)√(L/C)<br>Bandwidth = f0 / Q</code>
+<p>Real filters are affected by what drives and loads them. Keep the source impedance low and the load impedance at least ten times R.</p>
+  </details></div>
+</section>
+
+<!-- OP-AMP -->
+<section class="panel" id="opamp">
+  <div class="block">
+    <h2>Op-amp gain</h2>
+    <p class="hint">Ideal op-amp. Target gain suggests an E24 feedback resistor.</p>
+    <div class="grid">
+      <label>Configuration<select id="oa_mode">
+        <option value="inv">Inverting</option><option value="non">Non-inverting</option>
+        <option value="diff">Differential</option><option value="sum">Summing (inverting)</option>
+      </select></label>
+      <label id="oa_r1l">R1 (Ω)<input id="oa_r1" inputmode="decimal" placeholder="10k"></label>
+      <label id="oa_rfl">Rf (Ω)<input id="oa_rf" inputmode="decimal" placeholder="47k"></label>
+      <label id="oa_r2l">R2 (Ω)<input id="oa_r2" inputmode="decimal" placeholder="10k"></label>
+      <label id="oa_v1l">Vin (V)<input id="oa_v1" inputmode="decimal" placeholder="optional"></label>
+      <label id="oa_v2l">V2 (V)<input id="oa_v2" inputmode="decimal" placeholder="optional"></label>
+      <label>Supply ± (V)<input id="oa_vs" inputmode="decimal" placeholder="optional"></label>
+      <label id="oa_gl">Target gain<input id="oa_g" inputmode="decimal" placeholder="optional"></label>
+    </div>
+    <div class="dia" id="oa_dia"></div>
+    <div class="out" id="oa_out"></div>
+  </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>An op-amp has very high gain, so with negative feedback (output connected back to the − input) it adjusts its output until both inputs sit at the same voltage. Two "golden rules" for an ideal op-amp make the maths easy: no current flows into the inputs, and the inputs are at equal voltage.</p>
+<p><b>Inverting:</b> the + input is grounded, so the − input becomes a "virtual ground". The input current Vin/R1 must all flow through Rf, giving an inverted output.</p>
+<code class="fx">Gain = −Rf / R1</code>
+<p><b>Non-inverting:</b> the signal goes to the + input. Rf and Rg form a divider that feeds back a fraction of the output. Its input impedance is very high.</p>
+<code class="fx">Gain = 1 + Rf / Rg</code>
+<p><b>Differential</b> amplifies only the difference between two inputs, rejecting what they share (such as noise). It needs matched pairs: R1 = R3 and R2 = R4. <b>Summing</b> adds several inputs, each weighted by Rf/Rn, like an audio mixer.</p>
+<code class="fx">Differential: Vout = (R2/R1)(V2 − V1)<br>Summing: Vout = −Rf (V1/R1 + V2/R2)</code>
+<p>Real op-amps can't swing their output past the supply rails, and their bandwidth shrinks as gain rises (bandwidth ≈ gain-bandwidth product ÷ gain). Resistors in the 1 kΩ–100 kΩ range work well for most designs.</p>
+  </details></div>
+</section>
+
+<!-- ZENER -->
+<section class="panel" id="zener">
+  <div class="block">
+    <h2>Zener regulator</h2>
+    <p class="hint">Picks the series resistor so the Zener still regulates at the lowest input and full load.</p>
+    <div class="grid">
+      <label>Vin minimum (V)<input id="z_vmin" inputmode="decimal" placeholder="9"></label>
+      <label>Vin maximum (V)<input id="z_vmax" inputmode="decimal" placeholder="optional"></label>
+      <label>Zener voltage (V)<input id="z_vz" inputmode="decimal" placeholder="5.1"></label>
+      <label>Max load current (A)<input id="z_il" inputmode="decimal" placeholder="20m"></label>
+      <label>Min Zener current (A)<input id="z_izm" inputmode="decimal" value="5m"></label>
+    </div>
+    <div class="dia" id="z_dia"></div>
+    <div class="out" id="z_out"></div>
+  </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>A Zener diode is designed to be used in reverse. Once the reverse voltage reaches its Zener voltage Vz, it conducts and holds the voltage nearly constant, absorbing whatever current is needed to do so. A series resistor Rs drops the difference between the input and Vz.</p>
+<code class="fx">Rs = (Vin min − Vz) / (I load + Iz min)</code>
+<p>Rs is sized for the worst case on the supply side, which is the lowest input voltage at full load, while still leaving the minimum current (Iz min, a few mA) for the Zener to stay in regulation. The worst case for the Zener's heat is the opposite: highest input with no load, when all the current flows through the diode.</p>
+<code class="fx">Pz (worst) = Vz × (Vin max − Vz) / Rs</code>
+<p>Zener regulators are simple and fine for voltage references or loads of a few tens of mA, but they waste power constantly. For larger currents, add a transistor as a follower or use a regulator IC.</p>
+  </details></div>
+</section>
+
+<!-- LINEAR REGULATOR HEAT -->
+<section class="panel" id="lreg">
+  <div class="block">
+    <h2>Linear regulator heat</h2>
+    <p class="hint">Presets use typical datasheet values. Check the datasheet of your exact part and package.</p>
+    <div class="grid">
+      <label>Regulator<select id="g_part">
+        <option value="7805">7805 (TO-220)</option><option value="ams">AMS1117 (SOT-223)</option>
+        <option value="317">LM317 (TO-220)</option><option value="custom">Custom</option>
+      </select></label>
+      <label>Input voltage (V)<input id="g_vin" inputmode="decimal" placeholder="12"></label>
+      <label>Output voltage (V)<input id="g_vout" inputmode="decimal" placeholder="5"></label>
+      <label>Load current (A)<input id="g_i" inputmode="decimal" placeholder="300m"></label>
+      <label>Ambient (°C)<input id="g_ta" inputmode="decimal" value="30"></label>
+      <label>θJA (°C/W)<input id="g_tja" inputmode="decimal"></label>
+      <label>θJC (°C/W)<input id="g_tjc" inputmode="decimal"></label>
+      <label>Max junction (°C)<input id="g_tjm" inputmode="decimal"></label>
+      <label>Dropout (V)<input id="g_drop" inputmode="decimal"></label>
+      <label>Quiescent current (A)<input id="g_iq" inputmode="decimal"></label>
+    </div>
+    <div class="dia" id="g_dia"></div>
+    <div class="out" id="g_out"></div>
+  </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>A linear regulator (7805, AMS1117, LM317) works like a variable resistor that adjusts itself to hold the output steady. All the extra voltage is burned off as heat.</p>
+<code class="fx">P = (Vin − Vout) × I + Vin × Iq<br>Efficiency ≈ Vout / Vin</code>
+<p>That heat has to travel from the silicon junction to the surrounding air. Each step in the path has a <b>thermal resistance</b> θ in °C/W, which works like electrical resistance: more watts means a bigger temperature rise.</p>
+<code class="fx">Tj = Tambient + P × θJA<br>With heatsink: θJA → θJC + θCS + θSA</code>
+<p>Keep the junction well below its maximum (usually 125 °C), ideally with a 25 °C margin. If it overheats, the regulator's thermal protection shuts it down. A heatsink with a lower θSA (°C/W) removes heat faster.</p>
+<p>A regulator also needs a minimum gap between input and output, called <b>dropout</b>, to keep regulating. If the voltage drop is large, for example 12 V to 3.3 V, a switching buck converter is far more efficient.</p>
+  </details></div>
+</section>
+
+<!-- PCB TRACE -->
+<section class="panel" id="trace">
+  <div class="block">
+    <h2>PCB trace width (IPC-2221)</h2>
+    <p class="hint">Valid for up to about 35 A, 10–100 °C rise and widths up to 400 mil. Length is optional.</p>
+    <div class="grid">
+      <label>Current (A)<input id="pc_i" inputmode="decimal" placeholder="2"></label>
+      <label>Temperature rise (°C)<input id="pc_dt" inputmode="decimal" value="10"></label>
+      <label>Copper weight<select id="pc_oz">
+        <option value="0.5">0.5 oz (18 µm)</option><option value="1" selected>1 oz (35 µm)</option>
+        <option value="2">2 oz (70 µm)</option><option value="3">3 oz (105 µm)</option>
+      </select></label>
+      <label>Layer<select id="pc_layer"><option value="ext">External (outer)</option><option value="int">Internal (inner)</option></select></label>
+      <label>Trace length (mm)<input id="pc_len" inputmode="decimal" placeholder="optional"></label>
+    </div>
+    <div class="dia" id="pc_dia"></div>
+    <div class="out" id="pc_out"></div>
+  </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>A PCB trace is a flat strip of copper. As current flows it heats up, and a trace that is too narrow can overheat, lift off the board or burn open. The IPC-2221 standard gives an empirical formula linking current, allowed temperature rise and cross-section area:</p>
+<code class="fx">I = k × ΔT^0.44 × A^0.725<br>(A in mil², k = 0.048 outer, 0.024 inner)</code>
+<p>The width then comes from the area and the copper thickness, given in ounces per square foot: 1 oz copper is about 35 µm (1.38 mil) thick. Thicker copper allows narrower traces for the same current.</p>
+<p>Outer-layer traces shed heat into the air, while inner-layer traces are buried in insulating fibreglass, so they need roughly 2.6 times the width. A 10 °C rise is a common, conservative design choice.</p>
+<p>IPC-2221 is conservative; the newer IPC-2152 often allows narrower traces. For high currents, use copper pours instead of thin traces, and several vias when changing layers.</p>
+  </details></div>
 </section>
 
 <!-- COLOR CODE -->
@@ -294,6 +562,12 @@ input.bad{border-color:var(--err)}
     </div>
     <div class="msg" id="r_rev_msg" style="margin-top:8px"></div>
   </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>Through-hole resistors are too small for printed numbers, so their value is coded in coloured bands. Each colour stands for a digit from 0 to 9: black, brown, red, orange, yellow, green, blue, violet, grey, white.</p>
+<p>On a <b>4-band</b> resistor, the first two bands are digits, the third is the multiplier (how many zeros to add) and the fourth is the tolerance. <b>5-band</b> precision resistors use three digit bands. A <b>6th band</b> gives the temperature coefficient in ppm/K.</p>
+<code class="fx">Yellow Violet Red Gold = 4, 7, ×100, ±5% = 4.7 kΩ ±5%</code>
+<p>Read from the end where the bands sit closer to the edge. Gold or silver is always the tolerance band, so it goes on the right. Resistor values come from standard <b>E-series</b> sets: E24 (24 values per decade) for 5% parts and E96 for 1% parts, which is why you'll find 4.7 kΩ but not 5 kΩ.</p>
+  </details></div>
 </section>
 
 <!-- CODES -->
@@ -312,6 +586,12 @@ input.bad{border-color:var(--err)}
     <div class="dia" id="k_dia"></div>
     <div class="out" id="k_out"></div>
   </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p><b>SMD resistors</b> use printed codes instead of colours. In the <b>3-digit</b> code, the first two digits are the value and the third is the number of zeros: 472 = 47 followed by two zeros = 4700 Ω. The <b>4-digit</b> code used on 1% parts works the same way with three value digits: 1002 = 100 followed by two zeros = 10 kΩ.</p>
+<p>An <b>R</b> marks the decimal point for small values: 4R7 = 4.7 Ω and R10 = 0.1 Ω. A code of 000 or 0 is a zero-ohm jumper.</p>
+<p>Tiny 1% resistors use the <b>EIA-96</b> code: two digits pick a value from the E96 table, and a letter is the multiplier. For example, 01C = 100 × 100 = 10 kΩ.</p>
+<p><b>Ceramic and film capacitors</b> use a similar 3-digit code in picofarads: 104 = 10 followed by four zeros = 100,000 pF = 100 nF = 0.1 µF. A letter after it gives the tolerance: J = ±5%, K = ±10%, M = ±20%. Small SMD capacitors are usually not marked at all, so keep them in labelled packaging.</p>
+  </details></div>
 </section>
 </div>
 
@@ -360,6 +640,7 @@ const SYM={
   C:'M0 0H26M26 -12V12M34 -12V12M34 0H60',
   L:'M0 0H10a5 5 0 0 1 10 0a5 5 0 0 1 10 0a5 5 0 0 1 10 0a5 5 0 0 1 10 0H60',
   B:'M0 0H24M24 -14V14M32 -7V7M32 0H60',
+  Z:'M0 0H22M22 -7V7M22 -7l-4 -3M22 7l4 3M22 0L36 -7L36 7ZM36 0H60',
   D:'M0 0H8M8 -7L22 0L8 7ZM22 -7V7M22 0H30M12 -10l5 -5M17 -15h-3M17 -15v3M17 -10l5 -5M22 -15h-3M22 -15v3'
 };
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -889,6 +1170,304 @@ function wireCalc(){
   $('w_out').innerHTML=rows(list)+(R===null?msg('Enter a length to get total resistance.'):'');
 }
 listen(['w_mat','w_type','w_size','w_len','w_path','w_i','w_vs','w_t'],wireCalc);
+
+/* ---------- more shared helpers ---------- */
+const E6=[1,1.5,2.2,3.3,4.7,6.8,10], E12=[1,1.2,1.5,1.8,2.2,2.7,3.3,3.9,4.7,5.6,6.8,8.2,10];
+function nearestIn(x,list){
+  const dec=Math.pow(10,Math.floor(Math.log10(x))), m=x/dec; let best=list[0];
+  for(const e of list) if(Math.abs(e-m)<Math.abs(best-m)) best=e;
+  return +(best*dec).toPrecision(3);
+}
+function prevE24(x){
+  const dec=Math.pow(10,Math.floor(Math.log10(x)));
+  for(let i=E24.length-1;i>=0;i--) if(E24[i]*dec<=x*(1+1e-9)) return +(E24[i]*dec).toPrecision(3);
+  return +(9.1*dec/10).toPrecision(3);
+}
+const showL=(id,on)=>{$(id).style.display=on?'':'none'};
+const setL=(id,t)=>{$(id).firstChild.nodeValue=t};
+const ACsrc=(x,y)=>`<circle cx="${x}" cy="${y}" r="14" fill="none" stroke="var(--silk)" stroke-width="2"/><path class="w" d="M${x-8} ${y}q4 -9 8 0t8 0"/>`;
+
+/* ---------- REACTANCE ---------- */
+function reactDia(R,L,C,XL,XC,X,Z,phi,f){
+  let els=[]; if(R>0) els.push(['R',fmt(R,'Ω'),'']); if(L>0) els.push(['L',fmt(L,'H'),XL!==null?'XL = '+fmt(XL,'Ω'):'']); if(C>0) els.push(['C',fmt(C,'F'),XC!==null?'XC = '+fmt(XC,'Ω'):'']);
+  if(!els.length) els=[['R','?',''],['L','?',''],['C','?','']];
+  const xe=80+90*els.length-30;
+  let a=wire(`M40 76V40H80`)+wire('M40 104V140H'+xe+'V40')+ACsrc(40,90)+txt(40,162,'f = '+fv(f,'Hz'),'vl','middle');
+  els.forEach((e,i)=>{const x=80+90*i; a+=sym(e[0],x,40)+(i<els.length-1?wire(`M${x+60} 40H${x+90}`):'')+txt(x+30,22,e[1],'vl','middle')+(e[2]?txt(x+30,68,e[2],'lb sm','middle'):'');});
+  let b='';
+  if(Z>0){
+    const s=150/Math.max(R,Math.abs(X)), up=X>=0, ox=50, oy=up?170:30, xr=ox+R*s, yx=oy-X*s;
+    b=txt(4,up?14:196,'Impedance triangle','lb')+
+      `<path class="w" d="M${ox} ${oy}H${xr}"/><path class="w" style="stroke:var(--muted)" d="M${xr} ${oy}V${yx}"/><path class="w cu" style="stroke-width:3" d="M${ox} ${oy}L${xr} ${yx}"/>`+
+      txt((ox+xr)/2,up?oy+16:oy-8,'R = '+fmt(R,'Ω'),'lb','middle')+txt(xr+8,(oy+yx)/2+4,'X = '+fmt(X,'Ω'),'lb')+
+      txt((ox+xr)/2-10,(oy+yx)/2+(up?-6:14),'|Z| = '+fmt(Z,'Ω'),'vl','end')+txt(ox+24,up?oy-6:oy+16,'φ = '+phi.toFixed(1)+'°','lb sm');
+  }
+  $('x_dia').innerHTML=svg(Math.max(260,xe+30),172,a)+(b?svg(320,204,b):'');
+}
+function react(){
+  const {v,bad}=read(['x_f','x_r','x_l','x_c','x_v']);
+  const f=v.x_f, R=v.x_r>0?v.x_r:0, L=v.x_l, C=v.x_c, w=2*Math.PI*f;
+  const XL=(L>0&&f>0)?w*L:null, XC=(C>0&&f>0)?1/(w*C):null;
+  const X=(XL||0)-(XC||0), Z=Math.hypot(R,X), phi=Math.atan2(X,R)*180/Math.PI, ok=f>0&&(R>0||XL!==null||XC!==null);
+  reactDia(R,L,C,XL,XC,X,ok?Z:0,phi,f);
+  if(bad) return $('x_out').innerHTML=msg('Check the highlighted value.',true);
+  if(!(f>0)) return $('x_out').innerHTML=msg('Enter the frequency.');
+  if(!ok) return $('x_out').innerHTML=msg('Enter at least one of R, L or C.');
+  const list=[];
+  if(XL!==null) list.push(['XL = 2πfL',fmt(XL,'Ω')]);
+  if(XC!==null) list.push(['XC = 1 / 2πfC',fmt(XC,'Ω')]);
+  list.push(['Net reactance',fmt(X,'Ω')+(Math.abs(X)<1e-12?'':X>0?' (inductive)':' (capacitive)')],['Impedance |Z|',fmt(Z,'Ω')],['Phase angle',phi.toFixed(2)+'°'],['Power factor',Math.cos(phi*Math.PI/180).toFixed(3)]);
+  if(L>0&&C>0) list.push(['Resonant frequency',fmt(1/(2*Math.PI*Math.sqrt(L*C)),'Hz')]);
+  if(v.x_v>0&&Z>0){
+    const I=v.x_v/Z; list.push(['Current',fmt(I,'A')]);
+    if(R>0) list.push(['Voltage across R',fmt(I*R,'V')]);
+    if(XL!==null) list.push(['Voltage across L',fmt(I*XL,'V')]);
+    if(XC!==null) list.push(['Voltage across C',fmt(I*XC,'V')]);
+    list.push(['Real power',fmt(I*I*R,'W')]);
+  }
+  $('x_out').innerHTML=rows(list);
+}
+listen(['x_f','x_r','x_l','x_c','x_v'],react);
+
+/* ---------- FILTERS ---------- */
+const FT={rclp:{s:['R'],sh:'C',n:'RC low-pass'},rchp:{s:['C'],sh:'R',n:'RC high-pass'},rllp:{s:['L'],sh:'R',n:'RL low-pass'},rlhp:{s:['R'],sh:'L',n:'RL high-pass'},rlc:{s:['L','C'],sh:'R',n:'RLC band-pass'}};
+function filtSch(t,vals){
+  const d=FT[t]; let x=40, b=term(20,40)+txt(20,62,'Vin','lb','middle')+wire('M24 40H40');
+  d.s.forEach((e,i)=>{ b+=sym(e,x,40)+txt(x+30,22,e+' = '+vals[e],'vl','middle'); x+=60; if(i<d.s.length-1){b+=wire(`M${x} 40H${x+30}`);x+=30;} });
+  const xn=x+30;
+  b+=wire(`M${x} 40H${xn+50}M${xn} 40V45`)+dot(xn,40)+sym(d.sh,xn,45,90)+wire(`M${xn} 105V110`)+gnd(xn,110)+
+    txt(xn+18,80,d.sh+' = '+vals[d.sh],'vl')+term(xn+54,40)+txt(xn+54,28,'Vout','lb','middle');
+  return svg(Math.max(240,xn+90),135,b);
+}
+function bode(t,fc,Q,marks){
+  const ok=fc>0, F=ok?fc:1, x0=46,W=270,y0=20,H=140, lo=F/100;
+  const X=f=>x0+W*Math.log10(f/lo)/4, Y=db=>y0+Math.min(40,Math.max(0,-db))*H/40;
+  const mag=f=>{const r=f/F; if(t==='rclp'||t==='rllp') return 1/Math.sqrt(1+r*r); if(t==='rlc') return 1/Math.sqrt(1+Q*Q*Math.pow(r-1/r,2)); return r/Math.sqrt(1+r*r);};
+  let b='';
+  for(let db=0;db>=-40;db-=10) b+=`<path class="dash" d="M${x0} ${Y(db)}H${x0+W}"/>`+txt(x0-6,Y(db)+4,db+' dB','lb sm','end');
+  for(let k=0;k<=4;k++){const f=lo*Math.pow(10,k); b+=`<path class="dash" d="M${X(f)} ${y0}V${y0+H}"/>`+txt(X(f),y0+H+16,ok?fmt(f,'Hz'):['fc/100','fc/10','fc','10fc','100fc'][k],'lb sm','middle');}
+  const pts=[]; for(let i=0;i<=160;i++){const f=lo*Math.pow(10,4*i/160); pts.push(X(f).toFixed(1)+' '+Y(20*Math.log10(mag(f))).toFixed(1));}
+  b+=`<path class="w cu" d="M${pts.join('L')}"/>`+`<path class="dashc" d="M${x0} ${Y(-3)}H${x0+W}"/>`;
+  (marks||[]).forEach(m=>{ if(m>=lo&&m<=lo*1e4) b+=`<circle cx="${X(m)}" cy="${Y(-3)}" r="4" fill="var(--copper)"/>`; });
+  b+=txt(x0+W,y0+H+32,'Frequency (log scale)','lb sm','end');
+  return svg(350,200,b);
+}
+function filt(){
+  const t=$('fl_type').value, isRC=t[1]==='c'&&t!=='rlc', isRL=t==='rllp'||t==='rlhp', isRLC=t==='rlc';
+  showL('fl_cl',isRC||isRLC); showL('fl_ll',isRL||isRLC); showL('fl_tl',!isRLC);
+  $('fl_hint').textContent=isRLC?'Series L and C with the output across R. Peak response at the resonant frequency.':'Fill in both parts for the cutoff, or the target cutoff plus one part to size the other.';
+  const ids=['fl_r','fl_l','fl_c','fl_t'].filter(id=>$(id).parentNode.style.display!=='none');
+  const {v,bad}=read(ids);
+  let R=v.fl_r,L=v.fl_l,C=v.fl_c,T=v.fl_t, fc=null,Q=null, list=[], marks=[], note='';
+  if(isRC){
+    if(R>0&&C>0) fc=1/(2*Math.PI*R*C);
+    else if(T>0&&C>0){const Rx=1/(2*Math.PI*T*C); R=nearestE24(Rx); fc=1/(2*Math.PI*R*C); list.push(['R exact',fmt(Rx,'Ω')],['R nearest E24',fmt(R,'Ω')]);}
+    else if(T>0&&R>0){const Cx=1/(2*Math.PI*T*R); C=nearestIn(Cx,E6); fc=1/(2*Math.PI*R*C); list.push(['C exact',fmt(Cx,'F')],['C nearest E6',fmt(C,'F')]);}
+  } else if(isRL){
+    if(R>0&&L>0) fc=R/(2*Math.PI*L);
+    else if(T>0&&L>0){const Rx=2*Math.PI*T*L; R=nearestE24(Rx); fc=R/(2*Math.PI*L); list.push(['R exact',fmt(Rx,'Ω')],['R nearest E24',fmt(R,'Ω')]);}
+    else if(T>0&&R>0){const Lx=R/(2*Math.PI*T); L=nearestIn(Lx,E12); fc=R/(2*Math.PI*L); list.push(['L exact',fmt(Lx,'H')],['L nearest E12',fmt(L,'H')]);}
+  } else if(L>0&&C>0){
+    fc=1/(2*Math.PI*Math.sqrt(L*C));
+    if(R>0){Q=Math.sqrt(L/C)/R;}
+  }
+  if(fc) marks.push(fc);
+  if(isRLC&&Q){const k=1/(2*Q), r=Math.sqrt(1+k*k); marks=[fc*(r-k),fc*(r+k)];}
+  const vals={R:fv(R,'Ω'),L:fv(L,'H'),C:fv(C,'F')};
+  $('fl_dia').innerHTML=filtSch(t,vals)+bode(t,fc,Q||5,marks);
+  if(bad) return $('fl_out').innerHTML=msg('Check the highlighted value.',true);
+  if(!fc) return $('fl_out').innerHTML=msg(isRLC?'Enter L and C (and R for Q and bandwidth).':'Enter both parts, or a target cutoff plus one part.');
+  if(isRLC){
+    list.push(['Resonant frequency f0',fmt(fc,'Hz')],['Characteristic impedance √(L/C)',fmt(Math.sqrt(L/C),'Ω')]);
+    if(Q){list.push(['Quality factor Q',(+Q.toPrecision(4))+''],['Bandwidth (−3 dB)',fmt(fc/Q,'Hz')],['Lower −3 dB',fmt(marks[0],'Hz')],['Upper −3 dB',fmt(marks[1],'Hz')]);}
+    else note='Add R to get Q and bandwidth.';
+  } else {
+    list.unshift(['Cutoff frequency (−3 dB)',fmt(fc,'Hz')]);
+    list.push(['Time constant',fmt(isRC?R*C:L/R,'s')],['Roll-off','−20 dB per decade']);
+  }
+  $('fl_out').innerHTML=rows(list)+(note?msg(note):'');
+}
+listen(['fl_type','fl_r','fl_l','fl_c','fl_t'],filt);
+
+/* ---------- OP-AMP ---------- */
+function opDia(mode,L){
+  const tri='<path class="w" d="M160 60L240 100L160 140Z"/>'+txt(166,85,'−','vl')+txt(166,125,'+','vl');
+  const out=wire('M240 100H290')+dot(260,100)+term(294,100)+txt(294,88,'Vout','lb','middle')+txt(294,122,L.vout,'vl','middle');
+  const fb=(y,x0)=>wire(`M${x0} 80V${y}H170`)+sym('R',170,y)+wire(`M230 ${y}H260V100`)+txt(200,y-14,L.fn+' = '+L.rf,'vl','middle');
+  let b=tri+out, h=170;
+  if(mode==='inv'){
+    b+=term(20,80)+txt(12,84,'Vin = '+L.v1,'lb','end')+wire('M24 80H50')+sym('R',50,80)+wire('M110 80H160')+dot(140,80)+txt(80,64,'R1 = '+L.r1,'vl','middle')+
+      wire('M160 120H140V130')+gnd(140,130)+fb(30,140);
+  } else if(mode==='non'){
+    b+=sym('R',70,80)+wire('M130 80H160M70 80H60V95')+gnd(60,95)+dot(140,80)+txt(96,62,'Rg = '+L.r1,'vl','middle')+
+      term(20,120)+txt(12,124,'Vin = '+L.v1,'lb','end')+wire('M24 120H160')+fb(30,140);
+  } else if(mode==='diff'){
+    b+=term(20,80)+txt(12,84,'V1 = '+L.v1,'lb','end')+wire('M24 80H50')+sym('R',50,80)+wire('M110 80H160')+dot(140,80)+txt(80,64,'R1 = '+L.r1,'vl','middle')+
+      term(20,120)+txt(12,124,'V2 = '+L.v2,'lb','end')+wire('M24 120H50')+sym('R',50,120)+wire('M110 120H160M130 120V130')+dot(130,120)+txt(80,146,'R3 = '+L.r1,'vl','middle')+
+      sym('R',130,130,90)+wire('M130 190V194')+gnd(130,194)+txt(142,170,'R4 = '+L.rf,'vl')+fb(30,140);
+    h=222;
+  } else {
+    b+=term(20,50)+txt(12,54,'V1 = '+L.v1,'lb','end')+wire('M24 50H40')+sym('R',40,50)+wire('M100 50H140V80H160')+txt(70,34,'R1 = '+L.r1,'vl','middle')+
+      term(20,110)+txt(12,114,'V2 = '+L.v2,'lb','end')+wire('M24 110H40')+sym('R',40,110)+wire('M100 110H140V80')+txt(70,94,'R2 = '+L.r2,'vl','middle')+
+      dot(140,80)+dot(140,50)+wire('M160 120H150V130')+gnd(150,130)+wire('M140 50V20H170')+sym('R',170,20)+wire('M230 20H260V100')+txt(200,6,'Rf = '+L.rf,'vl','middle');
+  }
+  $('oa_dia').innerHTML=svg(420,h+12,`<g transform="translate(92 12)">${b}</g>`);
+}
+function opamp(){
+  const m=$('oa_mode').value;
+  setL('oa_r1l',{inv:'Rin, R1 (Ω)',non:'Rg to ground (Ω)',diff:'R1 = R3 (Ω)',sum:'R1 (Ω)'}[m]);
+  setL('oa_rfl',m==='diff'?'R2 = R4 (Ω)':'Rf (Ω)');
+  setL('oa_v1l',(m==='inv'||m==='non')?'Vin (V)':'V1 (V)');
+  showL('oa_r2l',m==='sum'); showL('oa_v2l',m==='diff'||m==='sum'); showL('oa_gl',m!=='sum');
+  const ids=['oa_r1','oa_rf','oa_r2','oa_v1','oa_v2','oa_vs','oa_g'].filter(id=>$(id).parentNode.style.display!=='none');
+  const {v,bad}=read(ids);
+  const R1=v.oa_r1,Rf=v.oa_rf,R2=v.oa_r2,V1=v.oa_v1,V2=v.oa_v2,G=v.oa_g;
+  let gain=null,vout=null,list=[],sug=[];
+  if(m==='inv'&&R1>0&&Rf>0){gain=-Rf/R1; if(V1!==null) vout=gain*V1;}
+  if(m==='non'&&R1>0&&Rf>=0&&Rf!==null){gain=1+Rf/R1; if(V1!==null) vout=gain*V1;}
+  if(m==='diff'&&R1>0&&Rf>0){gain=Rf/R1; if(V1!==null&&V2!==null) vout=gain*(V2-V1);}
+  if(m==='sum'&&R1>0&&R2>0&&Rf>0){ if(V1!==null&&V2!==null) vout=-Rf*(V1/R1+V2/R2); }
+  if(G!==null&&m!=='sum'){
+    const base=R1>0?R1:10000, g=Math.abs(G);
+    if(m==='non'&&g<1) sug.push(['Target gain','must be 1 or more']);
+    else if(m==='non'&&g===1) sug.push(['For gain 1','use a voltage follower (Rf = 0, no Rg)']);
+    else { const Rx=m==='non'?(g-1)*base:g*base, Rs=nearestE24(Rx), ga=m==='non'?1+Rs/base:Rs/base;
+      if(!(R1>0)) sug.push([m==='non'?'Rg assumed':'R1 assumed',fmt(base,'Ω')]); sug.push([(m==='diff'?'R2':'Rf')+' exact',fmt(Rx,'Ω')],[(m==='diff'?'R2':'Rf')+' nearest E24',fmt(Rs,'Ω')],['Gain with E24',(m==='inv'?'−':'')+ga.toFixed(3)]); }
+  }
+  opDia(m,{r1:fv(R1,'Ω'),rf:fv(Rf,'Ω'),r2:fv(R2,'Ω'),v1:fv(V1,'V'),v2:fv(V2,'V'),vout:fv(vout,'V'),fn:m==='diff'?'R2':'Rf'});
+  if(bad) return $('oa_out').innerHTML=msg('Check the highlighted value.',true);
+  if(m==='sum'){
+    if(!(R1>0&&R2>0&&Rf>0)) return $('oa_out').innerHTML=msg('Enter R1, R2 and Rf.');
+    list.push(['Gain for V1',(-Rf/R1).toFixed(3)],['Gain for V2',(-Rf/R2).toFixed(3)],['Vout = −Rf(V1/R1 + V2/R2)',fv(vout,'V')],['Input impedance','R1 and R2']);
+  } else if(gain===null){
+    if(!sug.length) return $('oa_out').innerHTML=msg('Enter both resistors, or a target gain.');
+  } else {
+    list.push(['Gain',(+gain.toPrecision(5))+' V/V'],['Gain in dB',(20*Math.log10(Math.abs(gain))).toFixed(2)+' dB']);
+    if(vout!==null) list.push(['Output voltage',fmt(vout,'V')]);
+    list.push(['Input impedance',m==='inv'?fmt(R1,'Ω'):m==='non'?'very high (op-amp input)':fmt(2*R1,'Ω')+' between inputs']);
+  }
+  const clip=(v.oa_vs>0&&vout!==null&&Math.abs(vout)>v.oa_vs)?`<div class="note" style="color:var(--err)">The output can't go past the ±${fmt(v.oa_vs,'V')} supply, so it will clip. Most op-amps stop 1–2 V short of the rails unless they're rail-to-rail.</div>`:'';
+  $('oa_out').innerHTML=rows(list.concat(sug))+clip;
+}
+listen(['oa_mode','oa_r1','oa_rf','oa_r2','oa_v1','oa_v2','oa_vs','oa_g'],opamp);
+
+/* ---------- ZENER ---------- */
+function zenDia(L){
+  const b=term(20,40)+txt(20,28,'Vin','lb','middle')+txt(4,62,L.vin,'vl')+wire('M24 40H50')+sym('R',50,40)+wire('M110 40H280')+txt(80,22,'Rs = '+L.rs,'vl','middle')+
+    dot(150,40)+wire('M150 40V50')+sym('Z',150,50,90)+wire('M150 110V130H230V110M190 130V136')+gnd(190,136)+txt(138,84,'Vz = '+L.vz,'vl','end')+
+    dot(230,40)+wire('M230 40V50')+sym('R',230,50,90)+txt(242,76,'Load','lb')+txt(242,92,L.il,'vl')+term(284,40)+txt(284,28,'Vout','lb','middle');
+  $('z_dia').innerHTML=svg(330,160,b);
+}
+function zener(){
+  const {v,bad}=read(['z_vmin','z_vmax','z_vz','z_il','z_izm']);
+  const vmin=v.z_vmin, vmax=v.z_vmax!==null?v.z_vmax:vmin, vz=v.z_vz, il=v.z_il!==null?v.z_il:0, izm=v.z_izm!==null?v.z_izm:0.005;
+  let Rs=null, ok=vmin>0&&vz>0;
+  if(ok&&vmin>vz&&(il+izm)>0) Rs=prevE24((vmin-vz)/(il+izm));
+  zenDia({vin:vmax!==vmin&&vmax?`${fmt(vmin,'V')}–${fmt(vmax,'V')}`:fv(vmin,'V'),rs:fv(Rs,'Ω'),vz:fv(vz,'V'),il:fv(il||null,'A')});
+  if(bad) return $('z_out').innerHTML=msg('Check the highlighted value.',true);
+  if(!ok) return $('z_out').innerHTML=msg('Enter Vin minimum, Zener voltage and load current.');
+  if(vmin<=vz) return $('z_out').innerHTML=msg('Vin minimum must be above the Zener voltage. Aim for at least 1–2 V of headroom.',true);
+  if(vmax<vmin) return $('z_out').innerHTML=msg('Vin maximum must be at least Vin minimum.',true);
+  const Rx=(vmin-vz)/(il+izm), izMax=(vmax-vz)/Rs, pz=vz*izMax, pr=Math.pow(vmax-vz,2)/Rs, izFull=(vmin-vz)/Rs-il;
+  const zr=[0.5,1,1.3,3,5].find(x=>x>=2*pz);
+  $('z_out').innerHTML=rows([['Rs exact',fmt(Rx,'Ω')],['Rs (E24, rounded down)',fmt(Rs,'Ω')],['Resistor power (worst case)',`${fmt(pr,'W')}, use ${rating(pr)}`],
+    ['Zener current at Vin min, full load',fmt(izFull,'A')],['Zener current at Vin max, no load',fmt(izMax,'A')],['Zener power (worst case)',fmt(pz,'W')],
+    ['Zener rating',zr?`${zr} W or more`:'over 5 W, use a regulator IC instead']])+
+    '<div class="note">Worst case for the Zener is maximum input with the load disconnected, because all the current then flows through it.</div>';
+}
+listen(['z_vmin','z_vmax','z_vz','z_il','z_izm'],zener);
+
+/* ---------- LINEAR REGULATOR ---------- */
+const REG={'7805':{n:'7805',tja:65,tjc:5,tjm:125,drop:2,iq:'5m'},ams:{n:'AMS1117',tja:90,tjc:15,tjm:125,drop:1.3,iq:'5m'},'317':{n:'LM317',tja:50,tjc:5,tjm:125,drop:2.5,iq:'5m'}};
+function regPreset(){
+  const r=REG[$('g_part').value]; if(!r) return;
+  $('g_tja').value=r.tja;$('g_tjc').value=r.tjc;$('g_tjm').value=r.tjm;$('g_drop').value=r.drop;$('g_iq').value=r.iq;
+}
+function regDia(name,L,tj,tjm,ta){
+  let b=term(20,50)+txt(20,38,'Vin','lb','middle')+txt(20,74,L.vin,'vl','middle')+wire('M24 50H110')+
+    '<rect x="110" y="26" width="100" height="56" rx="6" fill="var(--line)" stroke="var(--silk)" stroke-width="1.5"/>'+
+    txt(160,50,name,'vl','middle')+txt(160,68,'P = '+L.p,'lb sm','middle')+wire('M210 50H296M160 82V96')+gnd(160,96)+
+    arrow(250,50)+txt(250,40,'I = '+L.i,'lb sm','middle')+term(300,50)+txt(300,38,'Vout','lb','middle')+txt(300,74,L.vout,'vl','middle');
+  const X=t=>20+290*Math.max(0,Math.min(150,t))/150, y=150;
+  b+=txt(20,130,'Junction temp, no heatsink','lb sm')+`<rect x="20" y="${y-7}" width="290" height="14" rx="7" fill="var(--line)"/>`;
+  if(tj!==null){const hot=tj>tjm; b+=`<rect x="20" y="${y-7}" width="${Math.max(14,X(tj)-20)}" height="14" rx="7" fill="${hot?'var(--err)':'var(--copper)'}"/>`+
+    txt(Math.min(300,Math.max(30,X(tj))),y+24,(tj>150?'over 150':tj.toFixed(0))+' °C','vl',X(tj)>260?'end':'middle');}
+  if(tjm) b+=`<path d="M${X(tjm)} ${y-12}V${y+12}" stroke="var(--silk)" stroke-width="2"/>`+txt(X(tjm),y-16,'max '+tjm+' °C','lb sm','middle');
+  b+=txt(20,y+24,ta!==null?ta+' °C':'','lb sm');
+  $('g_dia').innerHTML=svg(330,186,b);
+}
+function lreg(){
+  const ids=['g_vin','g_vout','g_i','g_ta','g_tja','g_tjc','g_tjm','g_drop','g_iq'], {v,bad}=read(ids);
+  const vin=v.g_vin,vout=v.g_vout,I=v.g_i,ta=v.g_ta!==null?v.g_ta:25,tja=v.g_tja,tjc=v.g_tjc,tjm=v.g_tjm||125,drop=v.g_drop||0,iq=v.g_iq||0;
+  const name=(REG[$('g_part').value]||{n:'Regulator'}).n, ok=vin>0&&vout>0&&I>0&&vin>vout;
+  const P=ok?(vin-vout)*I+vin*iq:null, tj=(ok&&tja>0)?ta+P*tja:null;
+  regDia(name,{vin:fv(vin,'V'),vout:fv(vout,'V'),i:fv(I,'A'),p:fv(P,'W')},tj,tjm,ta);
+  if(bad) return $('g_out').innerHTML=msg('Check the highlighted value.',true);
+  if(!(vin>0&&vout>0&&I>0)) return $('g_out').innerHTML=msg('Enter input voltage, output voltage and load current.');
+  if(vin<=vout) return $('g_out').innerHTML=msg('Input must be higher than output for a linear regulator.',true);
+  const list=[['Power dissipated',fmt(P,'W')],['Efficiency',(100*vout*I/(vin*(I+iq))).toFixed(0)+' %']];
+  let verdict='';
+  if(tj!==null){
+    list.push(['Junction temp, no heatsink',tj.toFixed(0)+' °C']);
+    const safe=tjm-25, maxI=((safe-ta)/tja-vin*iq)/(vin-vout);
+    if(maxI>0) list.push(['Max current with no heatsink',fmt(maxI,'A')]);
+    if(tj<=safe) verdict='<div class="note">OK without a heatsink, with at least 25 °C margin.</div>';
+    else {
+      const need=(safe-ta)/P-(tjc||0)-0.5;
+      if(need>0) list.push(['Heatsink needed (θSA)',`${need.toFixed(1)} °C/W or lower`]);
+      verdict=need>0?`<div class="note" style="color:${tj>tjm?'var(--err)':'var(--copper)'}">${tj>tjm?'Heatsink required: without one the regulator overheats and shuts down.':'Runs hot: a heatsink is recommended.'} Choose a heatsink rated ${need.toFixed(1)} °C/W or lower and use thermal paste.</div>`
+        :'<div class="note" style="color:var(--err)">Too much heat even with a heatsink. Lower the input voltage or use a switching (buck) regulator.</div>';
+    }
+  }
+  const lowIn=drop&&vin-vout<drop?`<div class="note" style="color:var(--err)">Input is below dropout: needs at least ${fmt(vout+drop,'V')} to regulate.</div>`:'';
+  $('g_out').innerHTML=rows(list)+verdict+lowIn;
+}
+$('g_part').addEventListener('change',()=>{regPreset();lreg();});
+regPreset();
+listen(['g_vin','g_vout','g_i','g_ta','g_tja','g_tjc','g_tjm','g_drop','g_iq'],lreg);
+
+/* ---------- PCB TRACE ---------- */
+function traceDia(ext,wtxt,ttxt,I){
+  let b=txt(20,16,ext?'External layer (cross-section)':'Internal layer (cross-section)','lb');
+  if(ext){
+    b+='<rect x="20" y="96" width="290" height="36" fill="var(--line)" stroke="var(--silk)" stroke-width="1"/>'+txt(165,120,'FR-4 board','lb sm','middle')+
+      '<rect x="105" y="84" width="120" height="12" fill="var(--copper)"/>';
+  } else {
+    b+='<rect x="20" y="70" width="290" height="70" fill="var(--line)" stroke="var(--silk)" stroke-width="1"/>'+txt(165,132,'FR-4 board','lb sm','middle')+
+      '<rect x="105" y="84" width="120" height="12" fill="var(--copper)"/>';
+  }
+  b+=wire('M105 58V80M225 58V80M105 64H225')+arrow(219,64)+arrow(111,64,180)+txt(165,52,'W = '+wtxt,'vl','middle')+
+    wire('M240 84H252M240 96H252')+txt(258,94,'t = '+ttxt,'lb sm');
+  if(I) b+=txt(20,40,'I = '+fmt(I,'A'),'lb');
+  $('pc_dia').innerHTML=svg(330,150,b);
+}
+function trace(){
+  const {v,bad}=read(['pc_i','pc_dt','pc_len']);
+  const I=v.pc_i, dT=v.pc_dt||10, oz=+$('pc_oz').value, ext=$('pc_layer').value==='ext', len=v.pc_len;
+  const tum=oz*35, tmil=oz*1.378;
+  let W=null, A=null;
+  if(I>0){ A=Math.pow(I/((ext?0.048:0.024)*Math.pow(dT,0.44)),1/0.725); W=A/tmil; }
+  traceDia(ext,W?`${(W*0.0254).toFixed(3)} mm`:'?',`${tum} µm`,I);
+  if(bad) return $('pc_out').innerHTML=msg('Check the highlighted value.',true);
+  if(!(I>0)) return $('pc_out').innerHTML=msg('Enter the current.');
+  const Wmm=W*0.0254, list=[['Minimum width',`${Wmm.toFixed(3)} mm (${W.toFixed(1)} mil)`],['Suggested width',`${(Math.ceil(Wmm*20)/20).toFixed(2)} mm`],['Cross-section area',`${A.toFixed(1)} mil²`]];
+  if(len>0){
+    const rho=1.72e-8*(1+0.00393*(5+dT)), R=rho*(len/1000)/((Wmm/1000)*(tum*1e-6));
+    list.push(['Resistance',fmt(R,'Ω')],['Voltage drop',fmt(I*R,'V')],['Power lost',fmt(I*I*R,'W')]);
+  }
+  const warn=(I>35||W>400||dT<10||dT>100)?'<div class="note" style="color:var(--copper)">Outside the IPC-2221 chart range, so treat this as a rough estimate.</div>':'';
+  $('pc_out').innerHTML=rows(list)+(ext?'':'<div class="note">Inner layers cool poorly, so they need about 2.6 times the width of an outer-layer trace.</div>')+warn;
+}
+listen(['pc_i','pc_dt','pc_oz','pc_layer','pc_len'],trace);
+
+/* ---------- theme switcher ---------- */
+function setTheme(t){
+  if(t==='light') delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme=t;
+  document.querySelectorAll('.themes button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.t===t));
+  try{localStorage.setItem('eecalc-theme',t)}catch(e){}
+}
+document.querySelectorAll('.themes button').forEach(b=>b.addEventListener('click',()=>setTheme(b.dataset.t)));
+setTheme(document.documentElement.dataset.theme||'light');
 </script>
 </body>
 </html>
