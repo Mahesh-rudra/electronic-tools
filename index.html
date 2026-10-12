@@ -38,6 +38,21 @@ html,body{margin:0;background:var(--mask);color:var(--silk)}
 body{font-family:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.45;
   background-image:var(--pat);background-size:280px 280px}
 .wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+.groups{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);margin:4px 0 12px}
+.groups::-webkit-scrollbar{display:none}
+.groups button{flex:0 0 auto;font:inherit;font-size:.95rem;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;padding:8px 12px;cursor:pointer;margin-bottom:-1px}
+.groups button[aria-selected="true"]{color:var(--silk);border-bottom-color:var(--copper)}
+.groups button:focus-visible{outline:2px solid var(--silk);outline-offset:-2px}
+.exbtn{float:right;font:inherit;font-size:.82rem;font-weight:600;color:var(--copper);background:transparent;border:1.5px solid var(--copper);border-radius:999px;padding:4px 12px;cursor:pointer;margin-left:10px}
+.exbtn:hover{background:var(--copper);color:var(--ontab)}
+@media (min-width:1000px){
+  .wrap{max-width:1120px}
+  .block.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-template-rows:auto 1fr;grid-template-areas:"top right" "bot right";column-gap:32px}
+  .block.two>.top{grid-area:top}
+  .block.two>.bot{grid-area:bot;align-self:start}
+  .block.two>.right{grid-area:right;align-self:start;position:sticky;top:16px}
+  .block.two>.right>.dia:first-child svg{margin-top:0}
+}
 header h1{font-size:1.6rem;margin:4px 0 2px;font-weight:700;letter-spacing:-.01em}
 header p{margin:0 0 16px;color:var(--muted);font-size:.92rem}
 nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;scrollbar-width:none}
@@ -717,11 +732,25 @@ function capDia(code){
     `<text x="120" y="58" text-anchor="middle" fill="#2A1606" font-size="22" font-weight="700">${esc(code||'—')}</text>`);
 }
 
-/* ---------- tabs ---------- */
-document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('nav button').forEach(x=>x.setAttribute('aria-selected', x===b));
-  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id===b.dataset.tab));
+/* ---------- tabs, groups and links ---------- */
+const GROUP={ohm:'basics',combine:'basics',divider:'basics',react:'ac',filt:'ac',rc:'ac',t555:'circuits',opamp:'circuits',led:'circuits',zener:'circuits',
+  lreg:'power',pack:'power',run:'power',wire:'power',trace:'power',color:'codes',codes:'codes'};
+const lastInGroup={};
+function showTab(id){
+  if(!GROUP[id]) id='ohm';
+  const g=GROUP[id]; lastInGroup[g]=id;
+  document.querySelectorAll('.groups button').forEach(b=>b.setAttribute('aria-selected',b.dataset.g===g));
+  document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===id));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===id));
+  if(location.hash!=='#'+id) history.replaceState(null,'','#'+id);
+  try{localStorage.setItem('eecalc-tab',id)}catch(e){}
+  if(typeof fbkLink==='function'&&$('fbk')) fbkLink();
+}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+document.querySelectorAll('.groups button').forEach(b=>b.addEventListener('click',()=>{
+  const g=b.dataset.g; showTab(lastInGroup[g]||Object.keys(GROUP).find(k=>GROUP[k]===g));
 }));
+window.addEventListener('hashchange',()=>showTab(location.hash.slice(1)));
 
 /* ---------- Ohm's law ---------- */
 const OHM=['o_v','o_i','o_r','o_p'];
@@ -1493,6 +1522,53 @@ function fbkLink(){
   $('fbk').href='mailto:feedback@vedaxglobal.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent('Calculator: '+(t?t.textContent:'')+'\n\nWhat happened or what would you like?\n\n');
 }
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',fbkLink)); fbkLink();
+
+/* ---------- two-column layout on wide screens ---------- */
+document.querySelectorAll('.panel .block:not(.learn)').forEach(bl=>{
+  const dias=[...bl.querySelectorAll(':scope > .dia')]; if(!dias.length) return;
+  const top=document.createElement('div'), right=document.createElement('div'), bot=document.createElement('div');
+  top.className='top'; right.className='right'; bot.className='bot';
+  let seen=false;
+  [...bl.children].forEach(ch=>{ if(ch.classList.contains('dia')){seen=true;right.appendChild(ch);} else (seen?bot:top).appendChild(ch); });
+  bl.append(top,right,bot); bl.classList.add('two');
+});
+
+/* ---------- try an example ---------- */
+const EX={
+  ohm:[['o_v','12'],['o_i',''],['o_r','470'],['o_p','']],
+  combine:[['c_type','R'],['c_vals','1k, 2.2k, 4.7k']],
+  divider:[['d_vin','12'],['d_r1','10k'],['d_r2','3.3k'],['f_vin','5'],['f_vout','3.3'],['f_r2','10k'],['i_it','100m'],['i_r1','100'],['i_r2','220']],
+  react:[['x_f','1k'],['x_r','100'],['x_l','10m'],['x_c','1u'],['x_v','5']],
+  filt:[['fl_type','rclp'],['fl_r','1k'],['fl_l',''],['fl_c','100n'],['fl_t','']],
+  rc:[['rc_r','10k'],['rc_c','100u'],['rc_vs','5'],['rc_vt','3.3']],
+  t555:[['t_mode','a'],['t_r1','1k'],['t_r2','10k'],['t_c','10u']],
+  opamp:[['oa_mode','inv'],['oa_r1','10k'],['oa_rf','47k'],['oa_r2',''],['oa_v1','0.5'],['oa_v2',''],['oa_vs','12'],['oa_g','']],
+  led:[['l_vs','12'],['l_vf','2'],['l_if','20m'],['l_n','10'],['l_per','']],
+  zener:[['z_vmin','9'],['z_vmax','12'],['z_vz','5.1'],['z_il','20m'],['z_izm','5m']],
+  lreg:[['g_part','7805'],['g_vin','12'],['g_vout','5'],['g_i','300m'],['g_ta','30']],
+  pack:[['p_s','4'],['p_p','2'],['p_cap','2600'],['p_v','3.7'],['p_full','4.2'],['p_empty','3.0'],['p_imax','10']],
+  run:[['r_cap','500'],['r_v','3.7'],['r_use','80'],['r_ia','15m'],['r_is','10u'],['r_duty','2']],
+  wire:[['w_mat','cu'],['w_type','awg'],['w_size','18'],['w_len','10'],['w_path','2'],['w_i','5'],['w_vs','12'],['w_t','20']],
+  trace:[['pc_i','2'],['pc_dt','10'],['pc_oz','1'],['pc_layer','ext'],['pc_len','50']],
+  color:[['r_n','4'],['r_rev','4.7k']],
+  codes:[['s_code','472'],['k_code','104K']]
+};
+function runExample(id){
+  EX[id].forEach(([k,v])=>{const el=$(k); if(!el) return; el.value=v; el.dispatchEvent(new Event('change')); el.dispatchEvent(new Event('input'));});
+  if(id==='color') $('r_rev_btn').click();
+}
+Object.keys(EX).forEach(id=>{
+  const h=document.querySelector(`#${id} .block h2`); if(!h) return;
+  const b=document.createElement('button'); b.type='button'; b.className='exbtn'; b.textContent='Try an example';
+  b.addEventListener('click',()=>runExample(id)); h.parentNode.insertBefore(b,h);
+});
+
+/* ---------- open the linked or last-used calculator ---------- */
+(function(){
+  let id=location.hash.slice(1);
+  if(!GROUP[id]){ try{id=localStorage.getItem('eecalc-tab')||'ohm'}catch(e){id='ohm'} }
+  showTab(id);
+})();
 </script>
 </body>
 </html>
