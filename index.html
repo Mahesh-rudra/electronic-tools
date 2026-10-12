@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Electronics Calculator — Basics</title>
+<title>EE Calculator: Electronics Engineering Tools</title>
+<meta name="description" content="Free electronics engineering calculators with live circuit diagrams: Ohm's law, voltage dividers, filters, reactance, 555 timer, op-amp gain, LED resistors, Zener and regulator heat, PCB trace width, battery packs, wire resistance and resistor codes.">
+<link rel="canonical" href="https://eecalc.vedaxglobal.com/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23B45309'/%3E%3Cpath d='M3 16h5l2-6 4 12 4-12 4 12 2-6h5' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#B45309">
+<meta property="og:type" content="website">
+<meta property="og:title" content="EE Calculator: Electronics Engineering Tools">
+<meta property="og:description" content="17 free electronics calculators with live circuit diagrams and simple explanations.">
+<meta property="og:url" content="https://eecalc.vedaxglobal.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&display=swap" rel="stylesheet">
 <script>try{var t=localStorage.getItem("eecalc-theme");if(t&&t!=="light")document.documentElement.dataset.theme=t;}catch(e){}</script>
@@ -79,6 +87,10 @@ input.bad{border-color:var(--err)}
 .learn details[open] summary::before{content:"▾ "}
 .learn p{margin:12px 0 0;font-size:.94rem;line-height:1.6}
 .fx{display:block;font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--mask);border:1px solid var(--line);border-radius:6px;padding:9px 11px;margin:10px 0 0;overflow-x:auto;white-space:normal;line-height:1.7;font-size:.88rem;color:var(--silk)}
+
+footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem;line-height:1.6;text-align:center}
+footer a{color:var(--copper);text-decoration:none;font-weight:600}
+footer a:hover{text-decoration:underline}
 .note{color:var(--muted);font-size:.84rem;margin-top:8px}
 </style>
 </head>
@@ -86,8 +98,8 @@ input.bad{border-color:var(--err)}
 <div class="wrap">
 <header>
   <div>
-    <h1>Electronics calculator</h1>
-    <p>Type values with prefixes: 4.7k, 2k2, 10m, 100n, 4R7, 1M.</p>
+    <h1>EE Calculator</h1>
+    <p>Electronics engineering tools. Type values with prefixes: 4.7k, 2k2, 10m, 100n, 4R7, 1M.</p>
   </div>
   <div class="themes" role="group" aria-label="Colour theme">
     <span>Theme</span>
@@ -593,6 +605,11 @@ input.bad{border-color:var(--err)}
 <p><b>Ceramic and film capacitors</b> use a similar 3-digit code in picofarads: 104 = 10 followed by four zeros = 100,000 pF = 100 nF = 0.1 µF. A letter after it gives the tolerance: J = ±5%, K = ±10%, M = ±20%. Small SMD capacitors are usually not marked at all, so keep them in labelled packaging.</p>
   </details></div>
 </section>
+<footer>
+  <div>Made by Vedax Global. Free to use, no sign-up.</div>
+  <div>Found a mistake or want a new calculator? <a id="fbk" href="mailto:feedback@vedaxglobal.com?subject=EE%20Calculator%20feedback">feedback@vedaxglobal.com</a></div>
+  <div>Results assume ideal parts. Check datasheets before building anything critical.</div>
+</footer>
 </div>
 
 <script>
@@ -1468,6 +1485,14 @@ function setTheme(t){
 }
 document.querySelectorAll('.themes button').forEach(b=>b.addEventListener('click',()=>setTheme(b.dataset.t)));
 setTheme(document.documentElement.dataset.theme||'light');
+
+/* ---------- feedback link follows the open tab ---------- */
+function fbkLink(){
+  const t=document.querySelector('nav button[aria-selected="true"]');
+  const subj='EE Calculator feedback: '+(t?t.textContent:'');
+  $('fbk').href='mailto:feedback@vedaxglobal.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent('Calculator: '+(t?t.textContent:'')+'\n\nWhat happened or what would you like?\n\n');
+}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',fbkLink)); fbkLink();
 </script>
 </body>
 </html>
