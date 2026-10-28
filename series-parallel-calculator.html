@@ -177,6 +177,9 @@ footer .pages a{margin:0 2px}
   <a href="battery-pack-calculator.html">Battery pack</a>
   <a href="battery-life-calculator.html">Battery runtime</a>
   <a href="wire-resistance-calculator.html">Wire resistance</a>
+  <a href="mosfet-power-loss-calculator.html">MOSFET loss</a>
+  <a href="thermal-resistance-calculator.html">Thermal</a>
+  <a href="current-sense-resistor-calculator.html">Current sense</a>
   <a href="pcb-trace-width-calculator.html">PCB trace</a>
   <a href="resistor-color-code-calculator.html">Color code</a>
   <a href="smd-capacitor-code-calculator.html">SMD &amp; cap codes</a>
@@ -212,7 +215,7 @@ footer .pages a{margin:0 2px}
 <p>Two equal resistors in parallel give exactly half the value, which is a handy trick when you don't have the right part in your box.</p>
   </details></div>
 </section>
-<div class="block alltools"><h2>More calculators</h2><div class="cols"><div><h3>Basics</h3><ul><li><a href="ohms-law-calculator.html">Ohm&#x27;s law calculator</a></li><li><a href="series-parallel-calculator.html" aria-current="page">Series and parallel calculator</a></li><li><a href="voltage-divider-calculator.html">Voltage divider calculator</a></li></ul></div><div><h3>AC and filters</h3><ul><li><a href="reactance-calculator.html">Reactance and impedance calculator</a></li><li><a href="filter-calculator.html">Filter cutoff calculator</a></li><li><a href="rc-time-constant-calculator.html">RC time constant calculator</a></li></ul></div><div><h3>Circuits</h3><ul><li><a href="555-timer-calculator.html">555 timer calculator</a></li><li><a href="op-amp-gain-calculator.html">Op-amp gain calculator</a></li><li><a href="led-resistor-calculator.html">LED resistor calculator</a></li><li><a href="zener-diode-calculator.html">Zener regulator calculator</a></li></ul></div><div><h3>Power and wiring</h3><ul><li><a href="linear-regulator-heat-calculator.html">Linear regulator heat calculator</a></li><li><a href="battery-pack-calculator.html">Battery pack calculator</a></li><li><a href="battery-life-calculator.html">Battery runtime calculator</a></li><li><a href="wire-resistance-calculator.html">Wire resistance calculator</a></li><li><a href="pcb-trace-width-calculator.html">PCB trace width calculator</a></li></ul></div><div><h3>Component codes</h3><ul><li><a href="resistor-color-code-calculator.html">Resistor color code calculator</a></li><li><a href="smd-capacitor-code-calculator.html">SMD resistor and capacitor code calculator</a></li></ul></div></div></div>
+<div class="block alltools"><h2>More calculators</h2><div class="cols"><div><h3>Basics</h3><ul><li><a href="ohms-law-calculator.html">Ohm&#x27;s law calculator</a></li><li><a href="series-parallel-calculator.html" aria-current="page">Series and parallel calculator</a></li><li><a href="voltage-divider-calculator.html">Voltage divider calculator</a></li></ul></div><div><h3>AC and filters</h3><ul><li><a href="reactance-calculator.html">Reactance and impedance calculator</a></li><li><a href="filter-calculator.html">Filter cutoff calculator</a></li><li><a href="rc-time-constant-calculator.html">RC time constant calculator</a></li></ul></div><div><h3>Circuits</h3><ul><li><a href="555-timer-calculator.html">555 timer calculator</a></li><li><a href="op-amp-gain-calculator.html">Op-amp gain calculator</a></li><li><a href="led-resistor-calculator.html">LED resistor calculator</a></li><li><a href="zener-diode-calculator.html">Zener regulator calculator</a></li></ul></div><div><h3>Power devices and thermal</h3><ul><li><a href="linear-regulator-heat-calculator.html">Linear regulator heat calculator</a></li><li><a href="mosfet-power-loss-calculator.html">MOSFET power loss calculator</a></li><li><a href="thermal-resistance-calculator.html">Thermal resistance calculator</a></li><li><a href="current-sense-resistor-calculator.html">Current sense resistor calculator</a></li></ul></div><div><h3>Batteries and wiring</h3><ul><li><a href="battery-pack-calculator.html">Battery pack calculator</a></li><li><a href="battery-life-calculator.html">Battery runtime calculator</a></li><li><a href="wire-resistance-calculator.html">Wire resistance calculator</a></li><li><a href="pcb-trace-width-calculator.html">PCB trace width calculator</a></li></ul></div><div><h3>Component codes</h3><ul><li><a href="resistor-color-code-calculator.html">Resistor color code calculator</a></li><li><a href="smd-capacitor-code-calculator.html">SMD resistor and capacitor code calculator</a></li></ul></div></div></div>
 <footer>
   <div class="pages"><a href="about.html">About</a> · <a href="contact.html">Contact</a> · <a href="privacy.html">Privacy policy</a></div>
   <div>Made by Vedax Global. Free to use, no sign-up.</div>
@@ -253,11 +256,11 @@ function read(ids){
   ids.forEach(id=>{ const el=$(id); const v=parse(el.value); el.classList.toggle('bad', Number.isNaN(v)); if(Number.isNaN(v)) bad=true; out[id]=v; });
   return {v:out, bad};
 }
-const E24=[1.0,1.1,1.2,1.3,1.5,1.6,1.8,2.0,2.2,2.4,2.7,3.0,3.3,3.6,3.9,4.3,4.7,5.1,5.6,6.2,6.8,7.5,8.2,9.1,10];
-function nearestE24(x){
+const E96N=[1,1.02,1.05,1.07,1.1,1.13,1.15,1.18,1.21,1.24,1.27,1.3,1.33,1.37,1.4,1.43,1.47,1.5,1.54,1.58,1.62,1.65,1.69,1.74,1.78,1.82,1.87,1.91,1.96,2,2.05,2.1,2.15,2.21,2.26,2.32,2.37,2.43,2.49,2.55,2.61,2.67,2.74,2.8,2.87,2.94,3.01,3.09,3.16,3.24,3.32,3.4,3.48,3.57,3.65,3.74,3.83,3.92,4.02,4.12,4.22,4.32,4.42,4.53,4.64,4.75,4.87,4.99,5.11,5.23,5.36,5.49,5.62,5.76,5.9,6.04,6.19,6.34,6.49,6.65,6.81,6.98,7.15,7.32,7.5,7.68,7.87,8.06,8.25,8.45,8.66,8.87,9.09,9.31,9.53,9.76,10];
+function nearestE96(x){
   const dec=Math.pow(10,Math.floor(Math.log10(x)));
-  const m=x/dec; let best=E24[0];
-  for(const e of E24) if(Math.abs(e-m)<Math.abs(best-m)) best=e;
+  const m=x/dec; let best=E96N[0];
+  for(const e of E96N) if(Math.abs(e-m)<Math.abs(best-m)) best=e;
   return +(best*dec).toPrecision(3);
 }
 
@@ -329,7 +332,7 @@ function capDia(code){
 
 /* ---------- tabs, groups and links ---------- */
 const GROUP={ohm:'basics',combine:'basics',divider:'basics',react:'ac',filt:'ac',rc:'ac',t555:'circuits',opamp:'circuits',led:'circuits',zener:'circuits',
-  lreg:'power',pack:'power',run:'power',wire:'power',trace:'power',color:'codes',codes:'codes'};
+  lreg:'power',mosfet:'power',thermal:'power',sense:'power',pack:'power',run:'power',wire:'power',trace:'power',color:'codes',codes:'codes'};
 const lastInGroup={};
 function showTab(id){
   if(!GROUP[id]) id='ohm';
@@ -363,9 +366,9 @@ function combine(){
 $('c_type').addEventListener('change',combine); $('c_vals').addEventListener('input',combine); combine();
 
 /* ---------- shared for new tools ---------- */
-function nextE24(x){
+function nextE96(x){
   const dec=Math.pow(10,Math.floor(Math.log10(x)));
-  for(const e of E24) if(e*dec>=x*(1-1e-9)) return +(e*dec).toPrecision(3);
+  for(const e of E96N) if(e*dec>=x*(1-1e-9)) return +(e*dec).toPrecision(3);
   return 10*dec;
 }
 function human(h){
@@ -384,10 +387,10 @@ function nearestIn(x,list){
   for(const e of list) if(Math.abs(e-m)<Math.abs(best-m)) best=e;
   return +(best*dec).toPrecision(3);
 }
-function prevE24(x){
+function prevE96(x){
   const dec=Math.pow(10,Math.floor(Math.log10(x)));
-  for(let i=E24.length-1;i>=0;i--) if(E24[i]*dec<=x*(1+1e-9)) return +(E24[i]*dec).toPrecision(3);
-  return +(9.1*dec/10).toPrecision(3);
+  for(let i=E96N.length-1;i>=0;i--) if(E96N[i]*dec<=x*(1+1e-9)) return +(E96N[i]*dec).toPrecision(3);
+  return +(9.76*dec/10).toPrecision(3);
 }
 const showL=(id,on)=>{$(id).style.display=on?'':'none'};
 const setL=(id,t)=>{$(id).firstChild.nodeValue=t};
@@ -436,6 +439,9 @@ const EX={
   pack:[['p_s','4'],['p_p','2'],['p_cap','2600'],['p_v','3.7'],['p_full','4.2'],['p_empty','3.0'],['p_imax','10']],
   run:[['r_cap','500'],['r_v','3.7'],['r_use','80'],['r_ia','15m'],['r_is','10u'],['r_duty','2']],
   wire:[['w_mat','cu'],['w_type','awg'],['w_size','18'],['w_len','10'],['w_path','2'],['w_i','5'],['w_vs','12'],['w_t','20']],
+  mosfet:[['mf_v','24'],['mf_i','10'],['mf_rds','10m'],['mf_hot','1.5'],['mf_d','50'],['mf_f','200k'],['mf_tr','20n'],['mf_tf','20n'],['mf_coss','500p'],['mf_qg','30n'],['mf_vg','10'],['mf_ta','40'],['mf_tjc','1'],['mf_tcs','0.5'],['mf_tja','62'],['mf_tjm','150']],
+  thermal:[['th_mode','pad'],['th_p','5'],['th_ta','40'],['th_tjm','150'],['th_tjc','1.5'],['th_k','3'],['th_t','0.5'],['th_a','150'],['th_tsa','8']],
+  sense:[['cs_i','5'],['cs_v','100m'],['cs_r',''],['cs_g','50'],['cs_vs','12']],
   trace:[['pc_i','2'],['pc_dt','10'],['pc_oz','1'],['pc_layer','ext'],['pc_len','50']],
   color:[['r_n','4'],['r_rev','4.7k']],
   codes:[['s_code','472'],['k_code','104K']]
