@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WLXEMTDWYD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WLXEMTDWYD');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>EE Calculator: Electronics Engineering Tools</title>
@@ -12,6 +20,10 @@
 <meta property="og:title" content="EE Calculator: Electronics Engineering Tools">
 <meta property="og:description" content="17 free electronics calculators with live circuit diagrams and simple explanations.">
 <meta property="og:url" content="https://eecalc.vedaxglobal.com/">
+<meta property="og:image" content="https://eecalc.vedaxglobal.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&display=swap" rel="stylesheet">
 <script>try{var t=localStorage.getItem("eecalc-theme");if(t&&t!=="light")document.documentElement.dataset.theme=t;}catch(e){}</script>
@@ -107,6 +119,23 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);color:v
 footer a{color:var(--copper);text-decoration:none;font-weight:600}
 footer a:hover{text-decoration:underline}
 .note{color:var(--muted);font-size:.84rem;margin-top:8px}
+
+nav a{flex:0 0 auto;font-size:.92rem;color:var(--muted);background:var(--mask2);border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;text-decoration:none}
+nav a:hover{border-color:var(--copper);color:var(--silk)}
+nav a[aria-current="page"]{color:var(--ontab);background:var(--copper);border-color:var(--copper);font-weight:700}
+nav a:focus-visible,.alltools a:focus-visible,.crumb a:focus-visible{outline:2px solid var(--silk);outline-offset:2px}
+.crumb{font-size:.86rem;color:var(--muted);margin:4px 0 2px}
+.crumb a{color:var(--copper);text-decoration:none;font-weight:600}
+.crumb a:hover{text-decoration:underline}
+.alltools h2{font-size:1.08rem;margin:0 0 10px}
+.alltools .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:4px 24px}
+.alltools h3{font-size:.92rem;color:var(--muted);margin:10px 0 4px;font-weight:600}
+.alltools ul{list-style:none;margin:0;padding:0}
+.alltools li{padding:3px 0}
+.alltools a{color:var(--copper);text-decoration:none;font-weight:600}
+.alltools a:hover{text-decoration:underline}
+.alltools a[aria-current="page"]{color:var(--silk);font-weight:700}
+footer .pages a{margin:0 2px}
 </style>
 </head>
 <body>
@@ -620,7 +649,9 @@ footer a:hover{text-decoration:underline}
 <p><b>Ceramic and film capacitors</b> use a similar 3-digit code in picofarads: 104 = 10 followed by four zeros = 100,000 pF = 100 nF = 0.1 µF. A letter after it gives the tolerance: J = ±5%, K = ±10%, M = ±20%. Small SMD capacitors are usually not marked at all, so keep them in labelled packaging.</p>
   </details></div>
 </section>
+<div class="block alltools"><h2>Every calculator on its own page</h2><div class="cols"><div><h3>Basics</h3><ul><li><a href="ohms-law-calculator.html">Ohm&#x27;s law calculator</a></li><li><a href="series-parallel-calculator.html">Series and parallel calculator</a></li><li><a href="voltage-divider-calculator.html">Voltage divider calculator</a></li></ul></div><div><h3>AC and filters</h3><ul><li><a href="reactance-calculator.html">Reactance and impedance calculator</a></li><li><a href="filter-calculator.html">Filter cutoff calculator</a></li><li><a href="rc-time-constant-calculator.html">RC time constant calculator</a></li></ul></div><div><h3>Circuits</h3><ul><li><a href="555-timer-calculator.html">555 timer calculator</a></li><li><a href="op-amp-gain-calculator.html">Op-amp gain calculator</a></li><li><a href="led-resistor-calculator.html">LED resistor calculator</a></li><li><a href="zener-diode-calculator.html">Zener regulator calculator</a></li></ul></div><div><h3>Power and wiring</h3><ul><li><a href="linear-regulator-heat-calculator.html">Linear regulator heat calculator</a></li><li><a href="battery-pack-calculator.html">Battery pack calculator</a></li><li><a href="battery-life-calculator.html">Battery runtime calculator</a></li><li><a href="wire-resistance-calculator.html">Wire resistance calculator</a></li><li><a href="pcb-trace-width-calculator.html">PCB trace width calculator</a></li></ul></div><div><h3>Component codes</h3><ul><li><a href="resistor-color-code-calculator.html">Resistor color code calculator</a></li><li><a href="smd-capacitor-code-calculator.html">SMD resistor and capacitor code calculator</a></li></ul></div></div></div>
 <footer>
+  <div class="pages"><a href="about.html">About</a> · <a href="contact.html">Contact</a> · <a href="privacy.html">Privacy policy</a></div>
   <div>Made by Vedax Global. Free to use, no sign-up.</div>
   <div>Found a mistake or want a new calculator? <a id="fbk" href="mailto:feedback@vedaxglobal.com?subject=EE%20Calculator%20feedback">feedback@vedaxglobal.com</a></div>
   <div>Results assume ideal parts. Check datasheets before building anything critical.</div>
