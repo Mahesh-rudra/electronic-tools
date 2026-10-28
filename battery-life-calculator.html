@@ -136,6 +136,13 @@ nav a:focus-visible,.alltools a:focus-visible,.crumb a:focus-visible{outline:2px
 .alltools a:hover{text-decoration:underline}
 .alltools a[aria-current="page"]{color:var(--silk);font-weight:700}
 footer .pages a{margin:0 2px}
+
+.byline{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;font-size:.84rem;color:var(--muted);margin:-4px 2px 14px}
+.byline a{color:var(--copper);text-decoration:none;font-weight:600}
+.byline a:hover{text-decoration:underline}
+.credit{display:flex;align-items:center;gap:8px}
+.credit img{width:32px;height:32px;border-radius:50%;object-fit:cover;border:1.5px solid var(--line)}
+.credit b{color:var(--silk)}
 </style>
 </head>
 <body>
@@ -190,7 +197,14 @@ footer .pages a{margin:0 2px}
     <div class="dia" id="r_dia"></div>
     <div class="out" id="r_out"></div>
   </div>
-  <div class="block learn"><details open><summary>How it works</summary>
+  <div class="byline">
+  <span>Built by <a href="about.html">Vedax Global</a> · Last checked October 2026</span>
+  <!-- CONTRIBUTOR CREDIT: to credit someone, delete the two comment marks around this block and fill in their details.
+       Put their photo in a "credits" folder in the repo. Remove the <img> line if there is no photo.
+  <span class="credit"><img src="credits/firstname-lastname.jpg" alt=""><span>Suggested by <b>Full Name</b>, Designation, Organisation</span></span>
+  -->
+</div>
+<div class="block learn"><details open><summary>How it works</summary>
 <p>Runtime is simply how much charge you can use divided by how fast you use it.</p>
 <code class="fx">Runtime (h) = usable capacity (Ah) / average current (A)</code>
 <p>Never plan on 100% of the rated capacity. Cells lose capacity with age, in cold weather and at high currents, and stopping before fully empty extends their life. 80% is a sensible planning figure.</p>
@@ -203,7 +217,8 @@ footer .pages a{margin:0 2px}
 <footer>
   <div class="pages"><a href="about.html">About</a> · <a href="contact.html">Contact</a> · <a href="privacy.html">Privacy policy</a></div>
   <div>Made by Vedax Global. Free to use, no sign-up.</div>
-  <div>Found a mistake or want a new calculator? <a id="fbk" href="mailto:feedback@vedaxglobal.com?subject=EE%20Calculator%20feedback">feedback@vedaxglobal.com</a></div>
+  <div>Need a calculator that isn't here? <a href="contact.html#suggest">Suggest one and get credited on its page</a></div>
+  <div>Found a mistake? <a id="fbk" href="mailto:feedback@vedaxglobal.com?subject=EE%20Calculator%20feedback">feedback@vedaxglobal.com</a></div>
   <div>Results assume ideal parts. Check datasheets before building anything critical.</div>
 </footer>
 </div>

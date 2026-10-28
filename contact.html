@@ -55,6 +55,10 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);color:v
 footer a{color:var(--copper);text-decoration:none;font-weight:600}
 footer a:hover,footer a:focus-visible{text-decoration:underline}
 a:focus-visible{outline:2px solid var(--silk);outline-offset:2px}
+.cta{display:inline-block;font-weight:700;color:var(--ontab);background:var(--copper);border-radius:999px;padding:9px 18px;text-decoration:none;margin:4px 0 6px}
+.doc a.cta{color:var(--ontab)}
+.cta:hover{background:var(--copperDim)}
+.cta:focus-visible{outline:2px solid var(--silk);outline-offset:3px}
 </style>
 </head>
 <body>
@@ -73,10 +77,15 @@ a:focus-visible{outline:2px solid var(--silk);outline-offset:2px}
 <h2>What to write about</h2>
 <ul>
   <li><b>Something looks wrong.</b> Tell me which calculator, the values you entered and the result you expected. That lets me check and fix it quickly.</li>
-  <li><b>A calculator you'd like.</b> Describe what you're trying to work out, and I'll see if it fits on the site.</li>
+  <li><b>A calculator you'd like.</b> See <a href="#suggest">Suggest a calculator</a> below.</li>
   <li><b>Anything else.</b> Feedback on the design, ideas, or collaboration on electronics projects and kits.</li>
 </ul>
 
+<h2 id="suggest">Suggest a calculator and get credited</h2>
+<p>Need a calculator that isn't here yet? Send me the name of the calculator and any reference documents, such as datasheets, application notes, standards or the formulas you use.</p>
+<p>When I add it, I'd be happy to credit you on that calculator's page with your name, designation and, if you like, a small photo. Credit is completely optional, and you can ask for it to be changed or removed at any time.</p>
+<a class="cta" href="mailto:feedback@vedaxglobal.com?subject=New%20calculator%20request&body=Calculator%20name%3A%0A%0AWhat%20it%20should%20calculate%20%28inputs%20and%20results%29%3A%0A%0AReference%20documents%20%28please%20attach%20datasheets%2C%20app%20notes%2C%20standards%20or%20formulas%29%3A%0A%0ACredit%20me%20on%20the%20calculator%20page%3F%20%28Yes%20/%20No%29%3A%0AName%3A%0ADesignation%20and%20organisation%3A%0APhoto%20%28optional%2C%20attach%20a%20small%20square%20photo%20if%20you%27d%20like%20it%20shown%29%3A%0A">Email a calculator request</a>
+<p class="updated">Opens your email app with a short form to fill in. Attach your documents and photo to the email.</p>
 </main>
 <footer>
   <nav class="pages" aria-label="Site pages">
