@@ -12,13 +12,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>EE Calculator: Electronics Engineering Tools</title>
-<meta name="description" content="Free electronics engineering calculators with live circuit diagrams: Ohm's law, voltage dividers, filters, reactance, 555 timer, op-amp gain, LED resistors, Zener and regulator heat, MOSFET power loss, thermal resistance, current sense resistors, PCB trace width, battery packs, wire resistance and resistor codes.">
+<meta name="description" content="Free electronics engineering calculators with live circuit diagrams: Ohm's law, voltage dividers, filters, reactance, 555 timer, op-amp gain, LED resistors, Zener and regulator heat, MOSFET power loss, thermal resistance, current sense resistors, active filters, dB and dBm, RMS and peak, PCB trace width, battery packs, wire resistance and resistor codes.">
 <link rel="canonical" href="https://eecalc.vedaxglobal.com/">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23B45309'/%3E%3Cpath d='M3 16h5l2-6 4 12 4-12 4 12 2-6h5' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
 <meta name="theme-color" content="#B45309">
 <meta property="og:type" content="website">
 <meta property="og:title" content="EE Calculator: Electronics Engineering Tools">
-<meta property="og:description" content="20 free electronics calculators with live circuit diagrams and simple explanations.">
+<meta property="og:description" content="23 free electronics calculators with live circuit diagrams and simple explanations.">
 <meta property="og:url" content="https://eecalc.vedaxglobal.com/">
 <meta property="og:image" content="https://eecalc.vedaxglobal.com/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -160,7 +160,10 @@ footer .pages a{margin:0 2px}
   <button role="tab" aria-selected="false" data-tab="divider">Dividers</button>
   <button role="tab" aria-selected="false" data-tab="react">Reactance</button>
   <button role="tab" aria-selected="false" data-tab="filt">Filters</button>
+  <button role="tab" aria-selected="false" data-tab="afilt">Active filter</button>
   <button role="tab" aria-selected="false" data-tab="rc">RC time</button>
+  <button role="tab" aria-selected="false" data-tab="db">dB converter</button>
+  <button role="tab" aria-selected="false" data-tab="wave">RMS &amp; peak</button>
   <button role="tab" aria-selected="false" data-tab="t555">555 timer</button>
   <button role="tab" aria-selected="false" data-tab="opamp">Op-amp</button>
   <button role="tab" aria-selected="false" data-tab="led">LED designer</button>
@@ -270,6 +273,88 @@ footer .pages a{margin:0 2px}
   </details></div>
 </section>
 
+
+<!-- ACTIVE FILTER -->
+<section class="panel" id="afilt">
+  <div class="block">
+    <h2>Op-amp active filter</h2>
+    <p class="hint">Second-order filter, −40 dB per decade. Pick one capacitor value and the calculator chooses the rest. Q = 0.707 gives the flattest (Butterworth) response.</p>
+    <div class="grid">
+      <label>Topology<select id="af_top"><option value="sk">Sallen-Key (unity gain)</option><option value="mfb">Multiple feedback (MFB)</option></select></label>
+      <label>Type<select id="af_type"><option value="lp">Low-pass</option><option value="hp">High-pass</option></select></label>
+      <label>Cutoff frequency (Hz)<input id="af_fc" inputmode="decimal" placeholder="1k"></label>
+      <label>Q<input id="af_q" inputmode="decimal" value="0.707"></label>
+      <label id="af_kl">Gain (V/V)<input id="af_k" inputmode="decimal" value="1"></label>
+      <label id="af_cl">Capacitor C (F)<input id="af_c" inputmode="decimal" placeholder="10n"></label>
+    </div>
+    <div class="dia" id="af_dia"></div>
+    <div class="out" id="af_out"></div>
+  </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>A passive RC filter rolls off at only −20 dB per decade, and its corner is soft. Adding an op-amp lets two resistors and two capacitors make a <b>second-order</b> filter that rolls off at −40 dB per decade, with a corner shape you can choose through <b>Q</b>.</p>
+<code class="fx">f₀ = 1 / (2π √(R1 R2 C1 C2))</code>
+<p>Q sets the shape around the cutoff. Q = 0.707 (Butterworth) is the flattest passband with no peak. Q = 0.577 (Bessel) gives the cleanest step response with no overshoot. Higher Q makes a sharper corner with a peak in the response.</p>
+<p><b>Sallen-Key</b> uses the op-amp as a unity-gain buffer, so it is simple and keeps the signal in phase. For the low-pass version, C1 must be at least 4Q² times C2, so the calculator picks the next standard C1 and then solves for the two resistors.</p>
+<p><b>Multiple feedback (MFB)</b> uses the op-amp as an inverting amplifier, so it can add gain and is less sensitive to component tolerance, but it inverts the signal.</p>
+<p>Resistors are rounded to E96 and capacitors to E12, and the actual cutoff and Q are recalculated with those values. Use 1% resistors and C0G/NP0 or film capacitors, and choose an op-amp with gain-bandwidth at least 100 × gain × f₀.</p>
+  </details></div>
+</section>
+
+<!-- DB CONVERTER -->
+<section class="panel" id="db">
+  <div class="block">
+    <h2>dB and ratios</h2>
+    <p class="hint">Enter a voltage ratio, power ratio or dB value.</p>
+    <div class="grid">
+      <label>Value<input id="db_x" inputmode="decimal" placeholder="10"></label>
+      <label>The value is<select id="db_t"><option value="vr">Voltage ratio (V/V)</option><option value="pr">Power ratio (W/W)</option><option value="db">dB</option></select></label>
+    </div>
+    <div class="out" id="db_out"></div>
+  </div>
+  <div class="block">
+    <h2>dBm, watts and volts</h2>
+    <p class="hint">Voltages assume a sine wave across the given impedance.</p>
+    <div class="grid">
+      <label>Value<input id="dm_x" inputmode="decimal" placeholder="0"></label>
+      <label>Unit<select id="dm_u"><option value="dbm">dBm</option><option value="w">Watts</option><option value="v">Volts RMS</option></select></label>
+      <label>Impedance (Ω)<input id="dm_z" inputmode="decimal" value="50"></label>
+    </div>
+    <div class="out" id="dm_out"></div>
+  </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>Decibels describe a ratio on a logarithmic scale, which turns huge ranges into small numbers and lets gains in a chain simply add up.</p>
+<code class="fx">dB = 10 × log₁₀(P2 / P1)<br>dB = 20 × log₁₀(V2 / V1)</code>
+<p>Voltage uses 20 instead of 10 because power goes with voltage squared. So doubling the voltage is +6 dB, while doubling the power is +3 dB. Both describe the same change when the impedance stays the same.</p>
+<p><b>dBm</b> is power compared with 1 milliwatt: 0 dBm = 1 mW, 30 dBm = 1 W, and −30 dBm = 1 µW. To turn dBm into volts you need the impedance, usually 50 Ω in RF work or 600 Ω in old audio systems.</p>
+<code class="fx">P = 1 mW × 10^(dBm/10)<br>V_rms = √(P × R)</code>
+<p><b>dBV</b> is voltage compared with 1 V RMS, and <b>dBµV</b> compared with 1 µV, common in EMC testing.</p>
+  </details></div>
+</section>
+
+<!-- RMS AND PEAK -->
+<section class="panel" id="wave">
+  <div class="block">
+    <h2>RMS, peak and average</h2>
+    <p class="hint">Works for voltage or current. Enter any one value.</p>
+    <div class="grid">
+      <label>Waveform<select id="wv_shape">
+        <option value="sine">Sine</option><option value="square">Square (±)</option><option value="tri">Triangle</option>
+        <option value="pulse">Pulse / PWM (0 to peak)</option><option value="full">Full-wave rectified sine</option><option value="half">Half-wave rectified sine</option>
+      </select></label>
+      <label>Value<input id="wv_x" inputmode="decimal" placeholder="230"></label>
+      <label>The value is<select id="wv_q"><option value="rms">RMS</option><option value="pk">Peak</option><option value="pp">Peak-to-peak</option><option value="avg">Average</option></select></label>
+      <label id="wv_dl">Duty cycle (%)<input id="wv_d" inputmode="decimal" value="50"></label>
+    </div>
+    <div class="dia" id="wv_dia"></div>
+    <div class="out" id="wv_out"></div>
+  </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p><b>RMS</b> (root mean square) is the DC value that would heat a resistor by the same amount. When people say mains is 230 V, they mean 230 V RMS, and the peak is actually about 325 V.</p>
+<code class="fx">Sine: V_rms = V_peak / √2 ≈ 0.707 × V_peak<br>Triangle: V_rms = V_peak / √3<br>Square: V_rms = V_peak<br>Pulse: V_rms = V_peak × √D</code>
+<p>A symmetric wave averages to zero over a full cycle, so for sine, square and triangle waves the <b>average</b> here means the rectified average, the average of its absolute value. For a sine that is 2/π ≈ 0.637 × peak.</p>
+<p><b>Crest factor</b> is peak ÷ RMS, and <b>form factor</b> is RMS ÷ average. Many cheap multimeters measure the average and multiply by 1.111, the sine wave's form factor. That reads correctly for sine waves but wrong for anything else, which is why true-RMS meters exist.</p>
+  </details></div>
+</section>
 
 <!-- RC -->
 <section class="panel" id="rc">
@@ -750,7 +835,7 @@ footer .pages a{margin:0 2px}
 <p><b>Ceramic and film capacitors</b> use a similar 3-digit code in picofarads: 104 = 10 followed by four zeros = 100,000 pF = 100 nF = 0.1 µF. A letter after it gives the tolerance: J = ±5%, K = ±10%, M = ±20%. Small SMD capacitors are usually not marked at all, so keep them in labelled packaging.</p>
   </details></div>
 </section>
-<div class="block alltools"><h2>Every calculator on its own page</h2><div class="cols"><div><h3>Basics</h3><ul><li><a href="ohms-law-calculator.html">Ohm&#x27;s law calculator</a></li><li><a href="series-parallel-calculator.html">Series and parallel calculator</a></li><li><a href="voltage-divider-calculator.html">Voltage divider calculator</a></li></ul></div><div><h3>AC and filters</h3><ul><li><a href="reactance-calculator.html">Reactance and impedance calculator</a></li><li><a href="filter-calculator.html">Filter cutoff calculator</a></li><li><a href="rc-time-constant-calculator.html">RC time constant calculator</a></li></ul></div><div><h3>Circuits</h3><ul><li><a href="555-timer-calculator.html">555 timer calculator</a></li><li><a href="op-amp-gain-calculator.html">Op-amp gain calculator</a></li><li><a href="led-resistor-calculator.html">LED resistor calculator</a></li><li><a href="zener-diode-calculator.html">Zener regulator calculator</a></li></ul></div><div><h3>Power devices and thermal</h3><ul><li><a href="linear-regulator-heat-calculator.html">Linear regulator heat calculator</a></li><li><a href="mosfet-power-loss-calculator.html">MOSFET power loss calculator</a></li><li><a href="thermal-resistance-calculator.html">Thermal resistance calculator</a></li><li><a href="current-sense-resistor-calculator.html">Current sense resistor calculator</a></li></ul></div><div><h3>Batteries and wiring</h3><ul><li><a href="battery-pack-calculator.html">Battery pack calculator</a></li><li><a href="battery-life-calculator.html">Battery runtime calculator</a></li><li><a href="wire-resistance-calculator.html">Wire resistance calculator</a></li><li><a href="pcb-trace-width-calculator.html">PCB trace width calculator</a></li></ul></div><div><h3>Component codes</h3><ul><li><a href="resistor-color-code-calculator.html">Resistor color code calculator</a></li><li><a href="smd-capacitor-code-calculator.html">SMD resistor and capacitor code calculator</a></li></ul></div></div></div>
+<div class="block alltools"><h2>Every calculator on its own page</h2><div class="cols"><div><h3>Basics</h3><ul><li><a href="ohms-law-calculator.html">Ohm&#x27;s law calculator</a></li><li><a href="series-parallel-calculator.html">Series and parallel calculator</a></li><li><a href="voltage-divider-calculator.html">Voltage divider calculator</a></li></ul></div><div><h3>AC, filters and signals</h3><ul><li><a href="reactance-calculator.html">Reactance and impedance calculator</a></li><li><a href="filter-calculator.html">Filter cutoff calculator</a></li><li><a href="active-filter-calculator.html">Active filter calculator</a></li><li><a href="rc-time-constant-calculator.html">RC time constant calculator</a></li><li><a href="db-dbm-converter.html">DB, dBm and ratio converter</a></li><li><a href="rms-peak-average-calculator.html">RMS, peak and average calculator</a></li></ul></div><div><h3>Circuits</h3><ul><li><a href="555-timer-calculator.html">555 timer calculator</a></li><li><a href="op-amp-gain-calculator.html">Op-amp gain calculator</a></li><li><a href="led-resistor-calculator.html">LED resistor calculator</a></li><li><a href="zener-diode-calculator.html">Zener regulator calculator</a></li></ul></div><div><h3>Power devices and thermal</h3><ul><li><a href="linear-regulator-heat-calculator.html">Linear regulator heat calculator</a></li><li><a href="mosfet-power-loss-calculator.html">MOSFET power loss calculator</a></li><li><a href="thermal-resistance-calculator.html">Thermal resistance calculator</a></li><li><a href="current-sense-resistor-calculator.html">Current sense resistor calculator</a></li></ul></div><div><h3>Batteries and wiring</h3><ul><li><a href="battery-pack-calculator.html">Battery pack calculator</a></li><li><a href="battery-life-calculator.html">Battery runtime calculator</a></li><li><a href="wire-resistance-calculator.html">Wire resistance calculator</a></li><li><a href="pcb-trace-width-calculator.html">PCB trace width calculator</a></li></ul></div><div><h3>Component codes</h3><ul><li><a href="resistor-color-code-calculator.html">Resistor color code calculator</a></li><li><a href="smd-capacitor-code-calculator.html">SMD resistor and capacitor code calculator</a></li></ul></div></div></div>
 <footer>
   <div class="pages"><a href="about.html">About</a> · <a href="contact.html">Contact</a> · <a href="privacy.html">Privacy policy</a></div>
   <div>Made by Vedax Global. Free to use, no sign-up.</div>
@@ -866,7 +951,7 @@ function capDia(code){
 }
 
 /* ---------- tabs, groups and links ---------- */
-const GROUP={ohm:'basics',combine:'basics',divider:'basics',react:'ac',filt:'ac',rc:'ac',t555:'circuits',opamp:'circuits',led:'circuits',zener:'circuits',
+const GROUP={ohm:'basics',combine:'basics',divider:'basics',react:'ac',filt:'ac',afilt:'ac',db:'ac',wave:'ac',rc:'ac',t555:'circuits',opamp:'circuits',led:'circuits',zener:'circuits',
   lreg:'power',mosfet:'power',thermal:'power',sense:'power',pack:'power',run:'power',wire:'power',trace:'power',color:'codes',codes:'codes'};
 const lastInGroup={};
 function showTab(id){
@@ -1732,6 +1817,156 @@ function sense(){
 }
 listen(['cs_i','cs_v','cs_r','cs_g','cs_vs'],sense);
 
+/* ---------- ACTIVE FILTER ---------- */
+const CAP12=[1,1.2,1.5,1.8,2.2,2.7,3.3,3.9,4.7,5.6,6.8,8.2,10];
+function capE12(x,mode){
+  if(!(x>0)) return x; const dec=Math.pow(10,Math.floor(Math.log10(x))), m=x/dec;
+  let e=CAP12[0];
+  if(mode==='up') e=CAP12.find(v=>v>=m*(1-1e-9));
+  else for(const v of CAP12) if(Math.abs(v-m)<Math.abs(e-m)) e=v;
+  return +(e*dec).toPrecision(3);
+}
+function afDia(top,type,L){
+  const lp=type==='lp', P=t=>lp?t:(t==='R'?'C':'R');
+  const lab=(x,y,str,anc)=>{const k=str.indexOf(' '); return txt(x,y,str.slice(0,k),'lb sm',anc)+txt(x,y+14,str.slice(k+1),'vl',anc);};
+  let b=term(16,150)+txt(16,172,'Vin','lb','middle')+wire('M20 150H30')+sym(P('R'),30,150)+wire('M90 150H140')+dot(120,150)+sym(P('R'),140,150)+wire('M200 150H270')+dot(230,150)+
+    lab(60,124,L.a,'middle')+lab(170,124,L.b,'middle');
+  if(top==='sk'){
+    b+='<path class="w" d="M270 90L340 130L270 170Z"/>'+txt(276,115,'−','vl')+txt(276,155,'+','vl')+
+      sym(P('C'),120,150,-90)+wire('M120 90V40H380V130')+lab(112,94,L.c,'end')+
+      sym(P('C'),230,150,90)+wire('M230 210V214')+gnd(230,214)+lab(242,180,L.d,'start')+
+      wire('M270 110H256V70H380')+dot(380,70)+wire('M340 130H410')+dot(380,130)+term(414,130)+txt(414,118,'Vout','lb','middle');
+  } else {
+    b+='<path class="w" d="M270 130L340 170L270 210Z"/>'+txt(276,155,'−','vl')+txt(276,195,'+','vl')+
+      sym(P('C'),120,150,90)+wire('M120 210V214')+gnd(120,214)+lab(132,180,L.c,'start')+
+      sym(P('R'),120,150,-90)+wire('M120 90V30H380V170')+lab(112,94,L.e,'end')+
+      sym(P('C'),230,150,-90)+wire('M230 90V60H380')+dot(380,60)+lab(222,94,L.d,'end')+
+      wire('M270 190H256V200')+gnd(256,200)+wire('M340 170H410')+dot(380,170)+term(414,170)+txt(414,158,'Vout','lb','middle');
+  }
+  $('af_dia').innerHTML=svg(430,240,b);
+}
+function afilt(){
+  const top=$('af_top').value, type=$('af_type').value, sk=top==='sk', lp=type==='lp';
+  showL('af_kl',!sk);
+  setL('af_cl',sk?(lp?'C2, to ground (F)':'C1 = C2 (F)'):(lp?'C2, feedback (F)':'C1 = C3 (F)'));
+  const ids=['af_fc','af_q','af_c'].concat(sk?[]:['af_k']), {v,bad}=read(ids);
+  const fc=v.af_fc, Q=v.af_q, C=v.af_c, K=sk?1:v.af_k;
+  const r=x=>fmt(nearestE96(x),'Ω'), c=x=>fmt(x,'F');
+  const nm={sklp:'R1 R2 C1 C2 -',skhp:'C1 C2 R1 R2 -',mfblp:'R1 R3 C1 C2 R2',mfbhp:'C1 C3 R1 R2 C2'}[top+type].split(' ');
+  let lab={a:nm[0]+' ?',b:nm[1]+' ?',c:nm[2]+' ?',d:nm[3]+' ?',e:nm[4]+' ?'}, list=[], act=null;
+  const ok=fc>0&&Q>0&&C>0&&K>0;
+  if(ok){ const w=2*Math.PI*fc;
+    if(sk&&lp){ const C2=C, C1=capE12(4*Q*Q*C2,'up'), S=1/(Q*w*C2), P=1/(w*w*C1*C2), d=Math.sqrt(Math.max(0,S*S-4*P));
+      const R1=(S+d)/2, R2=(S-d)/2, a=nearestE96(R1), b=nearestE96(R2);
+      lab={a:'R1 '+r(R1),b:'R2 '+r(R2),c:'C1 '+c(C1),d:'C2 '+c(C2)};
+      list=[['R1',`${r(R1)} (exact ${fmt(R1,'Ω')})`],['R2',`${r(R2)} (exact ${fmt(R2,'Ω')})`],['C1 (feedback)',c(C1)],['C2 (to ground)',c(C2)]];
+      const p=a*b*C1*C2; act={f:1/(2*Math.PI*Math.sqrt(p)),q:Math.sqrt(p)/(C2*(a+b)),k:1};
+    } else if(sk){ const Rf=1/(2*Q*w*C), Rg=2*Q/(w*C), a=nearestE96(Rf), b=nearestE96(Rg);
+      lab={a:'C1 '+c(C),b:'C2 '+c(C),c:'R1 '+r(Rf),d:'R2 '+r(Rg)};
+      list=[['C1 = C2',c(C)],['R1 (feedback)',`${r(Rf)} (exact ${fmt(Rf,'Ω')})`],['R2 (to ground)',`${r(Rg)} (exact ${fmt(Rg,'Ω')})`]];
+      act={f:1/(2*Math.PI*C*Math.sqrt(a*b)),q:Math.sqrt(b/a)/2,k:1};
+    } else if(lp){ const C2=C, C1=capE12(4*Q*Q*(1+K)*C2,'up'), d=Math.sqrt(Math.max(0,(C1/Q)**2-4*(K+1)*C1*C2));
+      const R2=(C1/Q+d)/(2*w*C1*C2), R3=1/(w*w*R2*C1*C2), R1=R2/K, a=nearestE96(R1), b=nearestE96(R2), e=nearestE96(R3);
+      lab={a:'R1 '+r(R1),b:'R3 '+r(R3),c:'C1 '+c(C1),d:'C2 '+c(C2),e:'R2 '+r(R2)};
+      list=[['R1 (input)',`${r(R1)} (exact ${fmt(R1,'Ω')})`],['R2 (feedback)',`${r(R2)} (exact ${fmt(R2,'Ω')})`],['R3 (to − input)',`${r(R3)} (exact ${fmt(R3,'Ω')})`],['C1 (to ground)',c(C1)],['C2 (feedback)',c(C2)]];
+      const w0=1/Math.sqrt(b*e*C1*C2); act={f:w0/(2*Math.PI),q:w0*C1/(1/a+1/b+1/e),k:b/a};
+    } else { const C1=C, C3=C, C2=capE12(C/K,'near'), sum=C1+C2+C3, R2=Q*sum/(w*C2*C3), R1=1/(w*Q*sum), a=nearestE96(R1), b=nearestE96(R2);
+      lab={a:'C1 '+c(C1),b:'C3 '+c(C3),c:'R1 '+r(R1),d:'R2 '+r(R2),e:'C2 '+c(C2)};
+      list=[['C1 (input) = C3',c(C)],['C2 (feedback)',c(C2)],['R1 (to ground)',`${r(R1)} (exact ${fmt(R1,'Ω')})`],['R2 (feedback)',`${r(R2)} (exact ${fmt(R2,'Ω')})`]];
+      const w0=1/Math.sqrt(a*b*C2*C3); act={f:w0/(2*Math.PI),q:w0*b*C2*C3/sum,k:C1/C2};
+    }
+  }
+  afDia(top,type,lab);
+  if(bad) return $('af_out').innerHTML=msg('Check the highlighted value.',true);
+  if(!ok) return $('af_out').innerHTML=msg('Enter the cutoff frequency, Q and a capacitor value.');
+  const g=act.k, gtxt=sk?'1 (0 dB)':`−${(+g.toPrecision(3))} (${(20*Math.log10(g)).toFixed(1)} dB)`;
+  list.push(['Actual cutoff',fmt(act.f,'Hz')],['Actual Q',act.q.toFixed(3)],['Passband gain',gtxt],['Roll-off','−40 dB per decade']);
+  let notes='';
+  const ef=Math.abs(act.f/fc-1);
+  if(ef>0.03) notes+=`<div class="note" style="color:var(--copper)">Standard values move the cutoff by ${(ef*100).toFixed(1)} %. Try a slightly different capacitor.</div>`;
+  const rs=list.filter(x=>/^R/.test(x[0])).map(x=>parse(x[1].split(' (')[0].replace('Ω','')));
+  if(rs.some(x=>x<1000)) notes+='<div class="note" style="color:var(--copper)">A resistor is below 1 kΩ, which loads the op-amp. Use a smaller capacitor.</div>';
+  if(rs.some(x=>x>1e6)) notes+='<div class="note" style="color:var(--copper)">A resistor is above 1 MΩ, which adds noise and bias-current error. Use a larger capacitor.</div>';
+  notes+=`<div class="note">Op-amp gain-bandwidth: at least ${fmt(100*g*fc,'Hz')}.</div>`;
+  $('af_out').innerHTML=rows(list)+notes;
+}
+listen(['af_top','af_type','af_fc','af_q','af_k','af_c'],afilt);
+
+/* ---------- DB ---------- */
+function dbconv(){
+  const t=$('db_t').value, {v,bad}=read(['db_x']), x=v.db_x;
+  if(bad) return $('db_out').innerHTML=msg('Check the value.',true);
+  if(x===null) return $('db_out').innerHTML=msg('Enter a value.');
+  const g=n=>(+n.toPrecision(4)).toString();
+  if(t==='db'){ const vr=Math.pow(10,x/20), pr=Math.pow(10,x/10);
+    return $('db_out').innerHTML=rows([['Voltage ratio',g(vr)+' V/V'],['Power ratio',g(pr)+' W/W']]); }
+  if(!(x>0)) return $('db_out').innerHTML=msg('A ratio must be greater than 0.',true);
+  if(t==='vr') $('db_out').innerHTML=rows([['dB (20 log)',(20*Math.log10(x)).toFixed(2)+' dB'],['Equivalent power ratio',g(x*x)+' W/W']]);
+  else $('db_out').innerHTML=rows([['dB (10 log)',(10*Math.log10(x)).toFixed(2)+' dB'],['Equivalent voltage ratio',g(Math.sqrt(x))+' V/V']]);
+}
+function dbm(){
+  const u=$('dm_u').value, {v,bad}=read(['dm_x','dm_z']), x=v.dm_x, Z=v.dm_z;
+  if(bad) return $('dm_out').innerHTML=msg('Check the highlighted value.',true);
+  if(x===null) return $('dm_out').innerHTML=msg('Enter a value.');
+  if(!(Z>0)) return $('dm_out').innerHTML=msg('Enter the impedance.');
+  let P;
+  if(u==='dbm') P=1e-3*Math.pow(10,x/10);
+  else { if(!(x>0)) return $('dm_out').innerHTML=msg('Enter a value greater than 0.',true); P=u==='w'?x:x*x/Z; }
+  const Vr=Math.sqrt(P*Z), d=10*Math.log10(P/1e-3), dv=20*Math.log10(Vr);
+  $('dm_out').innerHTML=rows([['dBm',d.toFixed(2)+' dBm'],['dBW',(d-30).toFixed(2)+' dBW'],['Power',fmt(P,'W')],
+    ['Voltage RMS',fmt(Vr,'V')],['Voltage peak',fmt(Vr*Math.SQRT2,'V')],['Voltage peak-to-peak',fmt(2*Vr*Math.SQRT2,'V')],
+    ['dBV',dv.toFixed(2)+' dBV'],['dBµV',(dv+120).toFixed(2)+' dBµV']]);
+}
+listen(['db_x','db_t'],dbconv);
+listen(['dm_x','dm_u','dm_z'],dbm);
+
+/* ---------- WAVEFORMS ---------- */
+const WAVES={
+  sine:{pp:2,rms:Math.SQRT1_2,ravg:2/Math.PI,avg:0,f:t=>Math.sin(2*Math.PI*t)},
+  square:{pp:2,rms:1,ravg:1,avg:0,f:t=>(t%1)<0.5?1:-1},
+  tri:{pp:2,rms:1/Math.sqrt(3),ravg:0.5,avg:0,f:t=>{const u=(t+0.25)%1; return u<0.5?4*u-1:3-4*u;}},
+  full:{pp:1,rms:Math.SQRT1_2,ravg:2/Math.PI,avg:2/Math.PI,f:t=>Math.abs(Math.sin(2*Math.PI*t))},
+  half:{pp:1,rms:0.5,ravg:1/Math.PI,avg:1/Math.PI,f:t=>Math.max(0,Math.sin(2*Math.PI*t))}
+};
+function wvDia(sh,D,vals){
+  const W=330,H=170,x0=10,x1=250,yc=sh==='sine'||sh==='square'||sh==='tri'?86:132,amp=sh==='sine'||sh==='square'||sh==='tri'?62:108;
+  const w=WAVES[sh]||{f:t=>(t%1)<D?1:0}, Y=k=>yc-amp*k;
+  let pts=''; const N=sh==='square'||sh==='pulse'?800:240;
+  for(let i=0;i<=N;i++){const t=2*i/N; pts+=(i?'L':'M')+(x0+(x1-x0)*i/N).toFixed(1)+' '+Y(w.f(t-1e-9)).toFixed(1);}
+  let b=wire(`M${x0} ${yc}H${x1}`).replace('class="w"','class="w" style="stroke:var(--line)"')+`<path class="w" d="${pts}"/>`;
+  const line=(k,lab,val,col,dash)=>`<path d="M${x0} ${Y(k).toFixed(1)}H${x1}" stroke="${col}" stroke-width="1.5" ${dash?'stroke-dasharray="5 4"':''} fill="none"/>`+
+    txt(x1+8,Y(k)+4,lab+' '+val,'lb sm');
+  b+=line(1,'Peak',vals.pk,'var(--muted)',true)+line(vals.rmsk,'RMS',vals.rms,'var(--copper)',true);
+  if(vals.avgk>0.02&&Math.abs(vals.avgk-vals.rmsk)>0.06) b+=line(vals.avgk,'Avg',vals.avg,'var(--copperDim)',true);
+  b+=txt(x1+8,yc+4,'0','lb sm');
+  $('wv_dia').innerHTML=svg(W,H,b);
+}
+function wave(){
+  const sh=$('wv_shape').value, q=$('wv_q').value, pulse=sh==='pulse';
+  showL('wv_dl',pulse);
+  const sym2=sh==='sine'||sh==='square'||sh==='tri';
+  const ids=['wv_x'].concat(pulse?['wv_d']:[]), {v,bad}=read(ids);
+  const D=pulse?(v.wv_d!==null?v.wv_d/100:0.5):1;
+  const k=pulse?{pp:1,rms:Math.sqrt(D),ravg:D,avg:D}:WAVES[sh];
+  const x=v.wv_x, kq={pk:1,pp:k.pp,rms:k.rms,avg:k.ravg}[q];
+  const pk=(x>0&&kq>0)?x/kq:null;
+  const f=n=>pk===null?'?':(+(n).toPrecision(4))+'';
+  wvDia(sh,D,{pk:f(pk),rms:f(pk*k.rms),avg:f(pk*k.avg),rmsk:k.rms,avgk:k.avg});
+  if(bad) return $('wv_out').innerHTML=msg('Check the highlighted value.',true);
+  if(pulse&&!(D>0&&D<=1)) return $('wv_out').innerHTML=msg('Duty cycle must be between 0 and 100 %.',true);
+  if(!(x>0)) return $('wv_out').innerHTML=msg('Enter a value greater than 0.');
+  if(!(kq>0)) return $('wv_out').innerHTML=msg('That waveform averages to zero, so pick another quantity.',true);
+  const n=y=>(+y.toPrecision(4))+'';
+  const list=[['Peak',n(pk)],['Peak-to-peak',n(pk*k.pp)],['RMS',n(pk*k.rms)],
+    [sym2?'Average (full cycle)':'Average',n(pk*k.avg)]];
+  if(sym2) list.push(['Rectified average',n(pk*k.ravg)]);
+  list.push(['Crest factor (peak ÷ RMS)',(1/k.rms).toFixed(3)],['Form factor (RMS ÷ average)',(k.rms/k.ravg).toFixed(3)]);
+  let notes='';
+  if(sh==='square'||sh==='tri') notes=`<div class="note">An average-responding (non true-RMS) meter would show ${n(pk*k.ravg*Math.PI/(2*Math.SQRT2))} instead of the true RMS ${n(pk*k.rms)}.</div>`;
+  $('wv_out').innerHTML=rows(list)+notes;
+}
+listen(['wv_shape','wv_x','wv_q','wv_d'],wave);
+
 /* ---------- PCB TRACE ---------- */
 function traceDia(ext,wtxt,ttxt,I){
   let b=txt(20,16,ext?'External layer (cross-section)':'Internal layer (cross-section)','lb');
@@ -1800,6 +2035,9 @@ const EX={
   divider:[['d_vin','12'],['d_r1','10k'],['d_r2','3.3k'],['f_vin','5'],['f_vout','3.3'],['f_r2','10k'],['i_it','100m'],['i_r1','100'],['i_r2','220']],
   react:[['x_f','1k'],['x_r','100'],['x_l','10m'],['x_c','1u'],['x_v','5']],
   filt:[['fl_type','rclp'],['fl_r','1k'],['fl_l',''],['fl_c','100n'],['fl_t','']],
+  afilt:[['af_top','sk'],['af_type','lp'],['af_fc','1k'],['af_q','0.707'],['af_k','1'],['af_c','10n']],
+  db:[['db_t','vr'],['db_x','10'],['dm_u','dbm'],['dm_x','0'],['dm_z','50']],
+  wave:[['wv_shape','sine'],['wv_q','rms'],['wv_x','230'],['wv_d','50']],
   rc:[['rc_r','10k'],['rc_c','100u'],['rc_vs','5'],['rc_vt','3.3']],
   t555:[['t_mode','a'],['t_r1','1k'],['t_r2','10k'],['t_c','10u']],
   opamp:[['oa_mode','inv'],['oa_r1','10k'],['oa_rf','47k'],['oa_r2',''],['oa_v1','0.5'],['oa_v2',''],['oa_vs','12'],['oa_g','']],

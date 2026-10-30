@@ -168,7 +168,10 @@ footer .pages a{margin:0 2px}
   <a href="voltage-divider-calculator.html">Dividers</a>
   <a href="reactance-calculator.html">Reactance</a>
   <a href="filter-calculator.html">Filters</a>
+  <a href="active-filter-calculator.html">Active filter</a>
   <a href="rc-time-constant-calculator.html">RC time</a>
+  <a href="db-dbm-converter.html">dB converter</a>
+  <a href="rms-peak-average-calculator.html">RMS &amp; peak</a>
   <a href="555-timer-calculator.html">555 timer</a>
   <a href="op-amp-gain-calculator.html" aria-current="page">Op-amp</a>
   <a href="led-resistor-calculator.html">LED designer</a>
@@ -206,7 +209,7 @@ footer .pages a{margin:0 2px}
     <div class="out" id="oa_out"></div>
   </div>
   <div class="byline">
-  <span>Built by <a href="about.html">Vedax Global</a> · Last checked October 2026</span>
+  <span>Designed and tested by <a href="about.html">Vedax Global</a> · Last checked October 2026</span>
   <!-- CONTRIBUTOR CREDIT: to credit someone, delete the two comment marks around this block and fill in their details.
        Put their photo in a "credits" folder in the repo. Remove the <img> line if there is no photo.
   <span class="credit"><img src="credits/firstname-lastname.jpg" alt=""><span>Suggested by <b>Full Name</b>, Designation, Organisation</span></span>
@@ -223,7 +226,7 @@ footer .pages a{margin:0 2px}
 <p>Real op-amps can't swing their output past the supply rails, and their bandwidth shrinks as gain rises (bandwidth ≈ gain-bandwidth product ÷ gain). Resistors in the 1 kΩ–100 kΩ range work well for most designs.</p>
   </details></div>
 </section>
-<div class="block alltools"><h2>More calculators</h2><div class="cols"><div><h3>Basics</h3><ul><li><a href="ohms-law-calculator.html">Ohm&#x27;s law calculator</a></li><li><a href="series-parallel-calculator.html">Series and parallel calculator</a></li><li><a href="voltage-divider-calculator.html">Voltage divider calculator</a></li></ul></div><div><h3>AC and filters</h3><ul><li><a href="reactance-calculator.html">Reactance and impedance calculator</a></li><li><a href="filter-calculator.html">Filter cutoff calculator</a></li><li><a href="rc-time-constant-calculator.html">RC time constant calculator</a></li></ul></div><div><h3>Circuits</h3><ul><li><a href="555-timer-calculator.html">555 timer calculator</a></li><li><a href="op-amp-gain-calculator.html" aria-current="page">Op-amp gain calculator</a></li><li><a href="led-resistor-calculator.html">LED resistor calculator</a></li><li><a href="zener-diode-calculator.html">Zener regulator calculator</a></li></ul></div><div><h3>Power devices and thermal</h3><ul><li><a href="linear-regulator-heat-calculator.html">Linear regulator heat calculator</a></li><li><a href="mosfet-power-loss-calculator.html">MOSFET power loss calculator</a></li><li><a href="thermal-resistance-calculator.html">Thermal resistance calculator</a></li><li><a href="current-sense-resistor-calculator.html">Current sense resistor calculator</a></li></ul></div><div><h3>Batteries and wiring</h3><ul><li><a href="battery-pack-calculator.html">Battery pack calculator</a></li><li><a href="battery-life-calculator.html">Battery runtime calculator</a></li><li><a href="wire-resistance-calculator.html">Wire resistance calculator</a></li><li><a href="pcb-trace-width-calculator.html">PCB trace width calculator</a></li></ul></div><div><h3>Component codes</h3><ul><li><a href="resistor-color-code-calculator.html">Resistor color code calculator</a></li><li><a href="smd-capacitor-code-calculator.html">SMD resistor and capacitor code calculator</a></li></ul></div></div></div>
+<div class="block alltools"><h2>More calculators</h2><div class="cols"><div><h3>Basics</h3><ul><li><a href="ohms-law-calculator.html">Ohm&#x27;s law calculator</a></li><li><a href="series-parallel-calculator.html">Series and parallel calculator</a></li><li><a href="voltage-divider-calculator.html">Voltage divider calculator</a></li></ul></div><div><h3>AC, filters and signals</h3><ul><li><a href="reactance-calculator.html">Reactance and impedance calculator</a></li><li><a href="filter-calculator.html">Filter cutoff calculator</a></li><li><a href="active-filter-calculator.html">Active filter calculator</a></li><li><a href="rc-time-constant-calculator.html">RC time constant calculator</a></li><li><a href="db-dbm-converter.html">DB, dBm and ratio converter</a></li><li><a href="rms-peak-average-calculator.html">RMS, peak and average calculator</a></li></ul></div><div><h3>Circuits</h3><ul><li><a href="555-timer-calculator.html">555 timer calculator</a></li><li><a href="op-amp-gain-calculator.html" aria-current="page">Op-amp gain calculator</a></li><li><a href="led-resistor-calculator.html">LED resistor calculator</a></li><li><a href="zener-diode-calculator.html">Zener regulator calculator</a></li></ul></div><div><h3>Power devices and thermal</h3><ul><li><a href="linear-regulator-heat-calculator.html">Linear regulator heat calculator</a></li><li><a href="mosfet-power-loss-calculator.html">MOSFET power loss calculator</a></li><li><a href="thermal-resistance-calculator.html">Thermal resistance calculator</a></li><li><a href="current-sense-resistor-calculator.html">Current sense resistor calculator</a></li></ul></div><div><h3>Batteries and wiring</h3><ul><li><a href="battery-pack-calculator.html">Battery pack calculator</a></li><li><a href="battery-life-calculator.html">Battery runtime calculator</a></li><li><a href="wire-resistance-calculator.html">Wire resistance calculator</a></li><li><a href="pcb-trace-width-calculator.html">PCB trace width calculator</a></li></ul></div><div><h3>Component codes</h3><ul><li><a href="resistor-color-code-calculator.html">Resistor color code calculator</a></li><li><a href="smd-capacitor-code-calculator.html">SMD resistor and capacitor code calculator</a></li></ul></div></div></div>
 <footer>
   <div class="pages"><a href="about.html">About</a> · <a href="contact.html">Contact</a> · <a href="privacy.html">Privacy policy</a></div>
   <div>Made by Vedax Global. Free to use, no sign-up.</div>
@@ -339,7 +342,7 @@ function capDia(code){
 }
 
 /* ---------- tabs, groups and links ---------- */
-const GROUP={ohm:'basics',combine:'basics',divider:'basics',react:'ac',filt:'ac',rc:'ac',t555:'circuits',opamp:'circuits',led:'circuits',zener:'circuits',
+const GROUP={ohm:'basics',combine:'basics',divider:'basics',react:'ac',filt:'ac',afilt:'ac',db:'ac',wave:'ac',rc:'ac',t555:'circuits',opamp:'circuits',led:'circuits',zener:'circuits',
   lreg:'power',mosfet:'power',thermal:'power',sense:'power',pack:'power',run:'power',wire:'power',trace:'power',color:'codes',codes:'codes'};
 const lastInGroup={};
 function showTab(id){
@@ -485,6 +488,9 @@ const EX={
   divider:[['d_vin','12'],['d_r1','10k'],['d_r2','3.3k'],['f_vin','5'],['f_vout','3.3'],['f_r2','10k'],['i_it','100m'],['i_r1','100'],['i_r2','220']],
   react:[['x_f','1k'],['x_r','100'],['x_l','10m'],['x_c','1u'],['x_v','5']],
   filt:[['fl_type','rclp'],['fl_r','1k'],['fl_l',''],['fl_c','100n'],['fl_t','']],
+  afilt:[['af_top','sk'],['af_type','lp'],['af_fc','1k'],['af_q','0.707'],['af_k','1'],['af_c','10n']],
+  db:[['db_t','vr'],['db_x','10'],['dm_u','dbm'],['dm_x','0'],['dm_z','50']],
+  wave:[['wv_shape','sine'],['wv_q','rms'],['wv_x','230'],['wv_d','50']],
   rc:[['rc_r','10k'],['rc_c','100u'],['rc_vs','5'],['rc_vt','3.3']],
   t555:[['t_mode','a'],['t_r1','1k'],['t_r2','10k'],['t_c','10u']],
   opamp:[['oa_mode','inv'],['oa_r1','10k'],['oa_rf','47k'],['oa_r2',''],['oa_v1','0.5'],['oa_v2',''],['oa_vs','12'],['oa_g','']],
