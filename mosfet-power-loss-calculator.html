@@ -160,6 +160,24 @@ nav .ngh{display:none}
   .layout>nav button:hover,.layout>nav a:hover{background:var(--line);color:var(--silk)}
   .layout>nav button[aria-selected="true"],.layout>nav a[aria-current="page"]{background:var(--copper);color:var(--ontab);font-weight:700}
 }
+
+/* mobile-v2 */
+.grid label{justify-content:flex-end}
+@media (max-width:999px){
+  .block.two{display:flex;flex-direction:column}
+  .block.two>.top{order:0}
+  .block.two>.bot{order:1}
+  .block.two>.right{order:2}
+}
+@media (max-width:640px){
+  .wrap{padding-top:12px}
+  header h1{font-size:1.32rem;line-height:1.25;margin:2px 0 4px}
+  header p{font-size:.84rem;line-height:1.45;margin:0 0 8px}
+  .themes{gap:6px;margin:0 0 10px}
+  .themes span{display:none}
+  .themes button{width:22px;height:22px}
+  .crumb{margin:0}
+}
 </style>
 </head>
 <body>
@@ -224,22 +242,22 @@ nav .ngh{display:none}
     <h2>MOSFET power loss and heatsink</h2>
     <p class="hint">Take RDS(on), rise and fall times and thermal values from your MOSFET's datasheet. For a simple on/off switch, set frequency to 0.</p>
     <div class="grid">
-      <label>Voltage when off, VDS (V)<input id="mf_v" inputmode="decimal" placeholder="24"></label>
-      <label>Current when on (A)<input id="mf_i" inputmode="decimal" placeholder="10"></label>
-      <label>RDS(on) at 25 °C (Ω)<input id="mf_rds" inputmode="decimal" placeholder="10m"></label>
-      <label>RDS(on) hot factor (×)<input id="mf_hot" inputmode="decimal" value="1.5"></label>
-      <label>Duty cycle (%)<input id="mf_d" inputmode="decimal" placeholder="100"></label>
-      <label>Switching frequency (Hz)<input id="mf_f" inputmode="decimal" placeholder="200k"></label>
-      <label>Rise time (s)<input id="mf_tr" inputmode="decimal" placeholder="20n"></label>
-      <label>Fall time (s)<input id="mf_tf" inputmode="decimal" placeholder="20n"></label>
-      <label>Coss (F)<input id="mf_coss" inputmode="decimal" placeholder="optional"></label>
-      <label>Gate charge Qg (C)<input id="mf_qg" inputmode="decimal" placeholder="optional"></label>
-      <label>Gate drive voltage (V)<input id="mf_vg" inputmode="decimal" value="10"></label>
-      <label>Ambient (°C)<input id="mf_ta" inputmode="decimal" value="40"></label>
-      <label>θJC (°C/W)<input id="mf_tjc" inputmode="decimal" placeholder="1"></label>
-      <label>θCS pad or grease (°C/W)<input id="mf_tcs" inputmode="decimal" value="0.5"></label>
-      <label>θJA, no heatsink (°C/W)<input id="mf_tja" inputmode="decimal" placeholder="62"></label>
-      <label>Max junction (°C)<input id="mf_tjm" inputmode="decimal" value="150"></label>
+      <label>Voltage when off, VDS (V)<input id="mf_v" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="24"></label>
+      <label>Current when on (A)<input id="mf_i" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10"></label>
+      <label>RDS(on) at 25 °C (Ω)<input id="mf_rds" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10m"></label>
+      <label>RDS(on) hot factor (×)<input id="mf_hot" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="1.5"></label>
+      <label>Duty cycle (%)<input id="mf_d" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="100"></label>
+      <label>Switching frequency (Hz)<input id="mf_f" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="200k"></label>
+      <label>Rise time (s)<input id="mf_tr" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="20n"></label>
+      <label>Fall time (s)<input id="mf_tf" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="20n"></label>
+      <label>Coss (F)<input id="mf_coss" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>Gate charge Qg (C)<input id="mf_qg" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>Gate drive voltage (V)<input id="mf_vg" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="10"></label>
+      <label>Ambient (°C)<input id="mf_ta" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="40"></label>
+      <label>θJC (°C/W)<input id="mf_tjc" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="1"></label>
+      <label>θCS pad or grease (°C/W)<input id="mf_tcs" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="0.5"></label>
+      <label>θJA, no heatsink (°C/W)<input id="mf_tja" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="62"></label>
+      <label>Max junction (°C)<input id="mf_tjm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="150"></label>
     </div>
     <div class="dia" id="mf_dia"></div>
     <div class="out" id="mf_out"></div>
@@ -559,6 +577,10 @@ try{localStorage.setItem('eecalc-tab','mosfet')}catch(e){}
     else if(n.scrollHeight>n.clientHeight+1){const bot=Math.min(nr.bottom,innerHeight); if(ar.bottom>bot) n.scrollTop+=ar.bottom-bot+48; else if(ar.top<nr.top) n.scrollTop-=nr.top-ar.top+48;}}
   if(document.readyState==='complete') requestAnimationFrame(c); else addEventListener('load',()=>requestAnimationFrame(c)); n.addEventListener('click',()=>setTimeout(c,0)); window.addEventListener('hashchange',()=>setTimeout(c,0)); window.addEventListener('resize',c);
 })();
+</script>
+<script>
+/* phones: start with "How it works" folded so the results stay close */
+if(matchMedia('(max-width:999px)').matches) document.querySelectorAll('.learn details[open]').forEach(d=>d.removeAttribute('open'));
 </script>
 </body>
 </html>

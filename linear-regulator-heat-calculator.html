@@ -160,6 +160,24 @@ nav .ngh{display:none}
   .layout>nav button:hover,.layout>nav a:hover{background:var(--line);color:var(--silk)}
   .layout>nav button[aria-selected="true"],.layout>nav a[aria-current="page"]{background:var(--copper);color:var(--ontab);font-weight:700}
 }
+
+/* mobile-v2 */
+.grid label{justify-content:flex-end}
+@media (max-width:999px){
+  .block.two{display:flex;flex-direction:column}
+  .block.two>.top{order:0}
+  .block.two>.bot{order:1}
+  .block.two>.right{order:2}
+}
+@media (max-width:640px){
+  .wrap{padding-top:12px}
+  header h1{font-size:1.32rem;line-height:1.25;margin:2px 0 4px}
+  header p{font-size:.84rem;line-height:1.45;margin:0 0 8px}
+  .themes{gap:6px;margin:0 0 10px}
+  .themes span{display:none}
+  .themes button{width:22px;height:22px}
+  .crumb{margin:0}
+}
 </style>
 </head>
 <body>
@@ -228,15 +246,15 @@ nav .ngh{display:none}
         <option value="7805">7805 (TO-220)</option><option value="ams">AMS1117 (SOT-223)</option>
         <option value="317">LM317 (TO-220)</option><option value="custom">Custom</option>
       </select></label>
-      <label>Input voltage (V)<input id="g_vin" inputmode="decimal" placeholder="12"></label>
-      <label>Output voltage (V)<input id="g_vout" inputmode="decimal" placeholder="5"></label>
-      <label>Load current (A)<input id="g_i" inputmode="decimal" placeholder="300m"></label>
-      <label>Ambient (°C)<input id="g_ta" inputmode="decimal" value="30"></label>
-      <label>θJA (°C/W)<input id="g_tja" inputmode="decimal"></label>
-      <label>θJC (°C/W)<input id="g_tjc" inputmode="decimal"></label>
-      <label>Max junction (°C)<input id="g_tjm" inputmode="decimal"></label>
-      <label>Dropout (V)<input id="g_drop" inputmode="decimal"></label>
-      <label>Quiescent current (A)<input id="g_iq" inputmode="decimal"></label>
+      <label>Input voltage (V)<input id="g_vin" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="12"></label>
+      <label>Output voltage (V)<input id="g_vout" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="5"></label>
+      <label>Load current (A)<input id="g_i" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="300m"></label>
+      <label>Ambient (°C)<input id="g_ta" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="30"></label>
+      <label>θJA (°C/W)<input id="g_tja" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></label>
+      <label>θJC (°C/W)<input id="g_tjc" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></label>
+      <label>Max junction (°C)<input id="g_tjm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></label>
+      <label>Dropout (V)<input id="g_drop" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></label>
+      <label>Quiescent current (A)<input id="g_iq" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></label>
     </div>
     <div class="dia" id="g_dia"></div>
     <div class="out" id="g_out"></div>
@@ -550,6 +568,10 @@ try{localStorage.setItem('eecalc-tab','lreg')}catch(e){}
     else if(n.scrollHeight>n.clientHeight+1){const bot=Math.min(nr.bottom,innerHeight); if(ar.bottom>bot) n.scrollTop+=ar.bottom-bot+48; else if(ar.top<nr.top) n.scrollTop-=nr.top-ar.top+48;}}
   if(document.readyState==='complete') requestAnimationFrame(c); else addEventListener('load',()=>requestAnimationFrame(c)); n.addEventListener('click',()=>setTimeout(c,0)); window.addEventListener('hashchange',()=>setTimeout(c,0)); window.addEventListener('resize',c);
 })();
+</script>
+<script>
+/* phones: start with "How it works" folded so the results stay close */
+if(matchMedia('(max-width:999px)').matches) document.querySelectorAll('.learn details[open]').forEach(d=>d.removeAttribute('open'));
 </script>
 </body>
 </html>

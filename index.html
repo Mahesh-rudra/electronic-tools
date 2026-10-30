@@ -153,6 +153,24 @@ nav .ngh{display:none}
   .layout>nav button:hover,.layout>nav a:hover{background:var(--line);color:var(--silk)}
   .layout>nav button[aria-selected="true"],.layout>nav a[aria-current="page"]{background:var(--copper);color:var(--ontab);font-weight:700}
 }
+
+/* mobile-v2 */
+.grid label{justify-content:flex-end}
+@media (max-width:999px){
+  .block.two{display:flex;flex-direction:column}
+  .block.two>.top{order:0}
+  .block.two>.bot{order:1}
+  .block.two>.right{order:2}
+}
+@media (max-width:640px){
+  .wrap{padding-top:12px}
+  header h1{font-size:1.32rem;line-height:1.25;margin:2px 0 4px}
+  header p{font-size:.84rem;line-height:1.45;margin:0 0 8px}
+  .themes{gap:6px;margin:0 0 10px}
+  .themes span{display:none}
+  .themes button{width:22px;height:22px}
+  .crumb{margin:0}
+}
 </style>
 </head>
 <body>
@@ -217,10 +235,10 @@ nav .ngh{display:none}
     <h2>Ohm's law and power</h2>
     <p class="hint">Fill in any two. The other two are calculated.</p>
     <div class="grid">
-      <label>Voltage (V)<input id="o_v" inputmode="decimal" placeholder="12"></label>
-      <label>Current (A)<input id="o_i" inputmode="decimal" placeholder="20m"></label>
-      <label>Resistance (Ω)<input id="o_r" inputmode="decimal" placeholder="470"></label>
-      <label>Power (W)<input id="o_p" inputmode="decimal" placeholder="0.25"></label>
+      <label>Voltage (V)<input id="o_v" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="12"></label>
+      <label>Current (A)<input id="o_i" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="20m"></label>
+      <label>Resistance (Ω)<input id="o_r" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="470"></label>
+      <label>Power (W)<input id="o_p" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="0.25"></label>
     </div>
     <div class="dia" id="o_dia"></div>
     <div class="out" id="o_out"></div>
@@ -266,9 +284,9 @@ nav .ngh{display:none}
     <h2>Voltage divider</h2>
     <p class="hint">Vout is measured across R2 (the bottom resistor).</p>
     <div class="grid">
-      <label>Vin (V)<input id="d_vin" inputmode="decimal" placeholder="12"></label>
-      <label>R1 top (Ω)<input id="d_r1" inputmode="decimal" placeholder="10k"></label>
-      <label>R2 bottom (Ω)<input id="d_r2" inputmode="decimal" placeholder="3.3k"></label>
+      <label>Vin (V)<input id="d_vin" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="12"></label>
+      <label>R1 top (Ω)<input id="d_r1" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10k"></label>
+      <label>R2 bottom (Ω)<input id="d_r2" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="3.3k"></label>
     </div>
     <div class="dia" id="d_dia"></div>
     <div class="out" id="d_out"></div>
@@ -277,9 +295,9 @@ nav .ngh{display:none}
     <h2>Find R1 for a target Vout</h2>
     <p class="hint">Gives the exact value and the nearest E96 (1%) standard resistor.</p>
     <div class="grid">
-      <label>Vin (V)<input id="f_vin" inputmode="decimal" placeholder="5"></label>
-      <label>Target Vout (V)<input id="f_vout" inputmode="decimal" placeholder="3.3"></label>
-      <label>R2 bottom (Ω)<input id="f_r2" inputmode="decimal" placeholder="10k"></label>
+      <label>Vin (V)<input id="f_vin" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="5"></label>
+      <label>Target Vout (V)<input id="f_vout" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="3.3"></label>
+      <label>R2 bottom (Ω)<input id="f_r2" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10k"></label>
     </div>
     <div class="dia" id="f_dia"></div>
     <div class="out" id="f_out"></div>
@@ -288,9 +306,9 @@ nav .ngh{display:none}
     <h2>Current divider</h2>
     <p class="hint">Two resistors in parallel sharing a total current.</p>
     <div class="grid">
-      <label>Total current (A)<input id="i_it" inputmode="decimal" placeholder="100m"></label>
-      <label>R1 (Ω)<input id="i_r1" inputmode="decimal" placeholder="100"></label>
-      <label>R2 (Ω)<input id="i_r2" inputmode="decimal" placeholder="220"></label>
+      <label>Total current (A)<input id="i_it" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="100m"></label>
+      <label>R1 (Ω)<input id="i_r1" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="100"></label>
+      <label>R2 (Ω)<input id="i_r2" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="220"></label>
     </div>
     <div class="dia" id="i_dia"></div>
     <div class="out" id="i_out"></div>
@@ -313,10 +331,10 @@ nav .ngh{display:none}
     <div class="grid">
       <label>Topology<select id="af_top"><option value="sk">Sallen-Key (unity gain)</option><option value="mfb">Multiple feedback (MFB)</option></select></label>
       <label>Type<select id="af_type"><option value="lp">Low-pass</option><option value="hp">High-pass</option></select></label>
-      <label>Cutoff frequency (Hz)<input id="af_fc" inputmode="decimal" placeholder="1k"></label>
-      <label>Q<input id="af_q" inputmode="decimal" value="0.707"></label>
-      <label id="af_kl">Gain (V/V)<input id="af_k" inputmode="decimal" value="1"></label>
-      <label id="af_cl">Capacitor C (F)<input id="af_c" inputmode="decimal" placeholder="10n"></label>
+      <label>Cutoff frequency (Hz)<input id="af_fc" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="1k"></label>
+      <label>Q<input id="af_q" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="0.707"></label>
+      <label id="af_kl">Gain (V/V)<input id="af_k" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="1"></label>
+      <label id="af_cl">Capacitor C (F)<input id="af_c" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10n"></label>
     </div>
     <div class="dia" id="af_dia"></div>
     <div class="out" id="af_out"></div>
@@ -337,7 +355,7 @@ nav .ngh{display:none}
     <h2>dB and ratios</h2>
     <p class="hint">Enter a voltage ratio, power ratio or dB value.</p>
     <div class="grid">
-      <label>Value<input id="db_x" inputmode="decimal" placeholder="10"></label>
+      <label>Value<input id="db_x" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10"></label>
       <label>The value is<select id="db_t"><option value="vr">Voltage ratio (V/V)</option><option value="pr">Power ratio (W/W)</option><option value="db">dB</option></select></label>
     </div>
     <div class="out" id="db_out"></div>
@@ -346,9 +364,9 @@ nav .ngh{display:none}
     <h2>dBm, watts and volts</h2>
     <p class="hint">Voltages assume a sine wave across the given impedance.</p>
     <div class="grid">
-      <label>Value<input id="dm_x" inputmode="decimal" placeholder="0"></label>
+      <label>Value<input id="dm_x" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="0"></label>
       <label>Unit<select id="dm_u"><option value="dbm">dBm</option><option value="w">Watts</option><option value="v">Volts RMS</option></select></label>
-      <label>Impedance (Ω)<input id="dm_z" inputmode="decimal" value="50"></label>
+      <label>Impedance (Ω)<input id="dm_z" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="50"></label>
     </div>
     <div class="out" id="dm_out"></div>
   </div>
@@ -372,9 +390,9 @@ nav .ngh{display:none}
         <option value="sine">Sine</option><option value="square">Square (±)</option><option value="tri">Triangle</option>
         <option value="pulse">Pulse / PWM (0 to peak)</option><option value="full">Full-wave rectified sine</option><option value="half">Half-wave rectified sine</option>
       </select></label>
-      <label>Value<input id="wv_x" inputmode="decimal" placeholder="230"></label>
+      <label>Value<input id="wv_x" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="230"></label>
       <label>The value is<select id="wv_q"><option value="rms">RMS</option><option value="pk">Peak</option><option value="pp">Peak-to-peak</option><option value="avg">Average</option></select></label>
-      <label id="wv_dl">Duty cycle (%)<input id="wv_d" inputmode="decimal" value="50"></label>
+      <label id="wv_dl">Duty cycle (%)<input id="wv_d" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="50"></label>
     </div>
     <div class="dia" id="wv_dia"></div>
     <div class="out" id="wv_out"></div>
@@ -393,10 +411,10 @@ nav .ngh{display:none}
     <h2>RC time constant</h2>
     <p class="hint">A capacitor charging through a resistor. Target voltage is optional.</p>
     <div class="grid">
-      <label>Resistance (Ω)<input id="rc_r" inputmode="decimal" placeholder="10k"></label>
-      <label>Capacitance (F)<input id="rc_c" inputmode="decimal" placeholder="100u"></label>
-      <label>Supply (V)<input id="rc_vs" inputmode="decimal" value="5"></label>
-      <label>Target voltage (V)<input id="rc_vt" inputmode="decimal" placeholder="3.3"></label>
+      <label>Resistance (Ω)<input id="rc_r" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10k"></label>
+      <label>Capacitance (F)<input id="rc_c" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="100u"></label>
+      <label>Supply (V)<input id="rc_vs" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="5"></label>
+      <label>Target voltage (V)<input id="rc_vt" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="3.3"></label>
     </div>
     <div class="dia" id="rc_dia"></div>
     <div class="out" id="rc_out"></div>
@@ -416,9 +434,9 @@ nav .ngh{display:none}
     <p class="hint" id="t_hint"></p>
     <div class="grid">
       <label>Mode<select id="t_mode"><option value="a">Astable (oscillator)</option><option value="m">Monostable (one-shot)</option></select></label>
-      <label id="t_r1l">R1 (Ω)<input id="t_r1" inputmode="decimal" placeholder="1k"></label>
-      <label id="t_r2l">R2 (Ω)<input id="t_r2" inputmode="decimal" placeholder="10k"></label>
-      <label>C (F)<input id="t_c" inputmode="decimal" placeholder="10u"></label>
+      <label id="t_r1l">R1 (Ω)<input id="t_r1" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="1k"></label>
+      <label id="t_r2l">R2 (Ω)<input id="t_r2" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10k"></label>
+      <label>C (F)<input id="t_c" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10u"></label>
     </div>
     <div class="dia" id="t_sch"></div>
     <div class="dia" id="t_dia"></div>
@@ -441,9 +459,9 @@ nav .ngh{display:none}
     <h2>LED series / parallel designer</h2>
     <p class="hint">Typical Vf: red 2.0 V, yellow 2.1 V, green, blue and white 3.0–3.3 V.</p>
     <div class="grid">
-      <label>Supply (V)<input id="l_vs" inputmode="decimal" placeholder="12"></label>
-      <label>LED forward voltage (V)<input id="l_vf" inputmode="decimal" value="2"></label>
-      <label>LED current (A)<input id="l_if" inputmode="decimal" value="20m"></label>
+      <label>Supply (V)<input id="l_vs" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="12"></label>
+      <label>LED forward voltage (V)<input id="l_vf" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="2"></label>
+      <label>LED current (A)<input id="l_if" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="20m"></label>
       <label>Number of LEDs<input id="l_n" inputmode="numeric" placeholder="10"></label>
       <label>LEDs per string<input id="l_per" inputmode="numeric" placeholder="auto"></label>
     </div>
@@ -466,11 +484,11 @@ nav .ngh{display:none}
     <div class="grid">
       <label>Cells in series (S)<input id="p_s" inputmode="numeric" placeholder="4"></label>
       <label>Cells in parallel (P)<input id="p_p" inputmode="numeric" placeholder="2"></label>
-      <label>Cell capacity (mAh)<input id="p_cap" inputmode="decimal" placeholder="2600"></label>
-      <label>Cell nominal (V)<input id="p_v" inputmode="decimal" value="3.7"></label>
-      <label>Cell full (V)<input id="p_full" inputmode="decimal" value="4.2"></label>
-      <label>Cell empty (V)<input id="p_empty" inputmode="decimal" value="3.0"></label>
-      <label>Max cell current (A)<input id="p_imax" inputmode="decimal" placeholder="optional"></label>
+      <label>Cell capacity (mAh)<input id="p_cap" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="2600"></label>
+      <label>Cell nominal (V)<input id="p_v" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="3.7"></label>
+      <label>Cell full (V)<input id="p_full" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="4.2"></label>
+      <label>Cell empty (V)<input id="p_empty" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="3.0"></label>
+      <label>Max cell current (A)<input id="p_imax" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
     </div>
     <div class="dia" id="p_dia"></div>
     <div class="out" id="p_out"></div>
@@ -489,12 +507,12 @@ nav .ngh{display:none}
     <h2>Li-ion battery runtime</h2>
     <p class="hint">For devices that sleep, enter the sleep current and the share of time spent active.</p>
     <div class="grid">
-      <label>Capacity (mAh)<input id="r_cap" inputmode="decimal" placeholder="2000"></label>
-      <label>Nominal voltage (V)<input id="r_v" inputmode="decimal" value="3.7"></label>
-      <label>Usable capacity (%)<input id="r_use" inputmode="decimal" value="80"></label>
-      <label>Active current (A)<input id="r_ia" inputmode="decimal" placeholder="120m"></label>
-      <label>Sleep current (A)<input id="r_is" inputmode="decimal" placeholder="optional, e.g. 10u"></label>
-      <label>Active time (%)<input id="r_duty" inputmode="decimal" value="100"></label>
+      <label>Capacity (mAh)<input id="r_cap" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="2000"></label>
+      <label>Nominal voltage (V)<input id="r_v" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="3.7"></label>
+      <label>Usable capacity (%)<input id="r_use" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="80"></label>
+      <label>Active current (A)<input id="r_ia" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="120m"></label>
+      <label>Sleep current (A)<input id="r_is" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional, e.g. 10u"></label>
+      <label>Active time (%)<input id="r_duty" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="100"></label>
     </div>
     <div class="dia" id="r_dia"></div>
     <div class="out" id="r_out"></div>
@@ -522,12 +540,12 @@ nav .ngh{display:none}
       <label>Size given as<select id="w_type">
         <option value="awg">AWG</option><option value="d">Diameter (mm)</option><option value="a">Area (mm²)</option>
       </select></label>
-      <label>Size<input id="w_size" inputmode="decimal" placeholder="18"></label>
-      <label>Length (m)<input id="w_len" inputmode="decimal" placeholder="10"></label>
+      <label>Size<input id="w_size" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="18"></label>
+      <label>Length (m)<input id="w_len" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10"></label>
       <label>Path<select id="w_path"><option value="1">One way</option><option value="2">Round trip</option></select></label>
-      <label>Current (A)<input id="w_i" inputmode="decimal" placeholder="optional"></label>
-      <label>Supply (V)<input id="w_vs" inputmode="decimal" placeholder="optional"></label>
-      <label>Temperature (°C)<input id="w_t" inputmode="decimal" value="20"></label>
+      <label>Current (A)<input id="w_i" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>Supply (V)<input id="w_vs" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>Temperature (°C)<input id="w_t" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="20"></label>
     </div>
     <div class="dia" id="w_dia"></div>
     <div class="out" id="w_out"></div>
@@ -548,11 +566,11 @@ nav .ngh{display:none}
     <h2>Reactance and impedance</h2>
     <p class="hint">Series circuit. Leave R, L or C blank to leave it out. Voltage is optional.</p>
     <div class="grid">
-      <label>Frequency (Hz)<input id="x_f" inputmode="decimal" placeholder="1k"></label>
-      <label>Resistance (Ω)<input id="x_r" inputmode="decimal" placeholder="100"></label>
-      <label>Inductance (H)<input id="x_l" inputmode="decimal" placeholder="10m"></label>
-      <label>Capacitance (F)<input id="x_c" inputmode="decimal" placeholder="1u"></label>
-      <label>Voltage (V rms)<input id="x_v" inputmode="decimal" placeholder="optional"></label>
+      <label>Frequency (Hz)<input id="x_f" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="1k"></label>
+      <label>Resistance (Ω)<input id="x_r" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="100"></label>
+      <label>Inductance (H)<input id="x_l" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10m"></label>
+      <label>Capacitance (F)<input id="x_c" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="1u"></label>
+      <label>Voltage (V rms)<input id="x_v" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
     </div>
     <div class="dia" id="x_dia"></div>
     <div class="out" id="x_out"></div>
@@ -577,10 +595,10 @@ nav .ngh{display:none}
         <option value="rllp">RL low-pass</option><option value="rlhp">RL high-pass</option>
         <option value="rlc">RLC band-pass / LC resonance</option>
       </select></label>
-      <label id="fl_rl">Resistance (Ω)<input id="fl_r" inputmode="decimal" placeholder="1k"></label>
-      <label id="fl_ll">Inductance (H)<input id="fl_l" inputmode="decimal" placeholder="10m"></label>
-      <label id="fl_cl">Capacitance (F)<input id="fl_c" inputmode="decimal" placeholder="100n"></label>
-      <label id="fl_tl">Target cutoff (Hz)<input id="fl_t" inputmode="decimal" placeholder="optional"></label>
+      <label id="fl_rl">Resistance (Ω)<input id="fl_r" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="1k"></label>
+      <label id="fl_ll">Inductance (H)<input id="fl_l" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10m"></label>
+      <label id="fl_cl">Capacitance (F)<input id="fl_c" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="100n"></label>
+      <label id="fl_tl">Target cutoff (Hz)<input id="fl_t" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
     </div>
     <div class="dia" id="fl_dia"></div>
     <div class="out" id="fl_out"></div>
@@ -605,13 +623,13 @@ nav .ngh{display:none}
         <option value="inv">Inverting</option><option value="non">Non-inverting</option>
         <option value="diff">Differential</option><option value="sum">Summing (inverting)</option>
       </select></label>
-      <label id="oa_r1l">R1 (Ω)<input id="oa_r1" inputmode="decimal" placeholder="10k"></label>
-      <label id="oa_rfl">Rf (Ω)<input id="oa_rf" inputmode="decimal" placeholder="47k"></label>
-      <label id="oa_r2l">R2 (Ω)<input id="oa_r2" inputmode="decimal" placeholder="10k"></label>
-      <label id="oa_v1l">Vin (V)<input id="oa_v1" inputmode="decimal" placeholder="optional"></label>
-      <label id="oa_v2l">V2 (V)<input id="oa_v2" inputmode="decimal" placeholder="optional"></label>
-      <label>Supply ± (V)<input id="oa_vs" inputmode="decimal" placeholder="optional"></label>
-      <label id="oa_gl">Target gain<input id="oa_g" inputmode="decimal" placeholder="optional"></label>
+      <label id="oa_r1l">R1 (Ω)<input id="oa_r1" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10k"></label>
+      <label id="oa_rfl">Rf (Ω)<input id="oa_rf" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="47k"></label>
+      <label id="oa_r2l">R2 (Ω)<input id="oa_r2" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10k"></label>
+      <label id="oa_v1l">Vin (V)<input id="oa_v1" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label id="oa_v2l">V2 (V)<input id="oa_v2" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>Supply ± (V)<input id="oa_vs" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label id="oa_gl">Target gain<input id="oa_g" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
     </div>
     <div class="dia" id="oa_dia"></div>
     <div class="out" id="oa_out"></div>
@@ -634,11 +652,11 @@ nav .ngh{display:none}
     <h2>Zener regulator</h2>
     <p class="hint">Picks the series resistor so the Zener still regulates at the lowest input and full load.</p>
     <div class="grid">
-      <label>Vin minimum (V)<input id="z_vmin" inputmode="decimal" placeholder="9"></label>
-      <label>Vin maximum (V)<input id="z_vmax" inputmode="decimal" placeholder="optional"></label>
-      <label>Zener voltage (V)<input id="z_vz" inputmode="decimal" placeholder="5.1"></label>
-      <label>Max load current (A)<input id="z_il" inputmode="decimal" placeholder="20m"></label>
-      <label>Min Zener current (A)<input id="z_izm" inputmode="decimal" value="5m"></label>
+      <label>Vin minimum (V)<input id="z_vmin" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="9"></label>
+      <label>Vin maximum (V)<input id="z_vmax" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>Zener voltage (V)<input id="z_vz" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="5.1"></label>
+      <label>Max load current (A)<input id="z_il" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="20m"></label>
+      <label>Min Zener current (A)<input id="z_izm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="5m"></label>
     </div>
     <div class="dia" id="z_dia"></div>
     <div class="out" id="z_out"></div>
@@ -662,15 +680,15 @@ nav .ngh{display:none}
         <option value="7805">7805 (TO-220)</option><option value="ams">AMS1117 (SOT-223)</option>
         <option value="317">LM317 (TO-220)</option><option value="custom">Custom</option>
       </select></label>
-      <label>Input voltage (V)<input id="g_vin" inputmode="decimal" placeholder="12"></label>
-      <label>Output voltage (V)<input id="g_vout" inputmode="decimal" placeholder="5"></label>
-      <label>Load current (A)<input id="g_i" inputmode="decimal" placeholder="300m"></label>
-      <label>Ambient (°C)<input id="g_ta" inputmode="decimal" value="30"></label>
-      <label>θJA (°C/W)<input id="g_tja" inputmode="decimal"></label>
-      <label>θJC (°C/W)<input id="g_tjc" inputmode="decimal"></label>
-      <label>Max junction (°C)<input id="g_tjm" inputmode="decimal"></label>
-      <label>Dropout (V)<input id="g_drop" inputmode="decimal"></label>
-      <label>Quiescent current (A)<input id="g_iq" inputmode="decimal"></label>
+      <label>Input voltage (V)<input id="g_vin" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="12"></label>
+      <label>Output voltage (V)<input id="g_vout" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="5"></label>
+      <label>Load current (A)<input id="g_i" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="300m"></label>
+      <label>Ambient (°C)<input id="g_ta" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="30"></label>
+      <label>θJA (°C/W)<input id="g_tja" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></label>
+      <label>θJC (°C/W)<input id="g_tjc" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></label>
+      <label>Max junction (°C)<input id="g_tjm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></label>
+      <label>Dropout (V)<input id="g_drop" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></label>
+      <label>Quiescent current (A)<input id="g_iq" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></label>
     </div>
     <div class="dia" id="g_dia"></div>
     <div class="out" id="g_out"></div>
@@ -691,22 +709,22 @@ nav .ngh{display:none}
     <h2>MOSFET power loss and heatsink</h2>
     <p class="hint">Take RDS(on), rise and fall times and thermal values from your MOSFET's datasheet. For a simple on/off switch, set frequency to 0.</p>
     <div class="grid">
-      <label>Voltage when off, VDS (V)<input id="mf_v" inputmode="decimal" placeholder="24"></label>
-      <label>Current when on (A)<input id="mf_i" inputmode="decimal" placeholder="10"></label>
-      <label>RDS(on) at 25 °C (Ω)<input id="mf_rds" inputmode="decimal" placeholder="10m"></label>
-      <label>RDS(on) hot factor (×)<input id="mf_hot" inputmode="decimal" value="1.5"></label>
-      <label>Duty cycle (%)<input id="mf_d" inputmode="decimal" placeholder="100"></label>
-      <label>Switching frequency (Hz)<input id="mf_f" inputmode="decimal" placeholder="200k"></label>
-      <label>Rise time (s)<input id="mf_tr" inputmode="decimal" placeholder="20n"></label>
-      <label>Fall time (s)<input id="mf_tf" inputmode="decimal" placeholder="20n"></label>
-      <label>Coss (F)<input id="mf_coss" inputmode="decimal" placeholder="optional"></label>
-      <label>Gate charge Qg (C)<input id="mf_qg" inputmode="decimal" placeholder="optional"></label>
-      <label>Gate drive voltage (V)<input id="mf_vg" inputmode="decimal" value="10"></label>
-      <label>Ambient (°C)<input id="mf_ta" inputmode="decimal" value="40"></label>
-      <label>θJC (°C/W)<input id="mf_tjc" inputmode="decimal" placeholder="1"></label>
-      <label>θCS pad or grease (°C/W)<input id="mf_tcs" inputmode="decimal" value="0.5"></label>
-      <label>θJA, no heatsink (°C/W)<input id="mf_tja" inputmode="decimal" placeholder="62"></label>
-      <label>Max junction (°C)<input id="mf_tjm" inputmode="decimal" value="150"></label>
+      <label>Voltage when off, VDS (V)<input id="mf_v" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="24"></label>
+      <label>Current when on (A)<input id="mf_i" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10"></label>
+      <label>RDS(on) at 25 °C (Ω)<input id="mf_rds" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10m"></label>
+      <label>RDS(on) hot factor (×)<input id="mf_hot" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="1.5"></label>
+      <label>Duty cycle (%)<input id="mf_d" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="100"></label>
+      <label>Switching frequency (Hz)<input id="mf_f" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="200k"></label>
+      <label>Rise time (s)<input id="mf_tr" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="20n"></label>
+      <label>Fall time (s)<input id="mf_tf" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="20n"></label>
+      <label>Coss (F)<input id="mf_coss" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>Gate charge Qg (C)<input id="mf_qg" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>Gate drive voltage (V)<input id="mf_vg" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="10"></label>
+      <label>Ambient (°C)<input id="mf_ta" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="40"></label>
+      <label>θJC (°C/W)<input id="mf_tjc" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="1"></label>
+      <label>θCS pad or grease (°C/W)<input id="mf_tcs" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="0.5"></label>
+      <label>θJA, no heatsink (°C/W)<input id="mf_tja" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="62"></label>
+      <label>Max junction (°C)<input id="mf_tjm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="150"></label>
     </div>
     <div class="dia" id="mf_dia"></div>
     <div class="out" id="mf_out"></div>
@@ -730,21 +748,21 @@ nav .ngh{display:none}
     <h2>Thermal resistance, junction to ambient</h2>
     <p class="hint">Add up the heat path from the chip to the air and find the temperature at each point.</p>
     <div class="grid">
-      <label>Power dissipated (W)<input id="th_p" inputmode="decimal" placeholder="5"></label>
-      <label>Ambient (°C)<input id="th_ta" inputmode="decimal" value="40"></label>
-      <label>Max junction (°C)<input id="th_tjm" inputmode="decimal" value="150"></label>
+      <label>Power dissipated (W)<input id="th_p" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="5"></label>
+      <label>Ambient (°C)<input id="th_ta" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="40"></label>
+      <label>Max junction (°C)<input id="th_tjm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="150"></label>
       <label>Mounting<select id="th_mode">
         <option value="pad">Heatsink with thermal pad</option>
         <option value="val">Heatsink, known θCS</option>
         <option value="none">No heatsink</option>
       </select></label>
-      <label id="th_tjcl">θJC (°C/W)<input id="th_tjc" inputmode="decimal" placeholder="1.5"></label>
-      <label id="th_kl">Pad conductivity (W/m·K)<input id="th_k" inputmode="decimal" value="3"></label>
-      <label id="th_tl">Pad thickness (mm)<input id="th_t" inputmode="decimal" placeholder="0.5"></label>
-      <label id="th_al">Contact area (mm²)<input id="th_a" inputmode="decimal" placeholder="150"></label>
-      <label id="th_tcsl">θCS (°C/W)<input id="th_tcs" inputmode="decimal" placeholder="0.5"></label>
-      <label id="th_tsal">Heatsink θSA (°C/W)<input id="th_tsa" inputmode="decimal" placeholder="8"></label>
-      <label id="th_tjal">θJA (°C/W)<input id="th_tja" inputmode="decimal" placeholder="62"></label>
+      <label id="th_tjcl">θJC (°C/W)<input id="th_tjc" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="1.5"></label>
+      <label id="th_kl">Pad conductivity (W/m·K)<input id="th_k" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="3"></label>
+      <label id="th_tl">Pad thickness (mm)<input id="th_t" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="0.5"></label>
+      <label id="th_al">Contact area (mm²)<input id="th_a" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="150"></label>
+      <label id="th_tcsl">θCS (°C/W)<input id="th_tcs" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="0.5"></label>
+      <label id="th_tsal">Heatsink θSA (°C/W)<input id="th_tsa" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="8"></label>
+      <label id="th_tjal">θJA (°C/W)<input id="th_tja" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="62"></label>
     </div>
     <div class="dia" id="th_dia"></div>
     <div class="out" id="th_out"></div>
@@ -766,11 +784,11 @@ nav .ngh{display:none}
     <h2>Current sense resistor</h2>
     <p class="hint">Typical full-scale sense voltage is 50 to 100 mV for a current-sense amplifier.</p>
     <div class="grid">
-      <label>Max current (A)<input id="cs_i" inputmode="decimal" placeholder="5"></label>
-      <label>Full-scale sense voltage (V)<input id="cs_v" inputmode="decimal" placeholder="100m"></label>
-      <label>Your resistor (Ω)<input id="cs_r" inputmode="decimal" placeholder="optional"></label>
-      <label>Amplifier gain (V/V)<input id="cs_g" inputmode="decimal" placeholder="optional"></label>
-      <label>Supply voltage (V)<input id="cs_vs" inputmode="decimal" placeholder="optional"></label>
+      <label>Max current (A)<input id="cs_i" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="5"></label>
+      <label>Full-scale sense voltage (V)<input id="cs_v" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="100m"></label>
+      <label>Your resistor (Ω)<input id="cs_r" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>Amplifier gain (V/V)<input id="cs_g" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>Supply voltage (V)<input id="cs_vs" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
     </div>
     <div class="dia" id="cs_dia"></div>
     <div class="out" id="cs_out"></div>
@@ -789,14 +807,14 @@ nav .ngh{display:none}
     <h2>PCB trace width (IPC-2221)</h2>
     <p class="hint">Valid for up to about 35 A, 10–100 °C rise and widths up to 400 mil. Length is optional.</p>
     <div class="grid">
-      <label>Current (A)<input id="pc_i" inputmode="decimal" placeholder="2"></label>
-      <label>Temperature rise (°C)<input id="pc_dt" inputmode="decimal" value="10"></label>
+      <label>Current (A)<input id="pc_i" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="2"></label>
+      <label>Temperature rise (°C)<input id="pc_dt" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="10"></label>
       <label>Copper weight<select id="pc_oz">
         <option value="0.5">0.5 oz (18 µm)</option><option value="1" selected>1 oz (35 µm)</option>
         <option value="2">2 oz (70 µm)</option><option value="3">3 oz (105 µm)</option>
       </select></label>
       <label>Layer<select id="pc_layer"><option value="ext">External (outer)</option><option value="int">Internal (inner)</option></select></label>
-      <label>Trace length (mm)<input id="pc_len" inputmode="decimal" placeholder="optional"></label>
+      <label>Trace length (mm)<input id="pc_len" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
     </div>
     <div class="dia" id="pc_dia"></div>
     <div class="out" id="pc_out"></div>
@@ -830,7 +848,7 @@ nav .ngh{display:none}
     <h2>Value to bands</h2>
     <p class="hint">Uses the band count selected above (4 or 5 bands).</p>
     <div class="inline">
-      <label>Resistance (Ω)<input id="r_rev" inputmode="decimal" placeholder="4.7k"></label>
+      <label>Resistance (Ω)<input id="r_rev" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="4.7k"></label>
       <button class="btn" id="r_rev_btn">Show bands</button>
     </div>
     <div class="msg" id="r_rev_msg" style="margin-top:8px"></div>
@@ -2113,6 +2131,10 @@ Object.keys(EX).forEach(id=>{
     else if(n.scrollHeight>n.clientHeight+1){const bot=Math.min(nr.bottom,innerHeight); if(ar.bottom>bot) n.scrollTop+=ar.bottom-bot+48; else if(ar.top<nr.top) n.scrollTop-=nr.top-ar.top+48;}}
   if(document.readyState==='complete') requestAnimationFrame(c); else addEventListener('load',()=>requestAnimationFrame(c)); n.addEventListener('click',()=>setTimeout(c,0)); window.addEventListener('hashchange',()=>setTimeout(c,0)); window.addEventListener('resize',c);
 })();
+</script>
+<script>
+/* phones: start with "How it works" folded so the results stay close */
+if(matchMedia('(max-width:999px)').matches) document.querySelectorAll('.learn details[open]').forEach(d=>d.removeAttribute('open'));
 </script>
 </body>
 </html>

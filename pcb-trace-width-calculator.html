@@ -160,6 +160,24 @@ nav .ngh{display:none}
   .layout>nav button:hover,.layout>nav a:hover{background:var(--line);color:var(--silk)}
   .layout>nav button[aria-selected="true"],.layout>nav a[aria-current="page"]{background:var(--copper);color:var(--ontab);font-weight:700}
 }
+
+/* mobile-v2 */
+.grid label{justify-content:flex-end}
+@media (max-width:999px){
+  .block.two{display:flex;flex-direction:column}
+  .block.two>.top{order:0}
+  .block.two>.bot{order:1}
+  .block.two>.right{order:2}
+}
+@media (max-width:640px){
+  .wrap{padding-top:12px}
+  header h1{font-size:1.32rem;line-height:1.25;margin:2px 0 4px}
+  header p{font-size:.84rem;line-height:1.45;margin:0 0 8px}
+  .themes{gap:6px;margin:0 0 10px}
+  .themes span{display:none}
+  .themes button{width:22px;height:22px}
+  .crumb{margin:0}
+}
 </style>
 </head>
 <body>
@@ -224,14 +242,14 @@ nav .ngh{display:none}
     <h2>PCB trace width (IPC-2221)</h2>
     <p class="hint">Valid for up to about 35 A, 10–100 °C rise and widths up to 400 mil. Length is optional.</p>
     <div class="grid">
-      <label>Current (A)<input id="pc_i" inputmode="decimal" placeholder="2"></label>
-      <label>Temperature rise (°C)<input id="pc_dt" inputmode="decimal" value="10"></label>
+      <label>Current (A)<input id="pc_i" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="2"></label>
+      <label>Temperature rise (°C)<input id="pc_dt" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="10"></label>
       <label>Copper weight<select id="pc_oz">
         <option value="0.5">0.5 oz (18 µm)</option><option value="1" selected>1 oz (35 µm)</option>
         <option value="2">2 oz (70 µm)</option><option value="3">3 oz (105 µm)</option>
       </select></label>
       <label>Layer<select id="pc_layer"><option value="ext">External (outer)</option><option value="int">Internal (inner)</option></select></label>
-      <label>Trace length (mm)<input id="pc_len" inputmode="decimal" placeholder="optional"></label>
+      <label>Trace length (mm)<input id="pc_len" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
     </div>
     <div class="dia" id="pc_dia"></div>
     <div class="out" id="pc_out"></div>
@@ -529,6 +547,10 @@ try{localStorage.setItem('eecalc-tab','trace')}catch(e){}
     else if(n.scrollHeight>n.clientHeight+1){const bot=Math.min(nr.bottom,innerHeight); if(ar.bottom>bot) n.scrollTop+=ar.bottom-bot+48; else if(ar.top<nr.top) n.scrollTop-=nr.top-ar.top+48;}}
   if(document.readyState==='complete') requestAnimationFrame(c); else addEventListener('load',()=>requestAnimationFrame(c)); n.addEventListener('click',()=>setTimeout(c,0)); window.addEventListener('hashchange',()=>setTimeout(c,0)); window.addEventListener('resize',c);
 })();
+</script>
+<script>
+/* phones: start with "How it works" folded so the results stay close */
+if(matchMedia('(max-width:999px)').matches) document.querySelectorAll('.learn details[open]').forEach(d=>d.removeAttribute('open'));
 </script>
 </body>
 </html>

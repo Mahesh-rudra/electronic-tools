@@ -160,6 +160,24 @@ nav .ngh{display:none}
   .layout>nav button:hover,.layout>nav a:hover{background:var(--line);color:var(--silk)}
   .layout>nav button[aria-selected="true"],.layout>nav a[aria-current="page"]{background:var(--copper);color:var(--ontab);font-weight:700}
 }
+
+/* mobile-v2 */
+.grid label{justify-content:flex-end}
+@media (max-width:999px){
+  .block.two{display:flex;flex-direction:column}
+  .block.two>.top{order:0}
+  .block.two>.bot{order:1}
+  .block.two>.right{order:2}
+}
+@media (max-width:640px){
+  .wrap{padding-top:12px}
+  header h1{font-size:1.32rem;line-height:1.25;margin:2px 0 4px}
+  header p{font-size:.84rem;line-height:1.45;margin:0 0 8px}
+  .themes{gap:6px;margin:0 0 10px}
+  .themes span{display:none}
+  .themes button{width:22px;height:22px}
+  .crumb{margin:0}
+}
 </style>
 </head>
 <body>
@@ -224,11 +242,11 @@ nav .ngh{display:none}
     <h2>Reactance and impedance</h2>
     <p class="hint">Series circuit. Leave R, L or C blank to leave it out. Voltage is optional.</p>
     <div class="grid">
-      <label>Frequency (Hz)<input id="x_f" inputmode="decimal" placeholder="1k"></label>
-      <label>Resistance (Ω)<input id="x_r" inputmode="decimal" placeholder="100"></label>
-      <label>Inductance (H)<input id="x_l" inputmode="decimal" placeholder="10m"></label>
-      <label>Capacitance (F)<input id="x_c" inputmode="decimal" placeholder="1u"></label>
-      <label>Voltage (V rms)<input id="x_v" inputmode="decimal" placeholder="optional"></label>
+      <label>Frequency (Hz)<input id="x_f" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="1k"></label>
+      <label>Resistance (Ω)<input id="x_r" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="100"></label>
+      <label>Inductance (H)<input id="x_l" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10m"></label>
+      <label>Capacitance (F)<input id="x_c" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="1u"></label>
+      <label>Voltage (V rms)<input id="x_v" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
     </div>
     <div class="dia" id="x_dia"></div>
     <div class="out" id="x_out"></div>
@@ -534,6 +552,10 @@ try{localStorage.setItem('eecalc-tab','react')}catch(e){}
     else if(n.scrollHeight>n.clientHeight+1){const bot=Math.min(nr.bottom,innerHeight); if(ar.bottom>bot) n.scrollTop+=ar.bottom-bot+48; else if(ar.top<nr.top) n.scrollTop-=nr.top-ar.top+48;}}
   if(document.readyState==='complete') requestAnimationFrame(c); else addEventListener('load',()=>requestAnimationFrame(c)); n.addEventListener('click',()=>setTimeout(c,0)); window.addEventListener('hashchange',()=>setTimeout(c,0)); window.addEventListener('resize',c);
 })();
+</script>
+<script>
+/* phones: start with "How it works" folded so the results stay close */
+if(matchMedia('(max-width:999px)').matches) document.querySelectorAll('.learn details[open]').forEach(d=>d.removeAttribute('open'));
 </script>
 </body>
 </html>

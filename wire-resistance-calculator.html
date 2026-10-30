@@ -160,6 +160,24 @@ nav .ngh{display:none}
   .layout>nav button:hover,.layout>nav a:hover{background:var(--line);color:var(--silk)}
   .layout>nav button[aria-selected="true"],.layout>nav a[aria-current="page"]{background:var(--copper);color:var(--ontab);font-weight:700}
 }
+
+/* mobile-v2 */
+.grid label{justify-content:flex-end}
+@media (max-width:999px){
+  .block.two{display:flex;flex-direction:column}
+  .block.two>.top{order:0}
+  .block.two>.bot{order:1}
+  .block.two>.right{order:2}
+}
+@media (max-width:640px){
+  .wrap{padding-top:12px}
+  header h1{font-size:1.32rem;line-height:1.25;margin:2px 0 4px}
+  header p{font-size:.84rem;line-height:1.45;margin:0 0 8px}
+  .themes{gap:6px;margin:0 0 10px}
+  .themes span{display:none}
+  .themes button{width:22px;height:22px}
+  .crumb{margin:0}
+}
 </style>
 </head>
 <body>
@@ -231,12 +249,12 @@ nav .ngh{display:none}
       <label>Size given as<select id="w_type">
         <option value="awg">AWG</option><option value="d">Diameter (mm)</option><option value="a">Area (mm²)</option>
       </select></label>
-      <label>Size<input id="w_size" inputmode="decimal" placeholder="18"></label>
-      <label>Length (m)<input id="w_len" inputmode="decimal" placeholder="10"></label>
+      <label>Size<input id="w_size" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="18"></label>
+      <label>Length (m)<input id="w_len" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10"></label>
       <label>Path<select id="w_path"><option value="1">One way</option><option value="2">Round trip</option></select></label>
-      <label>Current (A)<input id="w_i" inputmode="decimal" placeholder="optional"></label>
-      <label>Supply (V)<input id="w_vs" inputmode="decimal" placeholder="optional"></label>
-      <label>Temperature (°C)<input id="w_t" inputmode="decimal" value="20"></label>
+      <label>Current (A)<input id="w_i" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>Supply (V)<input id="w_vs" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>Temperature (°C)<input id="w_t" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="20"></label>
     </div>
     <div class="dia" id="w_dia"></div>
     <div class="out" id="w_out"></div>
@@ -543,6 +561,10 @@ try{localStorage.setItem('eecalc-tab','wire')}catch(e){}
     else if(n.scrollHeight>n.clientHeight+1){const bot=Math.min(nr.bottom,innerHeight); if(ar.bottom>bot) n.scrollTop+=ar.bottom-bot+48; else if(ar.top<nr.top) n.scrollTop-=nr.top-ar.top+48;}}
   if(document.readyState==='complete') requestAnimationFrame(c); else addEventListener('load',()=>requestAnimationFrame(c)); n.addEventListener('click',()=>setTimeout(c,0)); window.addEventListener('hashchange',()=>setTimeout(c,0)); window.addEventListener('resize',c);
 })();
+</script>
+<script>
+/* phones: start with "How it works" folded so the results stay close */
+if(matchMedia('(max-width:999px)').matches) document.querySelectorAll('.learn details[open]').forEach(d=>d.removeAttribute('open'));
 </script>
 </body>
 </html>

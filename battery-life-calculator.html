@@ -160,6 +160,24 @@ nav .ngh{display:none}
   .layout>nav button:hover,.layout>nav a:hover{background:var(--line);color:var(--silk)}
   .layout>nav button[aria-selected="true"],.layout>nav a[aria-current="page"]{background:var(--copper);color:var(--ontab);font-weight:700}
 }
+
+/* mobile-v2 */
+.grid label{justify-content:flex-end}
+@media (max-width:999px){
+  .block.two{display:flex;flex-direction:column}
+  .block.two>.top{order:0}
+  .block.two>.bot{order:1}
+  .block.two>.right{order:2}
+}
+@media (max-width:640px){
+  .wrap{padding-top:12px}
+  header h1{font-size:1.32rem;line-height:1.25;margin:2px 0 4px}
+  header p{font-size:.84rem;line-height:1.45;margin:0 0 8px}
+  .themes{gap:6px;margin:0 0 10px}
+  .themes span{display:none}
+  .themes button{width:22px;height:22px}
+  .crumb{margin:0}
+}
 </style>
 </head>
 <body>
@@ -224,12 +242,12 @@ nav .ngh{display:none}
     <h2>Li-ion battery runtime</h2>
     <p class="hint">For devices that sleep, enter the sleep current and the share of time spent active.</p>
     <div class="grid">
-      <label>Capacity (mAh)<input id="r_cap" inputmode="decimal" placeholder="2000"></label>
-      <label>Nominal voltage (V)<input id="r_v" inputmode="decimal" value="3.7"></label>
-      <label>Usable capacity (%)<input id="r_use" inputmode="decimal" value="80"></label>
-      <label>Active current (A)<input id="r_ia" inputmode="decimal" placeholder="120m"></label>
-      <label>Sleep current (A)<input id="r_is" inputmode="decimal" placeholder="optional, e.g. 10u"></label>
-      <label>Active time (%)<input id="r_duty" inputmode="decimal" value="100"></label>
+      <label>Capacity (mAh)<input id="r_cap" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="2000"></label>
+      <label>Nominal voltage (V)<input id="r_v" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="3.7"></label>
+      <label>Usable capacity (%)<input id="r_use" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="80"></label>
+      <label>Active current (A)<input id="r_ia" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="120m"></label>
+      <label>Sleep current (A)<input id="r_is" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional, e.g. 10u"></label>
+      <label>Active time (%)<input id="r_duty" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="100"></label>
     </div>
     <div class="dia" id="r_dia"></div>
     <div class="out" id="r_out"></div>
@@ -519,6 +537,10 @@ try{localStorage.setItem('eecalc-tab','run')}catch(e){}
     else if(n.scrollHeight>n.clientHeight+1){const bot=Math.min(nr.bottom,innerHeight); if(ar.bottom>bot) n.scrollTop+=ar.bottom-bot+48; else if(ar.top<nr.top) n.scrollTop-=nr.top-ar.top+48;}}
   if(document.readyState==='complete') requestAnimationFrame(c); else addEventListener('load',()=>requestAnimationFrame(c)); n.addEventListener('click',()=>setTimeout(c,0)); window.addEventListener('hashchange',()=>setTimeout(c,0)); window.addEventListener('resize',c);
 })();
+</script>
+<script>
+/* phones: start with "How it works" folded so the results stay close */
+if(matchMedia('(max-width:999px)').matches) document.querySelectorAll('.learn details[open]').forEach(d=>d.removeAttribute('open'));
 </script>
 </body>
 </html>

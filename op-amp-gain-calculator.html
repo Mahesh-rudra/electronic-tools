@@ -160,6 +160,24 @@ nav .ngh{display:none}
   .layout>nav button:hover,.layout>nav a:hover{background:var(--line);color:var(--silk)}
   .layout>nav button[aria-selected="true"],.layout>nav a[aria-current="page"]{background:var(--copper);color:var(--ontab);font-weight:700}
 }
+
+/* mobile-v2 */
+.grid label{justify-content:flex-end}
+@media (max-width:999px){
+  .block.two{display:flex;flex-direction:column}
+  .block.two>.top{order:0}
+  .block.two>.bot{order:1}
+  .block.two>.right{order:2}
+}
+@media (max-width:640px){
+  .wrap{padding-top:12px}
+  header h1{font-size:1.32rem;line-height:1.25;margin:2px 0 4px}
+  header p{font-size:.84rem;line-height:1.45;margin:0 0 8px}
+  .themes{gap:6px;margin:0 0 10px}
+  .themes span{display:none}
+  .themes button{width:22px;height:22px}
+  .crumb{margin:0}
+}
 </style>
 </head>
 <body>
@@ -228,13 +246,13 @@ nav .ngh{display:none}
         <option value="inv">Inverting</option><option value="non">Non-inverting</option>
         <option value="diff">Differential</option><option value="sum">Summing (inverting)</option>
       </select></label>
-      <label id="oa_r1l">R1 (Ω)<input id="oa_r1" inputmode="decimal" placeholder="10k"></label>
-      <label id="oa_rfl">Rf (Ω)<input id="oa_rf" inputmode="decimal" placeholder="47k"></label>
-      <label id="oa_r2l">R2 (Ω)<input id="oa_r2" inputmode="decimal" placeholder="10k"></label>
-      <label id="oa_v1l">Vin (V)<input id="oa_v1" inputmode="decimal" placeholder="optional"></label>
-      <label id="oa_v2l">V2 (V)<input id="oa_v2" inputmode="decimal" placeholder="optional"></label>
-      <label>Supply ± (V)<input id="oa_vs" inputmode="decimal" placeholder="optional"></label>
-      <label id="oa_gl">Target gain<input id="oa_g" inputmode="decimal" placeholder="optional"></label>
+      <label id="oa_r1l">R1 (Ω)<input id="oa_r1" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10k"></label>
+      <label id="oa_rfl">Rf (Ω)<input id="oa_rf" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="47k"></label>
+      <label id="oa_r2l">R2 (Ω)<input id="oa_r2" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="10k"></label>
+      <label id="oa_v1l">Vin (V)<input id="oa_v1" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label id="oa_v2l">V2 (V)<input id="oa_v2" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>Supply ± (V)<input id="oa_vs" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label id="oa_gl">Target gain<input id="oa_g" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
     </div>
     <div class="dia" id="oa_dia"></div>
     <div class="out" id="oa_out"></div>
@@ -563,6 +581,10 @@ try{localStorage.setItem('eecalc-tab','opamp')}catch(e){}
     else if(n.scrollHeight>n.clientHeight+1){const bot=Math.min(nr.bottom,innerHeight); if(ar.bottom>bot) n.scrollTop+=ar.bottom-bot+48; else if(ar.top<nr.top) n.scrollTop-=nr.top-ar.top+48;}}
   if(document.readyState==='complete') requestAnimationFrame(c); else addEventListener('load',()=>requestAnimationFrame(c)); n.addEventListener('click',()=>setTimeout(c,0)); window.addEventListener('hashchange',()=>setTimeout(c,0)); window.addEventListener('resize',c);
 })();
+</script>
+<script>
+/* phones: start with "How it works" folded so the results stay close */
+if(matchMedia('(max-width:999px)').matches) document.querySelectorAll('.learn details[open]').forEach(d=>d.removeAttribute('open'));
 </script>
 </body>
 </html>
