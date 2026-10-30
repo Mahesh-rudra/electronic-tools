@@ -178,6 +178,15 @@ nav .ngh{display:none}
   .themes button{width:22px;height:22px}
   .crumb{margin:0}
 }
+
+/* bookmark-v1 */
+header p.tagline{font-size:1.05rem;color:var(--silk);font-weight:500;margin:0 0 6px}
+.bm{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;font-size:.9rem;color:var(--muted);margin:0 0 8px}
+.bmbtn{font:inherit;font-size:.85rem;font-weight:600;color:var(--copper);background:transparent;border:1.5px solid var(--copper);border-radius:999px;padding:4px 12px;cursor:pointer}
+.bmbtn:hover{background:var(--copper);color:var(--ontab)}
+.bmbtn:focus-visible{outline:2px solid var(--silk);outline-offset:2px}
+header p.bmhint{font-size:.86rem;color:var(--silk);background:var(--mask2);border:1px solid var(--line);border-left:3px solid var(--copper);border-radius:6px;padding:6px 10px;margin:0 0 10px;max-width:520px}
+header p.pfx{font-size:.84rem}
 </style>
 </head>
 <body>
@@ -187,6 +196,8 @@ nav .ngh{display:none}
     <div class="crumb"><a href="./">EE Calculator</a> / Active filter</div>
     <h1>Active filter calculator</h1>
     <p>Design a second-order Sallen-Key or multiple feedback low-pass or high-pass filter from your cutoff frequency and Q. Type values with prefixes: 4.7k, 2k2, 10m, 100n, 4R7, 1M.</p>
+    <div class="bm"><button type="button" class="bmbtn">☆ Bookmark this calculator</button></div>
+    <p class="bmhint" role="status" aria-live="polite" hidden></p>
   </div>
   <div class="themes" role="group" aria-label="Colour theme">
     <span>Theme</span>
@@ -217,6 +228,13 @@ nav .ngh{display:none}
     <a href="op-amp-gain-calculator.html">Op-amp</a>
     <a href="led-resistor-calculator.html">LED designer</a>
     <a href="zener-diode-calculator.html">Zener</a>
+  </div>
+  <div class="ng"><span class="ngh" aria-hidden="true">Basic circuits</span>
+    <a href="transistor-switch-calculator.html">Transistor switch</a>
+    <a href="mosfet-switch-calculator.html">MOSFET switch</a>
+    <a href="discrete-linear-regulator-calculator.html">Discrete regulator</a>
+    <a href="lm317-calculator.html">LM317</a>
+    <a href="constant-current-source-calculator.html">Current source</a>
   </div>
   <div class="ng"><span class="ngh" aria-hidden="true">Power devices and thermal</span>
     <a href="linear-regulator-heat-calculator.html">Regulator heat</a>
@@ -268,7 +286,7 @@ nav .ngh{display:none}
 <p>Resistors are rounded to E96 and capacitors to E12, and the actual cutoff and Q are recalculated with those values. Use 1% resistors and C0G/NP0 or film capacitors, and choose an op-amp with gain-bandwidth at least 100 × gain × f₀.</p>
   </details></div>
 </section>
-<div class="block alltools"><h2>More calculators</h2><div class="cols"><div><h3>Basics</h3><ul><li><a href="ohms-law-calculator.html">Ohm&#x27;s law calculator</a></li><li><a href="series-parallel-calculator.html">Series and parallel calculator</a></li><li><a href="voltage-divider-calculator.html">Voltage divider calculator</a></li></ul></div><div><h3>AC, filters and signals</h3><ul><li><a href="reactance-calculator.html">Reactance and impedance calculator</a></li><li><a href="filter-calculator.html">Filter cutoff calculator</a></li><li><a href="active-filter-calculator.html" aria-current="page">Active filter calculator</a></li><li><a href="rc-time-constant-calculator.html">RC time constant calculator</a></li><li><a href="db-dbm-converter.html">DB, dBm and ratio converter</a></li><li><a href="rms-peak-average-calculator.html">RMS, peak and average calculator</a></li></ul></div><div><h3>Circuits</h3><ul><li><a href="555-timer-calculator.html">555 timer calculator</a></li><li><a href="op-amp-gain-calculator.html">Op-amp gain calculator</a></li><li><a href="led-resistor-calculator.html">LED resistor calculator</a></li><li><a href="zener-diode-calculator.html">Zener regulator calculator</a></li></ul></div><div><h3>Power devices and thermal</h3><ul><li><a href="linear-regulator-heat-calculator.html">Linear regulator heat calculator</a></li><li><a href="mosfet-power-loss-calculator.html">MOSFET power loss calculator</a></li><li><a href="thermal-resistance-calculator.html">Thermal resistance calculator</a></li><li><a href="current-sense-resistor-calculator.html">Current sense resistor calculator</a></li></ul></div><div><h3>Batteries and wiring</h3><ul><li><a href="battery-pack-calculator.html">Battery pack calculator</a></li><li><a href="battery-life-calculator.html">Battery runtime calculator</a></li><li><a href="wire-resistance-calculator.html">Wire resistance calculator</a></li><li><a href="pcb-trace-width-calculator.html">PCB trace width calculator</a></li></ul></div><div><h3>Component codes</h3><ul><li><a href="resistor-color-code-calculator.html">Resistor color code calculator</a></li><li><a href="smd-capacitor-code-calculator.html">SMD resistor and capacitor code calculator</a></li></ul></div></div></div>
+<div class="block alltools"><h2>More calculators</h2><div class="cols"><div><h3>Basics</h3><ul><li><a href="ohms-law-calculator.html">Ohm&#x27;s law calculator</a></li><li><a href="series-parallel-calculator.html">Series and parallel calculator</a></li><li><a href="voltage-divider-calculator.html">Voltage divider calculator</a></li></ul></div><div><h3>AC, filters and signals</h3><ul><li><a href="reactance-calculator.html">Reactance and impedance calculator</a></li><li><a href="filter-calculator.html">Filter cutoff calculator</a></li><li><a href="active-filter-calculator.html" aria-current="page">Active filter calculator</a></li><li><a href="rc-time-constant-calculator.html">RC time constant calculator</a></li><li><a href="db-dbm-converter.html">DB, dBm and ratio converter</a></li><li><a href="rms-peak-average-calculator.html">RMS, peak and average calculator</a></li></ul></div><div><h3>Circuits</h3><ul><li><a href="555-timer-calculator.html">555 timer calculator</a></li><li><a href="op-amp-gain-calculator.html">Op-amp gain calculator</a></li><li><a href="led-resistor-calculator.html">LED resistor calculator</a></li><li><a href="zener-diode-calculator.html">Zener regulator calculator</a></li></ul></div><div><h3>Basic circuits</h3><ul><li><a href="transistor-switch-calculator.html">Transistor switch calculator</a></li><li><a href="mosfet-switch-calculator.html">MOSFET logic-level switch calculator</a></li><li><a href="discrete-linear-regulator-calculator.html">Discrete linear regulator calculator</a></li><li><a href="lm317-calculator.html">LM317 resistor calculator</a></li><li><a href="constant-current-source-calculator.html">Constant-current source calculator</a></li></ul></div><div><h3>Power devices and thermal</h3><ul><li><a href="linear-regulator-heat-calculator.html">Linear regulator heat calculator</a></li><li><a href="mosfet-power-loss-calculator.html">MOSFET power loss calculator</a></li><li><a href="thermal-resistance-calculator.html">Thermal resistance calculator</a></li><li><a href="current-sense-resistor-calculator.html">Current sense resistor calculator</a></li></ul></div><div><h3>Batteries and wiring</h3><ul><li><a href="battery-pack-calculator.html">Battery pack calculator</a></li><li><a href="battery-life-calculator.html">Battery runtime calculator</a></li><li><a href="wire-resistance-calculator.html">Wire resistance calculator</a></li><li><a href="pcb-trace-width-calculator.html">PCB trace width calculator</a></li></ul></div><div><h3>Component codes</h3><ul><li><a href="resistor-color-code-calculator.html">Resistor color code calculator</a></li><li><a href="smd-capacitor-code-calculator.html">SMD resistor and capacitor code calculator</a></li></ul></div></div></div>
 </div>
 </div>
 <footer>
@@ -386,7 +404,7 @@ function capDia(code){
 }
 
 /* ---------- tabs, groups and links ---------- */
-const GROUP={ohm:'basics',combine:'basics',divider:'basics',react:'ac',filt:'ac',afilt:'ac',db:'ac',wave:'ac',rc:'ac',t555:'circuits',opamp:'circuits',led:'circuits',zener:'circuits',
+const GROUP={ohm:'basics',combine:'basics',divider:'basics',react:'ac',filt:'ac',afilt:'ac',db:'ac',wave:'ac',rc:'ac',t555:'circuits',opamp:'circuits',led:'circuits',zener:'circuits',bjt:'circuits',mosw:'circuits',dreg:'circuits',lm317:'circuits',ccs:'circuits',
   lreg:'power',mosfet:'power',thermal:'power',sense:'power',pack:'power',run:'power',wire:'power',trace:'power',color:'codes',codes:'codes'};
 const lastInGroup={};
 function showTab(id){
@@ -511,6 +529,22 @@ function afilt(){
 }
 listen(['af_top','af_type','af_fc','af_q','af_k','af_c'],afilt);
 
+/* ---------- transistor symbols ---------- */
+function npn(x,y,flip){ const k=flip?-1:1, X=d=>x+k*d;
+  return `<circle cx="${X(8)}" cy="${y}" r="21" fill="none" stroke="var(--line)" stroke-width="1.5"/>`+
+    wire(`M${X(-20)} ${y}H${x}M${x} ${y-6}L${X(16)} ${y-17}V${y-30}M${x} ${y+6}L${X(16)} ${y+17}V${y+30}`)+
+    `<path d="M${x} ${y-13}V${y+13}" stroke="var(--silk)" stroke-width="3"/>`+arrow(X(9),y+12.5,flip?146:34);
+}
+function nmos(x,y){
+  return `<circle cx="${x+9}" cy="${y}" r="21" fill="none" stroke="var(--line)" stroke-width="1.5"/>`+
+    wire(`M${x-20} ${y}H${x}M${x} ${y-13}V${y+13}`)+
+    `<path d="M${x+6} ${y-15}V${y-7}M${x+6} ${y-4}V${y+4}M${x+6} ${y+7}V${y+15}" stroke="var(--silk)" stroke-width="3"/>`+
+    wire(`M${x+6} ${y-11}H${x+18}V${y-30}M${x+6} ${y+11}H${x+18}V${y+30}M${x+6} ${y}H${x+18}V${y+11}`)+arrow(x+12,y,180);
+}
+function lbl(x,y,name,val,anc){ return txt(x,y,name,'lb sm',anc||'start')+txt(x,y+14,val,'vl',anc||'start'); }
+const ZENERS=[2.4,2.7,3,3.3,3.6,3.9,4.3,4.7,5.1,5.6,6.2,6.8,7.5,8.2,9.1,10,11,12,13,15,16,18,20,22,24,27,30,33,36,39,43,47];
+function nearestZener(v){ let b=ZENERS[0]; for(const z of ZENERS) if(Math.abs(z-v)<Math.abs(b-v)) b=z; return b; }
+
 /* ---------- theme switcher ---------- */
 function setTheme(t){
   if(t==='light') delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme=t;
@@ -552,6 +586,11 @@ const EX={
   t555:[['t_mode','a'],['t_r1','1k'],['t_r2','10k'],['t_c','10u']],
   opamp:[['oa_mode','inv'],['oa_r1','10k'],['oa_rf','47k'],['oa_r2',''],['oa_v1','0.5'],['oa_v2',''],['oa_vs','12'],['oa_g','']],
   led:[['l_vs','12'],['l_vf','2'],['l_if','20m'],['l_n','10'],['l_per','']],
+  bjt:[['bj_vcc','12'],['bj_il','100m'],['bj_vin','3.3'],['bj_hfe','100'],['bj_m','5'],['bj_vbe','0.7'],['bj_vce','0.2'],['bj_ip','20m']],
+  mosw:[['ms_vg','3.3'],['ms_vcc','12'],['ms_il','2'],['ms_vth','1.5'],['ms_vgr','2.5'],['ms_rds','30m'],['ms_ip','20m'],['ms_qg','10n'],['ms_f','20k']],
+  dreg:[['dr_vmin','12'],['dr_vmax','15'],['dr_vout','5'],['dr_il','500m'],['dr_hfe','50'],['dr_vbe','0.7'],['dr_iz','5m']],
+  lm317:[['lm_vout','5'],['lm_r1','240'],['lm_vin','9'],['lm_il','500m'],['lm_vref','1.25']],
+  ccs:[['cc_top','two'],['cc_i','20m'],['cc_vs','12'],['cc_vl','6.4'],['cc_vbe','0.65'],['cc_hfe','100']],
   zener:[['z_vmin','9'],['z_vmax','12'],['z_vz','5.1'],['z_il','20m'],['z_izm','5m']],
   lreg:[['g_part','7805'],['g_vin','12'],['g_vout','5'],['g_i','300m'],['g_ta','30']],
   pack:[['p_s','4'],['p_p','2'],['p_cap','2600'],['p_v','3.7'],['p_full','4.2'],['p_empty','3.0'],['p_imax','10']],
@@ -591,6 +630,21 @@ try{localStorage.setItem('eecalc-tab','afilt')}catch(e){}
 <script>
 /* phones: start with "How it works" folded so the results stay close */
 if(matchMedia('(max-width:999px)').matches) document.querySelectorAll('.learn details[open]').forEach(d=>d.removeAttribute('open'));
+</script>
+<script>
+/* bookmark button: browsers can't bookmark for you, so show the right shortcut for this device */
+(function(){
+  const b=document.querySelector('.bmbtn'), h=document.querySelector('.bmhint'); if(!b||!h) return;
+  const ua=navigator.userAgent, ios=/iPad|iPhone|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1), and=/Android/.test(ua), mac=/Mac/.test(navigator.platform||ua);
+  let t;
+  b.addEventListener('click',()=>{
+    h.textContent=ios?'Tap the Share button, then “Add to Home Screen” or “Add Bookmark”.'
+      :and?'Tap ⋮ in your browser, then “Add to Home screen”, or tap ☆ to bookmark.'
+      :'Press '+(mac?'⌘+D':'Ctrl+D')+' to bookmark this page.';
+    h.hidden=false; clearTimeout(t); t=setTimeout(()=>{h.hidden=true},9000);
+    try{ if(typeof gtag==='function') gtag('event','bookmark_click'); }catch(e){}
+  });
+})();
 </script>
 </body>
 </html>

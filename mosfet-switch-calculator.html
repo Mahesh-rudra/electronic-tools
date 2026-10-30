@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WLXEMTDWYD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WLXEMTDWYD');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MOSFET Switch Calculator: Logic-Level Gate Drive, Gate Resistor and Loss | EE Calculator</title>
+<meta name="description" content="Free MOSFET switch calculator. Check that a MOSFET fully turns on from 3.3 V or 5 V logic, and find the gate resistor, pull-down and power loss.">
+<link rel="canonical" href="https://eecalc.vedaxglobal.com/mosfet-switch-calculator.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23B45309'/%3E%3Cpath d='M3 16h5l2-6 4 12 4-12 4 12 2-6h5' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#B45309">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MOSFET Switch Calculator: Logic-Level Gate Drive, Gate Resistor and Loss">
+<meta property="og:description" content="Free MOSFET switch calculator. Check that a MOSFET fully turns on from 3.3 V or 5 V logic, and find the gate resistor, pull-down and power loss.">
+<meta property="og:url" content="https://eecalc.vedaxglobal.com/mosfet-switch-calculator.html">
+<meta property="og:image" content="https://eecalc.vedaxglobal.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem("eecalc-theme");if(t&&t!=="light")document.documentElement.dataset.theme=t;}catch(e){}</script>
+<style>
+:root{
+  --mask:#F7F9FC; --mask2:#FFFFFF; --line:#D5DEEA;
+  --silk:#1B2A41; --muted:#5D6F87; --copper:#B45309; --copperDim:#8C4A0E; --err:#C2410C;
+  --ontab:#fff; --ph:#A0AEC0; --shadow:0 1px 3px rgba(27,42,65,.06); --pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cg fill='%23DCE4EF' font-family='Georgia%2Cserif'%3E%3Ctext x='18' y='40' font-size='30' transform='rotate%28-12 18 40%29'%3E%CE%A9%3C/text%3E%3Ctext x='120' y='30' font-size='26' transform='rotate%288 120 30%29'%3E%CF%80%3C/text%3E%3Ctext x='190' y='70' font-size='28' transform='rotate%280 190 70%29'%3E%E2%88%9A%3C/text%3E%3Ctext x='60' y='110' font-size='30' transform='rotate%28-6 60 110%29'%3E%E2%88%91%3C/text%3E%3Ctext x='150' y='140' font-size='34' transform='rotate%2810 150 140%29'%3E%E2%88%AB%3C/text%3E%3Ctext x='20' y='190' font-size='26' transform='rotate%280 20 190%29'%3E%C2%B5%3C/text%3E%3Ctext x='100' y='200' font-size='26' transform='rotate%28-8 100 200%29'%3E%CE%94%3C/text%3E%3Ctext x='200' y='195' font-size='26' transform='rotate%280 200 195%29'%3E%E2%88%9E%3C/text%3E%3Ctext x='240' y='120' font-size='24' transform='rotate%2812 240 120%29'%3E%CE%BB%3C/text%3E%3Ctext x='250' y='30' font-size='22' transform='rotate%28-10 250 30%29'%3E%CE%B8%3C/text%3E%3Ctext x='70' y='250' font-size='26' transform='rotate%280 70 250%29'%3E%E2%89%88%3C/text%3E%3Ctext x='180' y='255' font-size='22' transform='rotate%2814 180 255%29'%3E%CE%A9%3C/text%3E%3Ctext x='260' y='240' font-size='20' transform='rotate%280 260 240%29'%3E%CF%80%3C/text%3E%3C/g%3E%3C/svg%3E");
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+:root[data-theme="navy"]{--mask:#0B1D36;--mask2:#11284A;--line:#28486F;--silk:#F4F7FC;--muted:#A3B5CC;--copper:#E0A458;--copperDim:#9A6A35;--err:#F19B85;--ontab:#0B1D36;--ph:#62799A;--shadow:none;--pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cg fill='%23132A4E' font-family='Georgia%2Cserif'%3E%3Ctext x='18' y='40' font-size='30' transform='rotate%28-12 18 40%29'%3E%CE%A9%3C/text%3E%3Ctext x='120' y='30' font-size='26' transform='rotate%288 120 30%29'%3E%CF%80%3C/text%3E%3Ctext x='190' y='70' font-size='28' transform='rotate%280 190 70%29'%3E%E2%88%9A%3C/text%3E%3Ctext x='60' y='110' font-size='30' transform='rotate%28-6 60 110%29'%3E%E2%88%91%3C/text%3E%3Ctext x='150' y='140' font-size='34' transform='rotate%2810 150 140%29'%3E%E2%88%AB%3C/text%3E%3Ctext x='20' y='190' font-size='26' transform='rotate%280 20 190%29'%3E%C2%B5%3C/text%3E%3Ctext x='100' y='200' font-size='26' transform='rotate%28-8 100 200%29'%3E%CE%94%3C/text%3E%3Ctext x='200' y='195' font-size='26' transform='rotate%280 200 195%29'%3E%E2%88%9E%3C/text%3E%3Ctext x='240' y='120' font-size='24' transform='rotate%2812 240 120%29'%3E%CE%BB%3C/text%3E%3Ctext x='250' y='30' font-size='22' transform='rotate%28-10 250 30%29'%3E%CE%B8%3C/text%3E%3Ctext x='70' y='250' font-size='26' transform='rotate%280 70 250%29'%3E%E2%89%88%3C/text%3E%3Ctext x='180' y='255' font-size='22' transform='rotate%2814 180 255%29'%3E%CE%A9%3C/text%3E%3Ctext x='260' y='240' font-size='20' transform='rotate%280 260 240%29'%3E%CF%80%3C/text%3E%3C/g%3E%3C/svg%3E")}
+:root[data-theme="charcoal"]{--mask:#16181B;--mask2:#1F2226;--line:#363B43;--silk:#ECEEF1;--muted:#9CA3AE;--copper:#E3A15A;--copperDim:#9A6A35;--err:#F19B85;--ontab:#16181B;--ph:#656C77;--shadow:0 1px 3px rgba(0,0,0,.3);--pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cg fill='%23262A30' font-family='Georgia%2Cserif'%3E%3Ctext x='18' y='40' font-size='30' transform='rotate%28-12 18 40%29'%3E%CE%A9%3C/text%3E%3Ctext x='120' y='30' font-size='26' transform='rotate%288 120 30%29'%3E%CF%80%3C/text%3E%3Ctext x='190' y='70' font-size='28' transform='rotate%280 190 70%29'%3E%E2%88%9A%3C/text%3E%3Ctext x='60' y='110' font-size='30' transform='rotate%28-6 60 110%29'%3E%E2%88%91%3C/text%3E%3Ctext x='150' y='140' font-size='34' transform='rotate%2810 150 140%29'%3E%E2%88%AB%3C/text%3E%3Ctext x='20' y='190' font-size='26' transform='rotate%280 20 190%29'%3E%C2%B5%3C/text%3E%3Ctext x='100' y='200' font-size='26' transform='rotate%28-8 100 200%29'%3E%CE%94%3C/text%3E%3Ctext x='200' y='195' font-size='26' transform='rotate%280 200 195%29'%3E%E2%88%9E%3C/text%3E%3Ctext x='240' y='120' font-size='24' transform='rotate%2812 240 120%29'%3E%CE%BB%3C/text%3E%3Ctext x='250' y='30' font-size='22' transform='rotate%28-10 250 30%29'%3E%CE%B8%3C/text%3E%3Ctext x='70' y='250' font-size='26' transform='rotate%280 70 250%29'%3E%E2%89%88%3C/text%3E%3Ctext x='180' y='255' font-size='22' transform='rotate%2814 180 255%29'%3E%CE%A9%3C/text%3E%3Ctext x='260' y='240' font-size='20' transform='rotate%280 260 240%29'%3E%CF%80%3C/text%3E%3C/g%3E%3C/svg%3E")}
+:root[data-theme="green"]{--mask:#0E3B2E;--mask2:#134A39;--line:#2A6A53;--silk:#F2F5EE;--muted:#9DB8AA;--copper:#D9A04F;--copperDim:#8C6630;--err:#F0A08C;--ontab:#0E3B2E;--ph:#5F8574;--shadow:none;--pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cg fill='%23144A38' font-family='Georgia%2Cserif'%3E%3Ctext x='18' y='40' font-size='30' transform='rotate%28-12 18 40%29'%3E%CE%A9%3C/text%3E%3Ctext x='120' y='30' font-size='26' transform='rotate%288 120 30%29'%3E%CF%80%3C/text%3E%3Ctext x='190' y='70' font-size='28' transform='rotate%280 190 70%29'%3E%E2%88%9A%3C/text%3E%3Ctext x='60' y='110' font-size='30' transform='rotate%28-6 60 110%29'%3E%E2%88%91%3C/text%3E%3Ctext x='150' y='140' font-size='34' transform='rotate%2810 150 140%29'%3E%E2%88%AB%3C/text%3E%3Ctext x='20' y='190' font-size='26' transform='rotate%280 20 190%29'%3E%C2%B5%3C/text%3E%3Ctext x='100' y='200' font-size='26' transform='rotate%28-8 100 200%29'%3E%CE%94%3C/text%3E%3Ctext x='200' y='195' font-size='26' transform='rotate%280 200 195%29'%3E%E2%88%9E%3C/text%3E%3Ctext x='240' y='120' font-size='24' transform='rotate%2812 240 120%29'%3E%CE%BB%3C/text%3E%3Ctext x='250' y='30' font-size='22' transform='rotate%28-10 250 30%29'%3E%CE%B8%3C/text%3E%3Ctext x='70' y='250' font-size='26' transform='rotate%280 70 250%29'%3E%E2%89%88%3C/text%3E%3Ctext x='180' y='255' font-size='22' transform='rotate%2814 180 255%29'%3E%CE%A9%3C/text%3E%3Ctext x='260' y='240' font-size='20' transform='rotate%280 260 240%29'%3E%CF%80%3C/text%3E%3C/g%3E%3C/svg%3E")}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.themes{display:flex;align-items:center;gap:8px;margin:8px 0 12px}
+.themes span{font-size:.8rem;color:var(--muted)}
+.themes button{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);cursor:pointer;padding:0}
+.themes button[aria-pressed="true"]{border-color:var(--copper);box-shadow:0 0 0 2px var(--mask),0 0 0 4px var(--copper)}
+.themes button:focus-visible{outline:2px solid var(--silk);outline-offset:3px}
+
+html,body{margin:0;background:var(--mask);color:var(--silk)}
+body{font-family:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.45;
+  background-image:var(--pat);background-size:280px 280px}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+.groups{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);margin:4px 0 12px}
+.groups::-webkit-scrollbar{display:none}
+.groups button{flex:0 0 auto;font:inherit;font-size:.95rem;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;padding:8px 12px;cursor:pointer;margin-bottom:-1px}
+.groups button[aria-selected="true"]{color:var(--silk);border-bottom-color:var(--copper)}
+.groups button:focus-visible{outline:2px solid var(--silk);outline-offset:-2px}
+.exbtn{float:right;font:inherit;font-size:.82rem;font-weight:600;color:var(--copper);background:transparent;border:1.5px solid var(--copper);border-radius:999px;padding:4px 12px;cursor:pointer;margin-left:10px}
+.exbtn:hover{background:var(--copper);color:var(--ontab)}
+@media (min-width:1000px){
+  .wrap{max-width:1120px}
+  .block.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-template-rows:auto 1fr;grid-template-areas:"top right" "bot right";column-gap:32px}
+  .block.two>.top{grid-area:top}
+  .block.two>.bot{grid-area:bot;align-self:start}
+  .block.two>.right{grid-area:right;align-self:start;position:sticky;top:16px}
+  .block.two>.right>.dia:first-child svg{margin-top:0}
+}
+header h1{font-size:1.6rem;margin:4px 0 2px;font-weight:700;letter-spacing:-.01em}
+header p{margin:0 0 16px;color:var(--muted);font-size:.92rem}
+nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:640px){nav{flex-wrap:wrap;overflow-x:visible}}
+nav button{flex:0 0 auto;font:inherit;font-size:.92rem;color:var(--muted);background:var(--mask2);border:1.5px solid var(--line);
+  border-radius:999px;padding:7px 14px;cursor:pointer}
+nav button[aria-selected="true"]{color:var(--ontab);background:var(--copper);border-color:var(--copper);font-weight:700}
+nav button:focus-visible,input:focus-visible,select:focus-visible,.btn:focus-visible{outline:2px solid var(--silk);outline-offset:2px}
+section.panel{display:none}
+section.panel.active{display:block}
+.block{background:var(--mask2);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.block h2{font-size:1.08rem;margin:0 0 4px}
+.hint{color:var(--muted);font-size:.86rem;margin:0 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+label{display:flex;flex-direction:column;gap:4px;font-size:.86rem;color:var(--muted)}
+input,select{font:inherit;font-size:1rem;color:var(--silk);background:var(--mask);border:1.5px solid var(--line);
+  border-radius:6px;padding:9px 10px;width:100%;font-variant-numeric:tabular-nums}
+input::placeholder{color:var(--ph)}
+input.bad{border-color:var(--err)}
+.out{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:4px 0;font-variant-numeric:tabular-nums}
+.row span:first-child{color:var(--muted)}
+.row b{color:var(--copper);font-weight:700}
+.msg{color:var(--muted);font-size:.9rem}
+.msg.err{color:var(--err)}
+.btn{font:inherit;font-size:.9rem;background:transparent;color:var(--silk);border:1.5px solid var(--line);border-radius:6px;padding:8px 12px;cursor:pointer;margin-top:10px}
+.resistor{width:100%;height:auto;display:block;margin:6px 0 10px}
+.big{font-size:1.7rem;font-weight:700;color:var(--copper);font-variant-numeric:tabular-nums;margin:2px 0}
+.inline{display:flex;gap:8px;align-items:flex-end}
+.inline label{flex:1}
+.inline .btn{margin-top:0;white-space:nowrap}
+.dia svg{display:block;width:100%;height:auto;margin:14px auto 0;font-family:inherit}
+.dia .w{fill:none;stroke:var(--silk);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.dia .lb{fill:var(--muted);font-size:12px}
+.dia .vl{fill:var(--copper);font-size:13px;font-weight:700}
+.dia .dot{fill:var(--silk)}
+.dia .ar{fill:var(--copper)}
+.dia .cu{stroke:var(--copper)}
+.dia .sm{font-size:11px}
+.dia .dash{fill:none;stroke:var(--muted);stroke-width:1;stroke-dasharray:3 4;opacity:.7}
+.dia .dashc{fill:none;stroke:var(--copper);stroke-width:1.5;stroke-dasharray:4 3}
+
+.learn details summary{cursor:pointer;font-weight:700;color:var(--copper);list-style:none;font-size:1rem}
+.learn details summary::-webkit-details-marker{display:none}
+.learn details summary::before{content:"▸ "}
+.learn details[open] summary::before{content:"▾ "}
+.learn p{margin:12px 0 0;font-size:.94rem;line-height:1.6}
+.fx{display:block;font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--mask);border:1px solid var(--line);border-radius:6px;padding:9px 11px;margin:10px 0 0;overflow-x:auto;white-space:normal;line-height:1.7;font-size:.88rem;color:var(--silk)}
+
+footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem;line-height:1.6;text-align:center}
+footer a{color:var(--copper);text-decoration:none;font-weight:600}
+footer a:hover{text-decoration:underline}
+.note{color:var(--muted);font-size:.84rem;margin-top:8px}
+
+nav a{flex:0 0 auto;font-size:.92rem;color:var(--muted);background:var(--mask2);border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;text-decoration:none}
+nav a:hover{border-color:var(--copper);color:var(--silk)}
+nav a[aria-current="page"]{color:var(--ontab);background:var(--copper);border-color:var(--copper);font-weight:700}
+nav a:focus-visible,.alltools a:focus-visible,.crumb a:focus-visible{outline:2px solid var(--silk);outline-offset:2px}
+.crumb{font-size:.86rem;color:var(--muted);margin:4px 0 2px}
+.crumb a{color:var(--copper);text-decoration:none;font-weight:600}
+.crumb a:hover{text-decoration:underline}
+.alltools h2{font-size:1.08rem;margin:0 0 10px}
+.alltools .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:4px 24px}
+.alltools h3{font-size:.92rem;color:var(--muted);margin:10px 0 4px;font-weight:600}
+.alltools ul{list-style:none;margin:0;padding:0}
+.alltools li{padding:3px 0}
+.alltools a{color:var(--copper);text-decoration:none;font-weight:600}
+.alltools a:hover{text-decoration:underline}
+.alltools a[aria-current="page"]{color:var(--silk);font-weight:700}
+footer .pages a{margin:0 2px}
+
+.byline{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;font-size:.84rem;color:var(--muted);margin:-4px 2px 14px}
+.byline a{color:var(--copper);text-decoration:none;font-weight:600}
+.byline a:hover{text-decoration:underline}
+.credit{display:flex;align-items:center;gap:8px}
+.credit img{width:32px;height:32px;border-radius:50%;object-fit:cover;border:1.5px solid var(--line)}
+.credit b{color:var(--silk)}
+
+nav .ng{display:contents}
+nav .ngh{display:none}
+@media (max-width:999px){
+  nav{flex-wrap:nowrap;overflow-x:auto;-webkit-mask-image:linear-gradient(to right,#000 86%,transparent);mask-image:linear-gradient(to right,#000 86%,transparent)}
+}
+@media (min-width:1000px){
+  .wrap{max-width:1320px}
+  .layout{display:grid;grid-template-columns:224px minmax(0,1fr);gap:24px;align-items:start}
+  .layout>nav{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;flex-direction:column;flex-wrap:nowrap;gap:0;margin:0;padding:12px 8px;background:var(--mask2);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);scrollbar-width:thin}
+  .layout>nav .ng{display:flex;flex-direction:column;gap:1px;margin-bottom:12px}
+  .layout>nav .ng:last-child{margin-bottom:0}
+  .layout>nav .ngh{display:block;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:2px 10px 4px}
+  .layout>nav button,.layout>nav a{display:block;width:100%;box-sizing:border-box;border:0;background:transparent;border-radius:6px;padding:6px 10px;text-align:left;font-size:.9rem;color:var(--silk)}
+  .layout>nav button:hover,.layout>nav a:hover{background:var(--line);color:var(--silk)}
+  .layout>nav button[aria-selected="true"],.layout>nav a[aria-current="page"]{background:var(--copper);color:var(--ontab);font-weight:700}
+}
+
+/* mobile-v2 */
+.grid label{justify-content:flex-end}
+@media (max-width:999px){
+  .block.two{display:flex;flex-direction:column}
+  .block.two>.top{order:0}
+  .block.two>.bot{order:1}
+  .block.two>.right{order:2}
+}
+@media (max-width:640px){
+  .wrap{padding-top:12px}
+  header h1{font-size:1.32rem;line-height:1.25;margin:2px 0 4px}
+  header p{font-size:.84rem;line-height:1.45;margin:0 0 8px}
+  .themes{gap:6px;margin:0 0 10px}
+  .themes span{display:none}
+  .themes button{width:22px;height:22px}
+  .crumb{margin:0}
+}
+
+/* bookmark-v1 */
+header p.tagline{font-size:1.05rem;color:var(--silk);font-weight:500;margin:0 0 6px}
+.bm{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;font-size:.9rem;color:var(--muted);margin:0 0 8px}
+.bmbtn{font:inherit;font-size:.85rem;font-weight:600;color:var(--copper);background:transparent;border:1.5px solid var(--copper);border-radius:999px;padding:4px 12px;cursor:pointer}
+.bmbtn:hover{background:var(--copper);color:var(--ontab)}
+.bmbtn:focus-visible{outline:2px solid var(--silk);outline-offset:2px}
+header p.bmhint{font-size:.86rem;color:var(--silk);background:var(--mask2);border:1px solid var(--line);border-left:3px solid var(--copper);border-radius:6px;padding:6px 10px;margin:0 0 10px;max-width:520px}
+header p.pfx{font-size:.84rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div>
+    <div class="crumb"><a href="./">EE Calculator</a> / MOSFET switch</div>
+    <h1>MOSFET logic-level switch calculator</h1>
+    <p>Check that an N-channel MOSFET fully turns on from your logic level, and find its gate resistor, pull-down and power loss. Type values with prefixes: 4.7k, 2k2, 10m, 100n, 4R7, 1M.</p>
+    <div class="bm"><button type="button" class="bmbtn">☆ Bookmark this calculator</button></div>
+    <p class="bmhint" role="status" aria-live="polite" hidden></p>
+  </div>
+  <div class="themes" role="group" aria-label="Colour theme">
+    <span>Theme</span>
+    <button data-t="light" title="Light" aria-label="Light theme" style="background:linear-gradient(135deg,#F7F9FC 50%,#B45309 50%)"></button>
+    <button data-t="navy" title="Navy" aria-label="Navy theme" style="background:linear-gradient(135deg,#0B1D36 50%,#E0A458 50%)"></button>
+    <button data-t="charcoal" title="Charcoal" aria-label="Charcoal theme" style="background:linear-gradient(135deg,#16181B 50%,#E3A15A 50%)"></button>
+    <button data-t="green" title="Green" aria-label="Green theme" style="background:linear-gradient(135deg,#0E3B2E 50%,#D9A04F 50%)"></button>
+  </div>
+</header>
+
+<div class="layout">
+<nav aria-label="Calculators">
+  <div class="ng"><span class="ngh" aria-hidden="true">Basics</span>
+    <a href="ohms-law-calculator.html">Ohm&#x27;s law</a>
+    <a href="series-parallel-calculator.html">Series / parallel</a>
+    <a href="voltage-divider-calculator.html">Dividers</a>
+  </div>
+  <div class="ng"><span class="ngh" aria-hidden="true">AC, filters and signals</span>
+    <a href="reactance-calculator.html">Reactance</a>
+    <a href="filter-calculator.html">Filters</a>
+    <a href="active-filter-calculator.html">Active filter</a>
+    <a href="rc-time-constant-calculator.html">RC time</a>
+    <a href="db-dbm-converter.html">dB converter</a>
+    <a href="rms-peak-average-calculator.html">RMS &amp; peak</a>
+  </div>
+  <div class="ng"><span class="ngh" aria-hidden="true">Circuits</span>
+    <a href="555-timer-calculator.html">555 timer</a>
+    <a href="op-amp-gain-calculator.html">Op-amp</a>
+    <a href="led-resistor-calculator.html">LED designer</a>
+    <a href="zener-diode-calculator.html">Zener</a>
+  </div>
+  <div class="ng"><span class="ngh" aria-hidden="true">Basic circuits</span>
+    <a href="transistor-switch-calculator.html">Transistor switch</a>
+    <a href="mosfet-switch-calculator.html" aria-current="page">MOSFET switch</a>
+    <a href="discrete-linear-regulator-calculator.html">Discrete regulator</a>
+    <a href="lm317-calculator.html">LM317</a>
+    <a href="constant-current-source-calculator.html">Current source</a>
+  </div>
+  <div class="ng"><span class="ngh" aria-hidden="true">Power devices and thermal</span>
+    <a href="linear-regulator-heat-calculator.html">Regulator heat</a>
+    <a href="mosfet-power-loss-calculator.html">MOSFET loss</a>
+    <a href="thermal-resistance-calculator.html">Thermal</a>
+    <a href="current-sense-resistor-calculator.html">Current sense</a>
+  </div>
+  <div class="ng"><span class="ngh" aria-hidden="true">Batteries and wiring</span>
+    <a href="battery-pack-calculator.html">Battery pack</a>
+    <a href="battery-life-calculator.html">Battery runtime</a>
+    <a href="wire-resistance-calculator.html">Wire resistance</a>
+    <a href="pcb-trace-width-calculator.html">PCB trace</a>
+  </div>
+  <div class="ng"><span class="ngh" aria-hidden="true">Component codes</span>
+    <a href="resistor-color-code-calculator.html">Color code</a>
+    <a href="smd-capacitor-code-calculator.html">SMD &amp; cap codes</a>
+  </div>
+</nav>
+<div class="main">
+
+<section class="panel active" id="mosw">
+  <div class="block">
+    <h2>MOSFET logic-level switch</h2>
+    <p class="hint">N-channel MOSFET as a low-side switch from a logic pin. Take VGS(th) max and RDS(on) from the datasheet.</p>
+    <div class="grid">
+      <label>Logic high voltage (V)<input id="ms_vg" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="3.3"></label>
+      <label>Load supply (V)<input id="ms_vcc" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="12"></label>
+      <label>Load current (A)<input id="ms_il" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="2"></label>
+      <label>VGS(th) maximum (V)<input id="ms_vth" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="1.5"></label>
+      <label>RDS(on) is rated at VGS (V)<input id="ms_vgr" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="2.5"></label>
+      <label>RDS(on) at that VGS (Ω)<input id="ms_rds" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="30m"></label>
+      <label>Max pin current (A)<input id="ms_ip" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="20m"></label>
+      <label>Gate charge Qg (C)<input id="ms_qg" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>PWM frequency (Hz)<input id="ms_f" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+    </div>
+    <div class="dia" id="mosw_dia"></div>
+    <div class="out" id="mosw_out"></div>
+  </div>
+  <div class="byline">
+  <span>Designed and tested by <a href="about.html">Vedax Global</a> · Last checked October 2026</span>
+  <!-- CONTRIBUTOR CREDIT: to credit someone, delete the two comment marks around this block and fill in their details.
+       Put their photo in a "credits" folder in the repo. Remove the <img> line if there is no photo.
+  <span class="credit"><img src="credits/firstname-lastname.jpg" alt=""><span>Suggested by <b>Full Name</b>, Designation, Organisation</span></span>
+  -->
+</div>
+<div class="block learn"><details open><summary>How it works</summary>
+<p>A MOSFET is turned on by voltage on its gate, not by current, so it is a great switch for microcontrollers. The catch is that it must be driven with enough gate voltage to fully turn on.</p>
+<p><b>VGS(th)</b> is only the point where it barely starts to conduct. The datasheet guarantees a low <b>RDS(on)</b> only at a stated gate voltage, often 10 V, 4.5 V or 2.5 V. For 3.3 V logic, choose a <b>logic-level</b> MOSFET with RDS(on) specified at 2.5 V or lower.</p>
+<code class="fx">P = I² × RDS(on) × 1.5 (hot)<br>Rg ≥ Vlogic / I_pin(max)</code>
+<p>The gate behaves like a capacitor, so at each switch it draws a short current spike. A gate resistor of a few tens to a few hundred ohms limits that spike and calms ringing. A larger resistor slows the switching and adds loss when using PWM.</p>
+<p>A <b>pull-down</b> of 10 kΩ to 100 kΩ from gate to source keeps the MOSFET off while the microcontroller pin is floating at start-up. For inductive loads, add a flyback diode across the load.</p>
+  </details></div>
+</section>
+<div class="block alltools"><h2>More calculators</h2><div class="cols"><div><h3>Basics</h3><ul><li><a href="ohms-law-calculator.html">Ohm&#x27;s law calculator</a></li><li><a href="series-parallel-calculator.html">Series and parallel calculator</a></li><li><a href="voltage-divider-calculator.html">Voltage divider calculator</a></li></ul></div><div><h3>AC, filters and signals</h3><ul><li><a href="reactance-calculator.html">Reactance and impedance calculator</a></li><li><a href="filter-calculator.html">Filter cutoff calculator</a></li><li><a href="active-filter-calculator.html">Active filter calculator</a></li><li><a href="rc-time-constant-calculator.html">RC time constant calculator</a></li><li><a href="db-dbm-converter.html">DB, dBm and ratio converter</a></li><li><a href="rms-peak-average-calculator.html">RMS, peak and average calculator</a></li></ul></div><div><h3>Circuits</h3><ul><li><a href="555-timer-calculator.html">555 timer calculator</a></li><li><a href="op-amp-gain-calculator.html">Op-amp gain calculator</a></li><li><a href="led-resistor-calculator.html">LED resistor calculator</a></li><li><a href="zener-diode-calculator.html">Zener regulator calculator</a></li></ul></div><div><h3>Basic circuits</h3><ul><li><a href="transistor-switch-calculator.html">Transistor switch calculator</a></li><li><a href="mosfet-switch-calculator.html" aria-current="page">MOSFET logic-level switch calculator</a></li><li><a href="discrete-linear-regulator-calculator.html">Discrete linear regulator calculator</a></li><li><a href="lm317-calculator.html">LM317 resistor calculator</a></li><li><a href="constant-current-source-calculator.html">Constant-current source calculator</a></li></ul></div><div><h3>Power devices and thermal</h3><ul><li><a href="linear-regulator-heat-calculator.html">Linear regulator heat calculator</a></li><li><a href="mosfet-power-loss-calculator.html">MOSFET power loss calculator</a></li><li><a href="thermal-resistance-calculator.html">Thermal resistance calculator</a></li><li><a href="current-sense-resistor-calculator.html">Current sense resistor calculator</a></li></ul></div><div><h3>Batteries and wiring</h3><ul><li><a href="battery-pack-calculator.html">Battery pack calculator</a></li><li><a href="battery-life-calculator.html">Battery runtime calculator</a></li><li><a href="wire-resistance-calculator.html">Wire resistance calculator</a></li><li><a href="pcb-trace-width-calculator.html">PCB trace width calculator</a></li></ul></div><div><h3>Component codes</h3><ul><li><a href="resistor-color-code-calculator.html">Resistor color code calculator</a></li><li><a href="smd-capacitor-code-calculator.html">SMD resistor and capacitor code calculator</a></li></ul></div></div></div>
+</div>
+</div>
+<footer>
+  <div class="pages"><a href="about.html">About</a> · <a href="contact.html">Contact</a> · <a href="privacy.html">Privacy policy</a></div>
+  <div>Made by Vedax Global. Free to use, no sign-up.</div>
+  <div>Need a calculator that isn't here? <a href="contact.html#suggest">Suggest one and get credited on its page</a></div>
+  <div>Found a mistake? <a id="fbk" href="mailto:feedback@vedaxglobal.com?subject=EE%20Calculator%20feedback">feedback@vedaxglobal.com</a></div>
+  <div>Results assume ideal parts. Check datasheets before building anything critical.</div>
+</footer>
+</div>
+
+<script>
+/* ---------- helpers ---------- */
+const $ = id => document.getElementById(id);
+const MULT = {p:1e-12,n:1e-9,u:1e-6,'µ':1e-6,m:1e-3,'':1,k:1e3,K:1e3,M:1e6,G:1e9};
+
+function parse(raw){
+  let s = String(raw).trim().replace(/\s+/g,'');
+  if(!s) return null;
+  s = s.replace(/(ohms?|Ω|[vVaAwWfFhH])$/,'');          // strip trailing unit
+  if(/^\d*R\d*$/i.test(s) && /\d/.test(s)) return parseFloat(s.replace(/r/i,'.').replace(/^\./,'0.'));
+  let m = s.match(/^(\d+)([pnuµmkKMG])(\d+)$/);          // 4k7 style
+  if(m) return parseFloat(m[1]+'.'+m[3]) * MULT[m[2]];
+  m = s.match(/^([-+]?\d*\.?\d+(?:e[-+]?\d+)?)([pnuµmkKMG]?)$/);
+  if(!m) return NaN;
+  return parseFloat(m[1]) * MULT[m[2]];
+}
+function fmt(v, unit){
+  if(v===null || !isFinite(v)) return '—';
+  if(v===0) return '0 '+unit;
+  const pre=[[1e9,'G'],[1e6,'M'],[1e3,'k'],[1,''],[1e-3,'m'],[1e-6,'µ'],[1e-9,'n'],[1e-12,'p']];
+  const a=Math.abs(v);
+  for(const [mul,p] of pre){ if(a >= mul*0.99995) return +(v/mul).toPrecision(4)+' '+p+unit; }
+  return +(v/1e-12).toPrecision(4)+' p'+unit;
+}
+function rows(list){ return list.map(([k,v])=>`<div class="row"><span>${k}</span><b>${v}</b></div>`).join(''); }
+function msg(t,err){ return `<div class="msg${err?' err':''}">${t}</div>`; }
+function read(ids){
+  const out={}; let bad=false;
+  ids.forEach(id=>{ const el=$(id); const v=parse(el.value); el.classList.toggle('bad', Number.isNaN(v)); if(Number.isNaN(v)) bad=true; out[id]=v; });
+  return {v:out, bad};
+}
+const E96N=[1,1.02,1.05,1.07,1.1,1.13,1.15,1.18,1.21,1.24,1.27,1.3,1.33,1.37,1.4,1.43,1.47,1.5,1.54,1.58,1.62,1.65,1.69,1.74,1.78,1.82,1.87,1.91,1.96,2,2.05,2.1,2.15,2.21,2.26,2.32,2.37,2.43,2.49,2.55,2.61,2.67,2.74,2.8,2.87,2.94,3.01,3.09,3.16,3.24,3.32,3.4,3.48,3.57,3.65,3.74,3.83,3.92,4.02,4.12,4.22,4.32,4.42,4.53,4.64,4.75,4.87,4.99,5.11,5.23,5.36,5.49,5.62,5.76,5.9,6.04,6.19,6.34,6.49,6.65,6.81,6.98,7.15,7.32,7.5,7.68,7.87,8.06,8.25,8.45,8.66,8.87,9.09,9.31,9.53,9.76,10];
+function nearestE96(x){
+  const dec=Math.pow(10,Math.floor(Math.log10(x)));
+  const m=x/dec; let best=E96N[0];
+  for(const e of E96N) if(Math.abs(e-m)<Math.abs(best-m)) best=e;
+  return +(best*dec).toPrecision(3);
+}
+
+/* ---------- diagram helpers ---------- */
+const SYM={
+  R:'M0 0H12l3 -8l6 16l6 -16l6 16l6 -16l6 16l6 -16l3 8H60',
+  C:'M0 0H26M26 -12V12M34 -12V12M34 0H60',
+  L:'M0 0H10a5 5 0 0 1 10 0a5 5 0 0 1 10 0a5 5 0 0 1 10 0a5 5 0 0 1 10 0H60',
+  B:'M0 0H24M24 -14V14M32 -7V7M32 0H60',
+  Z:'M0 0H22M22 -7V7M22 -7l-4 -3M22 7l4 3M22 0L36 -7L36 7ZM36 0H60',
+  D:'M0 0H8M8 -7L22 0L8 7ZM22 -7V7M22 0H30M12 -10l5 -5M17 -15h-3M17 -15v3M17 -10l5 -5M22 -15h-3M22 -15v3'
+};
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const sym=(t,x,y,a=0)=>`<path class="w" transform="translate(${x} ${y}) rotate(${a})" d="${SYM[t]}"/>`;
+const wire=d=>`<path class="w" d="${d}"/>`;
+const txt=(x,y,t,cls='lb',anc='start')=>`<text x="${x}" y="${y}" class="${cls}" text-anchor="${anc}">${esc(t)}</text>`;
+const dot=(x,y)=>`<circle class="dot" cx="${x}" cy="${y}" r="3.5"/>`;
+const term=(x,y)=>`<circle cx="${x}" cy="${y}" r="4" fill="var(--mask2)" stroke="var(--silk)" stroke-width="2"/>`;
+const arrow=(x,y,a=0)=>`<path class="ar" transform="translate(${x} ${y}) rotate(${a})" d="M6 0L-5 -5L-5 5Z"/>`;
+const gnd=(x,y)=>wire(`M${x} ${y}V${y+8}M${x-12} ${y+8}H${x+12}M${x-7} ${y+13}H${x+7}M${x-3} ${y+18}H${x+3}`);
+const svg=(w,h,b)=>`<svg viewBox="0 0 ${w} ${h}" style="max-width:${Math.round(w*1.25)}px" role="img">${b}</svg>`;
+const fv=(v,u)=>(v===null||v===undefined||!isFinite(v))?'?':fmt(v,u);
+
+function ohmDia(V,I,R,P){
+  $('o_dia').innerHTML=svg(360,170,
+    wire('M90 60V30H230V60')+sym('B',90,60,90)+sym('R',230,60,90)+wire('M90 120V150H230V120')+
+    arrow(160,30)+txt(160,20,'I = '+fv(I,'A'),'vl','middle')+
+    txt(98,80,'+')+txt(76,94,'V = '+fv(V,'V'),'vl','end')+
+    txt(244,86,'R = '+fv(R,'Ω'),'vl')+txt(244,104,'P = '+fv(P,'W'),'vl'));
+}
+function combDia(t,vals,unit){
+  if(!vals.length){ $('c_dia').innerHTML=''; return; }
+  const v=vals.slice(0,5), k=v.length, x0=24, W=x0*2+60*k;
+  let a=txt(4,14,'Series')+term(x0,40)+term(x0+60*k,40);
+  v.forEach((x,i)=>{ a+=sym(t,x0+60*i,40)+txt(x0+60*i+30,66,fmt(x,unit),'vl','middle'); });
+  const y0=40, yN=y0+40*(k-1);
+  let b=txt(4,14,'Parallel')+wire(`M40 ${y0}V${yN+18}M160 ${y0}V${yN+18}`)+term(40,yN+22)+term(160,yN+22);
+  v.forEach((x,i)=>{ const y=y0+40*i; b+=wire(`M40 ${y}H70M130 ${y}H160`)+sym(t,70,y)+txt(170,y+4,fmt(x,unit),'vl'); });
+  $('c_dia').innerHTML=svg(Math.max(W,240),76,a)+svg(250,yN+34,b)+
+    (vals.length>5?`<div class="msg" style="text-align:center">Showing first 5 of ${vals.length}</div>`:'');
+}
+function divDia(id,Vin,R1,R2,Vout,I){
+  $(id).innerHTML=svg(320,215,
+    term(110,20)+txt(122,24,'Vin = '+fv(Vin,'V'),'vl')+wire('M110 24V40')+arrow(110,32,90)+
+    sym('R',110,40,90)+txt(96,74,'R1 = '+fv(R1,'Ω'),'vl','end')+txt(124,74,'I = '+fv(I,'A'))+
+    wire('M110 100V120M110 110H166')+dot(110,110)+term(170,110)+txt(182,114,'Vout = '+fv(Vout,'V'),'vl')+
+    sym('R',110,120,90)+txt(96,154,'R2 = '+fv(R2,'Ω'),'vl','end')+wire('M110 180V190')+gnd(110,190));
+}
+function idivDia(It,R1,R2,I1,I2){
+  $('i_dia').innerHTML=svg(280,165,
+    term(16,90)+wire('M20 90H70M70 50V130M70 50H110M70 130H110')+dot(70,90)+
+    sym('R',110,50)+sym('R',110,130)+wire('M170 50H210M170 130H210M210 50V130M210 90H260')+dot(210,90)+term(264,90)+
+    arrow(45,90)+txt(45,108,'I = '+fv(It,'A'),'vl','middle')+
+    arrow(90,50)+txt(140,34,'R1 = '+fv(R1,'Ω'),'lb','middle')+txt(140,74,'I1 = '+fv(I1,'A'),'vl','middle')+
+    arrow(90,130)+txt(140,114,'R2 = '+fv(R2,'Ω'),'lb','middle')+txt(140,154,'I2 = '+fv(I2,'A'),'vl','middle'));
+}
+function smdDia(code){
+  $('s_dia').innerHTML=svg(240,84,
+    '<rect x="40" y="20" width="16" height="44" rx="2" fill="#B9B9B9"/><rect x="184" y="20" width="16" height="44" rx="2" fill="#B9B9B9"/>'+
+    '<rect x="52" y="18" width="136" height="48" rx="3" fill="#1c1c1c"/>'+
+    `<text x="120" y="51" text-anchor="middle" fill="#F2F5EE" font-size="24" font-weight="700" letter-spacing="2">${esc(code||'—')}</text>`);
+}
+function capDia(code){
+  $('k_dia').innerHTML=svg(240,130,
+    '<path d="M108 82L100 126M132 82L140 126" stroke="#B9B9B9" stroke-width="3" fill="none" stroke-linecap="round"/>'+
+    '<circle cx="120" cy="50" r="40" fill="#C9772E" stroke="#8E4F1A" stroke-width="2"/>'+
+    `<text x="120" y="58" text-anchor="middle" fill="#2A1606" font-size="22" font-weight="700">${esc(code||'—')}</text>`);
+}
+
+/* ---------- tabs, groups and links ---------- */
+const GROUP={ohm:'basics',combine:'basics',divider:'basics',react:'ac',filt:'ac',afilt:'ac',db:'ac',wave:'ac',rc:'ac',t555:'circuits',opamp:'circuits',led:'circuits',zener:'circuits',bjt:'circuits',mosw:'circuits',dreg:'circuits',lm317:'circuits',ccs:'circuits',
+  lreg:'power',mosfet:'power',thermal:'power',sense:'power',pack:'power',run:'power',wire:'power',trace:'power',color:'codes',codes:'codes'};
+const lastInGroup={};
+function showTab(id){
+  if(!GROUP[id]) id='ohm';
+  const g=GROUP[id]; lastInGroup[g]=id;
+  document.querySelectorAll('.groups button').forEach(b=>b.setAttribute('aria-selected',b.dataset.g===g));
+  document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===id));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===id));
+  if(location.hash!=='#'+id) history.replaceState(null,'','#'+id);
+  try{localStorage.setItem('eecalc-tab',id)}catch(e){}
+  if(typeof fbkLink==='function'&&$('fbk')) fbkLink();
+}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+document.querySelectorAll('.groups button').forEach(b=>b.addEventListener('click',()=>{
+  const g=b.dataset.g; showTab(lastInGroup[g]||Object.keys(GROUP).find(k=>GROUP[k]===g));
+}));
+
+
+/* ---------- shared for new tools ---------- */
+function nextE96(x){
+  const dec=Math.pow(10,Math.floor(Math.log10(x)));
+  for(const e of E96N) if(e*dec>=x*(1-1e-9)) return +(e*dec).toPrecision(3);
+  return 10*dec;
+}
+function human(h){
+  if(h<1) return (h*60).toFixed(1)+' min';
+  if(h<48) return h.toFixed(1)+' h';
+  const d=h/24; if(d<60) return d.toFixed(1)+' days';
+  if(d<730) return (d/30.44).toFixed(1)+' months';
+  return (d/365.25).toFixed(1)+' years';
+}
+const listen=(ids,fn)=>{ids.forEach(id=>{$(id).addEventListener('input',fn);$(id).addEventListener('change',fn)});fn();};
+
+/* ---------- more shared helpers ---------- */
+const E6=[1,1.5,2.2,3.3,4.7,6.8,10], E12=[1,1.2,1.5,1.8,2.2,2.7,3.3,3.9,4.7,5.6,6.8,8.2,10];
+function nearestIn(x,list){
+  const dec=Math.pow(10,Math.floor(Math.log10(x))), m=x/dec; let best=list[0];
+  for(const e of list) if(Math.abs(e-m)<Math.abs(best-m)) best=e;
+  return +(best*dec).toPrecision(3);
+}
+function prevE96(x){
+  const dec=Math.pow(10,Math.floor(Math.log10(x)));
+  for(let i=E96N.length-1;i>=0;i--) if(E96N[i]*dec<=x*(1+1e-9)) return +(E96N[i]*dec).toPrecision(3);
+  return +(9.76*dec/10).toPrecision(3);
+}
+const showL=(id,on)=>{$(id).style.display=on?'':'none'};
+const setL=(id,t)=>{$(id).firstChild.nodeValue=t};
+const ACsrc=(x,y)=>`<circle cx="${x}" cy="${y}" r="14" fill="none" stroke="var(--silk)" stroke-width="2"/><path class="w" d="M${x-8} ${y}q4 -9 8 0t8 0"/>`;
+
+/* ---------- transistor symbols ---------- */
+function npn(x,y,flip){ const k=flip?-1:1, X=d=>x+k*d;
+  return `<circle cx="${X(8)}" cy="${y}" r="21" fill="none" stroke="var(--line)" stroke-width="1.5"/>`+
+    wire(`M${X(-20)} ${y}H${x}M${x} ${y-6}L${X(16)} ${y-17}V${y-30}M${x} ${y+6}L${X(16)} ${y+17}V${y+30}`)+
+    `<path d="M${x} ${y-13}V${y+13}" stroke="var(--silk)" stroke-width="3"/>`+arrow(X(9),y+12.5,flip?146:34);
+}
+function nmos(x,y){
+  return `<circle cx="${x+9}" cy="${y}" r="21" fill="none" stroke="var(--line)" stroke-width="1.5"/>`+
+    wire(`M${x-20} ${y}H${x}M${x} ${y-13}V${y+13}`)+
+    `<path d="M${x+6} ${y-15}V${y-7}M${x+6} ${y-4}V${y+4}M${x+6} ${y+7}V${y+15}" stroke="var(--silk)" stroke-width="3"/>`+
+    wire(`M${x+6} ${y-11}H${x+18}V${y-30}M${x+6} ${y+11}H${x+18}V${y+30}M${x+6} ${y}H${x+18}V${y+11}`)+arrow(x+12,y,180);
+}
+function lbl(x,y,name,val,anc){ return txt(x,y,name,'lb sm',anc||'start')+txt(x,y+14,val,'vl',anc||'start'); }
+const ZENERS=[2.4,2.7,3,3.3,3.6,3.9,4.3,4.7,5.1,5.6,6.2,6.8,7.5,8.2,9.1,10,11,12,13,15,16,18,20,22,24,27,30,33,36,39,43,47];
+function nearestZener(v){ let b=ZENERS[0]; for(const z of ZENERS) if(Math.abs(z-v)<Math.abs(b-v)) b=z; return b; }
+
+/* ---------- MOSFET SWITCH ---------- */
+function moswDia(L){
+  const b=term(196,14)+txt(208,18,'Vcc '+L.vcc,'lb')+wire('M196 18V30')+
+    '<rect x="172" y="30" width="48" height="36" rx="5" fill="var(--line)" stroke="var(--silk)" stroke-width="1.5"/>'+txt(196,53,'Load','lb','middle')+
+    wire('M196 66V96')+arrow(196,82,90)+txt(208,86,'I = '+L.i,'vl')+nmos(178,126)+txt(222,122,'Q','lb')+txt(222,136,L.rds,'lb sm')+
+    term(16,126)+txt(8,148,'Logic '+L.vg,'lb','start')+wire('M20 126H58')+sym('R',58,126)+wire('M118 126H158')+dot(138,126)+lbl(88,92,'Rg',L.rg,'middle')+
+    sym('R',138,126,90)+wire('M138 186V188')+gnd(138,188)+lbl(126,152,'Rpd',L.rpd,'end')+wire('M196 156V168')+gnd(196,168);
+  $('mosw_dia').innerHTML=svg(320,214,b);
+}
+function mosw(){
+  const ids=['ms_vg','ms_vcc','ms_il','ms_vth','ms_vgr','ms_rds','ms_ip','ms_qg','ms_f'], {v,bad}=read(ids);
+  const vg=v.ms_vg, I=v.ms_il, rds=v.ms_rds, vth=v.ms_vth, vgr=v.ms_vgr, ip=v.ms_ip, qg=v.ms_qg||0, f=v.ms_f||0, vcc=v.ms_vcc;
+  const Rg=(vg>0&&ip>0)?Math.max(10,nextE96(vg/ip)):(vg>0?100:null);
+  moswDia({vcc:fv(vcc,'V'),i:fv(I,'A'),vg:fv(vg,'V'),rg:fv(Rg,'Ω'),rpd:'47 kΩ',rds:rds>0?'RDS(on) '+fmt(rds,'Ω'):''});
+  if(bad) return $('mosw_out').innerHTML=msg('Check the highlighted value.',true);
+  if(!(vg>0&&I>0&&rds>0)) return $('mosw_out').innerHTML=msg('Enter the logic voltage, load current and RDS(on).');
+  if(vth>0&&vg<=vth) return $('mosw_out').innerHTML=rows([['Logic voltage',fmt(vg,'V')],['VGS(th) max',fmt(vth,'V')]])+'<div class="note" style="color:var(--err)">The gate voltage is below the threshold, so this MOSFET may not turn on at all. Choose a logic-level MOSFET.</div>';
+  const Pc=I*I*rds*1.5, list=[['Conduction loss (RDS(on) × 1.5 hot)',fmt(Pc,'W')]];
+  let P=Pc;
+  list.push(['Gate resistor Rg',fmt(Rg,'Ω')],['Peak gate current',fmt(vg/Rg,'A')],['Gate pull-down','47 kΩ (10 kΩ to 100 kΩ)']);
+  if(qg>0){ const t=2*qg*Rg/vg; list.push(['Switching time (estimate)',fmt(t,'s')]);
+    if(f>0&&vcc>0){ const Ps=vcc*I*t*f; P+=Ps; list.push(['Switching loss (estimate)',fmt(Ps,'W')]); } }
+  list.push(['Total MOSFET loss',fmt(P,'W')]);
+  if(vcc>0) list.push(['Voltage lost in MOSFET',fmt(I*rds*1.5,'V')]);
+  let notes='';
+  if(vgr>0&&vg<vgr) notes+=`<div class="note" style="color:var(--copper)">RDS(on) is only guaranteed at VGS = ${fmt(vgr,'V')}, above your ${fmt(vg,'V')} logic level. Real resistance will be higher. Pick a MOSFET rated at VGS ≤ ${fmt(vg,'V')} or add a gate driver.</div>`;
+  else if(vgr>0) notes+='<div class="note">Your logic level meets the rated VGS, so the MOSFET turns fully on.</div>';
+  if(P>0.5) notes+='<div class="note" style="color:var(--copper)">Over 0.5 W: check the temperature with the thermal calculator, or use a lower RDS(on) part.</div>';
+  $('mosw_out').innerHTML=rows(list)+notes;
+}
+listen(['ms_vg','ms_vcc','ms_il','ms_vth','ms_vgr','ms_rds','ms_ip','ms_qg','ms_f'],mosw);
+
+/* ---------- theme switcher ---------- */
+function setTheme(t){
+  if(t==='light') delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme=t;
+  document.querySelectorAll('.themes button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.t===t));
+  try{localStorage.setItem('eecalc-theme',t)}catch(e){}
+}
+document.querySelectorAll('.themes button').forEach(b=>b.addEventListener('click',()=>setTheme(b.dataset.t)));
+setTheme(document.documentElement.dataset.theme||'light');
+
+/* ---------- feedback link follows the open tab ---------- */
+function fbkLink(){
+  const t={textContent:'MOSFET switch'};
+  const subj='EE Calculator feedback: '+(t?t.textContent:'');
+  $('fbk').href='mailto:feedback@vedaxglobal.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent('Calculator: '+(t?t.textContent:'')+'\n\nWhat happened or what would you like?\n\n');
+}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',fbkLink)); fbkLink();
+
+/* ---------- two-column layout on wide screens ---------- */
+document.querySelectorAll('.panel .block:not(.learn)').forEach(bl=>{
+  const dias=[...bl.querySelectorAll(':scope > .dia')]; if(!dias.length) return;
+  const top=document.createElement('div'), right=document.createElement('div'), bot=document.createElement('div');
+  top.className='top'; right.className='right'; bot.className='bot';
+  let seen=false;
+  [...bl.children].forEach(ch=>{ if(ch.classList.contains('dia')){seen=true;right.appendChild(ch);} else (seen?bot:top).appendChild(ch); });
+  bl.append(top,right,bot); bl.classList.add('two');
+});
+
+/* ---------- try an example ---------- */
+const EX={
+  ohm:[['o_v','12'],['o_i',''],['o_r','470'],['o_p','']],
+  combine:[['c_type','R'],['c_vals','1k, 2.2k, 4.7k']],
+  divider:[['d_vin','12'],['d_r1','10k'],['d_r2','3.3k'],['f_vin','5'],['f_vout','3.3'],['f_r2','10k'],['i_it','100m'],['i_r1','100'],['i_r2','220']],
+  react:[['x_f','1k'],['x_r','100'],['x_l','10m'],['x_c','1u'],['x_v','5']],
+  filt:[['fl_type','rclp'],['fl_r','1k'],['fl_l',''],['fl_c','100n'],['fl_t','']],
+  afilt:[['af_top','sk'],['af_type','lp'],['af_fc','1k'],['af_q','0.707'],['af_k','1'],['af_c','10n']],
+  db:[['db_t','vr'],['db_x','10'],['dm_u','dbm'],['dm_x','0'],['dm_z','50']],
+  wave:[['wv_shape','sine'],['wv_q','rms'],['wv_x','230'],['wv_d','50']],
+  rc:[['rc_r','10k'],['rc_c','100u'],['rc_vs','5'],['rc_vt','3.3']],
+  t555:[['t_mode','a'],['t_r1','1k'],['t_r2','10k'],['t_c','10u']],
+  opamp:[['oa_mode','inv'],['oa_r1','10k'],['oa_rf','47k'],['oa_r2',''],['oa_v1','0.5'],['oa_v2',''],['oa_vs','12'],['oa_g','']],
+  led:[['l_vs','12'],['l_vf','2'],['l_if','20m'],['l_n','10'],['l_per','']],
+  bjt:[['bj_vcc','12'],['bj_il','100m'],['bj_vin','3.3'],['bj_hfe','100'],['bj_m','5'],['bj_vbe','0.7'],['bj_vce','0.2'],['bj_ip','20m']],
+  mosw:[['ms_vg','3.3'],['ms_vcc','12'],['ms_il','2'],['ms_vth','1.5'],['ms_vgr','2.5'],['ms_rds','30m'],['ms_ip','20m'],['ms_qg','10n'],['ms_f','20k']],
+  dreg:[['dr_vmin','12'],['dr_vmax','15'],['dr_vout','5'],['dr_il','500m'],['dr_hfe','50'],['dr_vbe','0.7'],['dr_iz','5m']],
+  lm317:[['lm_vout','5'],['lm_r1','240'],['lm_vin','9'],['lm_il','500m'],['lm_vref','1.25']],
+  ccs:[['cc_top','two'],['cc_i','20m'],['cc_vs','12'],['cc_vl','6.4'],['cc_vbe','0.65'],['cc_hfe','100']],
+  zener:[['z_vmin','9'],['z_vmax','12'],['z_vz','5.1'],['z_il','20m'],['z_izm','5m']],
+  lreg:[['g_part','7805'],['g_vin','12'],['g_vout','5'],['g_i','300m'],['g_ta','30']],
+  pack:[['p_s','4'],['p_p','2'],['p_cap','2600'],['p_v','3.7'],['p_full','4.2'],['p_empty','3.0'],['p_imax','10']],
+  run:[['r_cap','500'],['r_v','3.7'],['r_use','80'],['r_ia','15m'],['r_is','10u'],['r_duty','2']],
+  wire:[['w_mat','cu'],['w_type','awg'],['w_size','18'],['w_len','10'],['w_path','2'],['w_i','5'],['w_vs','12'],['w_t','20']],
+  mosfet:[['mf_v','24'],['mf_i','10'],['mf_rds','10m'],['mf_hot','1.5'],['mf_d','50'],['mf_f','200k'],['mf_tr','20n'],['mf_tf','20n'],['mf_coss','500p'],['mf_qg','30n'],['mf_vg','10'],['mf_ta','40'],['mf_tjc','1'],['mf_tcs','0.5'],['mf_tja','62'],['mf_tjm','150']],
+  thermal:[['th_mode','pad'],['th_p','5'],['th_ta','40'],['th_tjm','150'],['th_tjc','1.5'],['th_k','3'],['th_t','0.5'],['th_a','150'],['th_tsa','8']],
+  sense:[['cs_i','5'],['cs_v','100m'],['cs_r',''],['cs_g','50'],['cs_vs','12']],
+  trace:[['pc_i','2'],['pc_dt','10'],['pc_oz','1'],['pc_layer','ext'],['pc_len','50']],
+  color:[['r_n','4'],['r_rev','4.7k']],
+  codes:[['s_code','472'],['k_code','104K']]
+};
+function runExample(id){
+  EX[id].forEach(([k,v])=>{const el=$(k); if(!el) return; el.value=v; el.dispatchEvent(new Event('change')); el.dispatchEvent(new Event('input'));});
+  if(id==='color') $('r_rev_btn').click();
+}
+Object.keys(EX).forEach(id=>{
+  const h=document.querySelector(`#${id} .block h2`); if(!h) return;
+  const b=document.createElement('button'); b.type='button'; b.className='exbtn'; b.textContent='Try an example';
+  b.addEventListener('click',()=>runExample(id)); h.parentNode.insertBefore(b,h);
+});
+
+try{localStorage.setItem('eecalc-tab','mosw')}catch(e){}
+/* ---------- show this calculator's link in the scrolling menu ---------- */
+(function(){const n=document.querySelector('nav[aria-label="Calculators"]'), a=n&&n.querySelector('a[aria-current]'); if(n&&a&&n.scrollWidth>n.clientWidth) n.scrollLeft=a.offsetLeft-n.offsetLeft-(n.clientWidth-a.offsetWidth)/2;})();
+</script>
+<script>
+/* keep the current calculator visible in the menu */
+(function(){const n=document.querySelector('.layout>nav'); if(!n) return;
+  function c(){const a=n.querySelector('[aria-current="page"],[aria-selected="true"]'); if(!a) return;
+    const ar=a.getBoundingClientRect(), nr=n.getBoundingClientRect();
+    if(n.scrollWidth>n.clientWidth+1) n.scrollLeft+=(ar.left+ar.width/2)-(nr.left+nr.width/2);
+    else if(n.scrollHeight>n.clientHeight+1){const bot=Math.min(nr.bottom,innerHeight); if(ar.bottom>bot) n.scrollTop+=ar.bottom-bot+48; else if(ar.top<nr.top) n.scrollTop-=nr.top-ar.top+48;}}
+  if(document.readyState==='complete') requestAnimationFrame(c); else addEventListener('load',()=>requestAnimationFrame(c)); n.addEventListener('click',()=>setTimeout(c,0)); window.addEventListener('hashchange',()=>setTimeout(c,0)); window.addEventListener('resize',c);
+})();
+</script>
+<script>
+/* phones: start with "How it works" folded so the results stay close */
+if(matchMedia('(max-width:999px)').matches) document.querySelectorAll('.learn details[open]').forEach(d=>d.removeAttribute('open'));
+</script>
+<script>
+/* bookmark button: browsers can't bookmark for you, so show the right shortcut for this device */
+(function(){
+  const b=document.querySelector('.bmbtn'), h=document.querySelector('.bmhint'); if(!b||!h) return;
+  const ua=navigator.userAgent, ios=/iPad|iPhone|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1), and=/Android/.test(ua), mac=/Mac/.test(navigator.platform||ua);
+  let t;
+  b.addEventListener('click',()=>{
+    h.textContent=ios?'Tap the Share button, then “Add to Home Screen” or “Add Bookmark”.'
+      :and?'Tap ⋮ in your browser, then “Add to Home screen”, or tap ☆ to bookmark.'
+      :'Press '+(mac?'⌘+D':'Ctrl+D')+' to bookmark this page.';
+    h.hidden=false; clearTimeout(t); t=setTimeout(()=>{h.hidden=true},9000);
+    try{ if(typeof gtag==='function') gtag('event','bookmark_click'); }catch(e){}
+  });
+})();
+</script>
+</body>
+</html>

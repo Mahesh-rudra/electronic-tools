@@ -12,13 +12,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>EE Calculator: Electronics Engineering Tools</title>
-<meta name="description" content="Free electronics engineering calculators with live circuit diagrams: Ohm's law, voltage dividers, filters, reactance, 555 timer, op-amp gain, LED resistors, Zener and regulator heat, MOSFET power loss, thermal resistance, current sense resistors, active filters, dB and dBm, RMS and peak, PCB trace width, battery packs, wire resistance and resistor codes.">
+<meta name="description" content="Free electronics engineering calculators with live circuit diagrams: Ohm's law, voltage dividers, filters, reactance, 555 timer, op-amp gain, LED resistors, Zener and regulator heat, MOSFET power loss, thermal resistance, current sense resistors, active filters, dB and dBm, RMS and peak, transistor and MOSFET switches, discrete and LM317 regulators, constant-current sources, PCB trace width, battery packs, wire resistance and resistor codes.">
 <link rel="canonical" href="https://eecalc.vedaxglobal.com/">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23B45309'/%3E%3Cpath d='M3 16h5l2-6 4 12 4-12 4 12 2-6h5' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
 <meta name="theme-color" content="#B45309">
 <meta property="og:type" content="website">
 <meta property="og:title" content="EE Calculator: Electronics Engineering Tools">
-<meta property="og:description" content="23 free electronics calculators with live circuit diagrams and simple explanations.">
+<meta property="og:description" content="Your everyday toolkit for electronics design: 28 free calculators with live circuit diagrams and simple explanations.">
 <meta property="og:url" content="https://eecalc.vedaxglobal.com/">
 <meta property="og:image" content="https://eecalc.vedaxglobal.com/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -171,6 +171,15 @@ nav .ngh{display:none}
   .themes button{width:22px;height:22px}
   .crumb{margin:0}
 }
+
+/* bookmark-v1 */
+header p.tagline{font-size:1.05rem;color:var(--silk);font-weight:500;margin:0 0 6px}
+.bm{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;font-size:.9rem;color:var(--muted);margin:0 0 8px}
+.bmbtn{font:inherit;font-size:.85rem;font-weight:600;color:var(--copper);background:transparent;border:1.5px solid var(--copper);border-radius:999px;padding:4px 12px;cursor:pointer}
+.bmbtn:hover{background:var(--copper);color:var(--ontab)}
+.bmbtn:focus-visible{outline:2px solid var(--silk);outline-offset:2px}
+header p.bmhint{font-size:.86rem;color:var(--silk);background:var(--mask2);border:1px solid var(--line);border-left:3px solid var(--copper);border-radius:6px;padding:6px 10px;margin:0 0 10px;max-width:520px}
+header p.pfx{font-size:.84rem}
 </style>
 </head>
 <body>
@@ -178,7 +187,10 @@ nav .ngh{display:none}
 <header>
   <div>
     <h1>EE Calculator</h1>
-    <p>Electronics engineering tools. Type values with prefixes: 4.7k, 2k2, 10m, 100n, 4R7, 1M.</p>
+    <p class="tagline">Your everyday toolkit for electronics design.</p>
+    <div class="bm"><span>Bookmark it so it’s ready for your next build.</span> <button type="button" class="bmbtn">☆ Bookmark</button></div>
+    <p class="bmhint" role="status" aria-live="polite" hidden></p>
+    <p class="pfx">Type values with prefixes: 4.7k, 2k2, 10m, 100n, 4R7, 1M.</p>
   </div>
   <div class="themes" role="group" aria-label="Colour theme">
     <span>Theme</span>
@@ -209,6 +221,13 @@ nav .ngh{display:none}
     <button role="tab" aria-selected="false" data-tab="opamp">Op-amp</button>
     <button role="tab" aria-selected="false" data-tab="led">LED designer</button>
     <button role="tab" aria-selected="false" data-tab="zener">Zener</button>
+  </div>
+  <div class="ng"><span class="ngh" aria-hidden="true">Basic circuits</span>
+    <button role="tab" aria-selected="false" data-tab="bjt">Transistor switch</button>
+    <button role="tab" aria-selected="false" data-tab="mosw">MOSFET switch</button>
+    <button role="tab" aria-selected="false" data-tab="dreg">Discrete regulator</button>
+    <button role="tab" aria-selected="false" data-tab="lm317">LM317</button>
+    <button role="tab" aria-selected="false" data-tab="ccs">Current source</button>
   </div>
   <div class="ng"><span class="ngh" aria-hidden="true">Power devices and thermal</span>
     <button role="tab" aria-selected="false" data-tab="lreg">Regulator heat</button>
@@ -801,6 +820,137 @@ nav .ngh{display:none}
   </details></div>
 </section>
 
+<!-- TRANSISTOR SWITCH -->
+<section class="panel" id="bjt">
+  <div class="block">
+    <h2>NPN transistor switch</h2>
+    <p class="hint">Low-side switch driven from a logic pin. Use the minimum hFE from the datasheet at your load current.</p>
+    <div class="grid">
+      <label>Load supply (V)<input id="bj_vcc" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="12"></label>
+      <label>Load current (A)<input id="bj_il" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="100m"></label>
+      <label>Drive voltage, logic high (V)<input id="bj_vin" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="3.3"></label>
+      <label>Minimum hFE<input id="bj_hfe" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="100"></label>
+      <label>Overdrive (×)<input id="bj_m" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="5"></label>
+      <label>VBE(sat) (V)<input id="bj_vbe" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="0.7"></label>
+      <label>VCE(sat) (V)<input id="bj_vce" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="0.2"></label>
+      <label>Max pin current (A)<input id="bj_ip" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="20m"></label>
+    </div>
+    <div class="dia" id="bjt_dia"></div>
+    <div class="out" id="bjt_out"></div>
+  </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>To use a transistor as a switch, you drive it into <b>saturation</b>: so much base current that it is fully on and only a small VCE(sat), about 0.1 to 0.3 V, is left across it. Then very little power is wasted in the transistor.</p>
+<code class="fx">IB = overdrive × IC / hFE(min)<br>RB = (Vdrive − VBE) / IB</code>
+<p>hFE varies a lot between parts and falls at high current, so use the minimum from the datasheet and add an <b>overdrive</b> of 2 to 5 times. The ratio IC / IB is called the forced gain. A forced gain of 10 to 20 gives a hard, reliable saturation.</p>
+<p>The base resistor is rounded down to E96 so the base current is never less than needed. Check that the base current is within what your microcontroller pin can supply. If not, use a Darlington, a MOSFET or a driver IC.</p>
+<p>For relays, motors and solenoids, always put a <b>flyback diode</b> across the load, cathode to the supply. A 10 kΩ to 100 kΩ resistor from base to emitter keeps the transistor off while the microcontroller is starting up.</p>
+  </details></div>
+</section>
+
+<!-- MOSFET SWITCH -->
+<section class="panel" id="mosw">
+  <div class="block">
+    <h2>MOSFET logic-level switch</h2>
+    <p class="hint">N-channel MOSFET as a low-side switch from a logic pin. Take VGS(th) max and RDS(on) from the datasheet.</p>
+    <div class="grid">
+      <label>Logic high voltage (V)<input id="ms_vg" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="3.3"></label>
+      <label>Load supply (V)<input id="ms_vcc" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="12"></label>
+      <label>Load current (A)<input id="ms_il" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="2"></label>
+      <label>VGS(th) maximum (V)<input id="ms_vth" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="1.5"></label>
+      <label>RDS(on) is rated at VGS (V)<input id="ms_vgr" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="2.5"></label>
+      <label>RDS(on) at that VGS (Ω)<input id="ms_rds" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="30m"></label>
+      <label>Max pin current (A)<input id="ms_ip" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="20m"></label>
+      <label>Gate charge Qg (C)<input id="ms_qg" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>PWM frequency (Hz)<input id="ms_f" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+    </div>
+    <div class="dia" id="mosw_dia"></div>
+    <div class="out" id="mosw_out"></div>
+  </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>A MOSFET is turned on by voltage on its gate, not by current, so it is a great switch for microcontrollers. The catch is that it must be driven with enough gate voltage to fully turn on.</p>
+<p><b>VGS(th)</b> is only the point where it barely starts to conduct. The datasheet guarantees a low <b>RDS(on)</b> only at a stated gate voltage, often 10 V, 4.5 V or 2.5 V. For 3.3 V logic, choose a <b>logic-level</b> MOSFET with RDS(on) specified at 2.5 V or lower.</p>
+<code class="fx">P = I² × RDS(on) × 1.5 (hot)<br>Rg ≥ Vlogic / I_pin(max)</code>
+<p>The gate behaves like a capacitor, so at each switch it draws a short current spike. A gate resistor of a few tens to a few hundred ohms limits that spike and calms ringing. A larger resistor slows the switching and adds loss when using PWM.</p>
+<p>A <b>pull-down</b> of 10 kΩ to 100 kΩ from gate to source keeps the MOSFET off while the microcontroller pin is floating at start-up. For inductive loads, add a flyback diode across the load.</p>
+  </details></div>
+</section>
+
+<!-- DISCRETE REGULATOR -->
+<section class="panel" id="dreg">
+  <div class="block">
+    <h2>Discrete linear regulator</h2>
+    <p class="hint">A Zener diode sets the voltage and an NPN pass transistor (emitter follower) supplies the current.</p>
+    <div class="grid">
+      <label>Input minimum (V)<input id="dr_vmin" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="12"></label>
+      <label>Input maximum (V)<input id="dr_vmax" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>Target output (V)<input id="dr_vout" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="5"></label>
+      <label>Max load current (A)<input id="dr_il" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="500m"></label>
+      <label>Minimum hFE<input id="dr_hfe" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="50"></label>
+      <label>VBE (V)<input id="dr_vbe" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="0.7"></label>
+      <label>Min Zener current (A)<input id="dr_iz" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="5m"></label>
+    </div>
+    <div class="dia" id="dreg_dia"></div>
+    <div class="out" id="dreg_out"></div>
+  </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>This classic regulator uses a Zener diode to make a steady reference voltage, and an NPN transistor wired as an <b>emitter follower</b> to deliver the load current. The output sits one VBE below the Zener voltage.</p>
+<code class="fx">Vout = Vz − VBE<br>Rz = (Vin(min) − Vz) / (IL / hFE + Iz(min))</code>
+<p>The Zener resistor must supply the transistor's base current plus enough current to keep the Zener regulating, even at the lowest input voltage and highest load. At no load and maximum input, all that current flows through the Zener instead, which sets the Zener's power rating.</p>
+<p>The pass transistor drops the difference between input and output, so its power is (Vin − Vout) × I. That often needs a heatsink. Because VBE changes with current and temperature (about −2 mV/°C), and Zeners have ±5% tolerance, the output is only roughly regulated. For a precise supply, use an LM317 or a regulator IC.</p>
+  </details></div>
+</section>
+
+<!-- LM317 -->
+<section class="panel" id="lm317">
+  <div class="block">
+    <h2>LM317 adjustable regulator</h2>
+    <p class="hint">Find R1 and R2 for any output voltage, rounded to E96.</p>
+    <div class="grid">
+      <label>Target output (V)<input id="lm_vout" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="5"></label>
+      <label>R1 (Ω)<input id="lm_r1" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="240"></label>
+      <label>Input voltage (V)<input id="lm_vin" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>Load current (A)<input id="lm_il" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>Vref (V)<input id="lm_vref" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="1.25"></label>
+    </div>
+    <div class="dia" id="lm317_dia"></div>
+    <div class="out" id="lm317_out"></div>
+  </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>The LM317 always keeps 1.25 V between its OUT and ADJ pins. R1 sits across that reference, so a fixed current of 1.25 V / R1 flows through R1 and on through R2. The voltage across R2 adds to the reference, setting the output.</p>
+<code class="fx">Vout = Vref × (1 + R2 / R1) + I_adj × R2</code>
+<p>I_adj is only about 50 µA, so it adds a small error that the calculator includes. The LM317 needs a minimum load of a few milliamps to stay in regulation. The current through R1 provides it, which is why R1 is usually 120 Ω to 240 Ω.</p>
+<p>The calculator also searches every E96 value of R1 from 100 Ω to 240 Ω, and shows a pair that lands closer to your target if one exists.</p>
+<p>The LM317 needs about 3 V more at its input than at its output, and it burns (Vin − Vout) × I as heat. Add a 0.1 µF input capacitor and at least 1 µF on the output.</p>
+  </details></div>
+</section>
+
+<!-- CURRENT SOURCE -->
+<section class="panel" id="ccs">
+  <div class="block">
+    <h2>Transistor constant-current source</h2>
+    <p class="hint">Keeps the load current fixed even when the supply or load voltage changes. Great for LED strings.</p>
+    <div class="grid">
+      <label>Circuit<select id="cc_top"><option value="two">Two transistors</option><option value="zener">Zener and one transistor</option></select></label>
+      <label>Target current (A)<input id="cc_i" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="20m"></label>
+      <label>Supply (V)<input id="cc_vs" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="12"></label>
+      <label>Load voltage (V)<input id="cc_vl" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
+      <label>VBE (V)<input id="cc_vbe" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="0.65"></label>
+      <label id="cc_vzl">Zener voltage (V)<input id="cc_vz" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="3.3"></label>
+      <label>Minimum hFE<input id="cc_hfe" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="100"></label>
+    </div>
+    <div class="dia" id="ccs_dia"></div>
+    <div class="out" id="ccs_out"></div>
+  </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p>A transistor can hold a current steady by sensing it across a small resistor and adjusting itself.</p>
+<p>In the <b>two-transistor</b> circuit, Q2 watches the voltage across the sense resistor Rs. When it reaches about one VBE (0.6 to 0.7 V), Q2 turns on and steals base current from Q1, so the current settles at:</p>
+<code class="fx">I = VBE / Rs</code>
+<p>In the <b>Zener</b> circuit, the Zener holds Q1's base at a fixed voltage, so the emitter resistor sees Vz − VBE:</p>
+<code class="fx">I = (Vz − VBE) / Re</code>
+<p>The circuit only regulates while Q1 has some voltage left across it, about 0.3 V or more. That limit is the <b>compliance</b>: the highest load voltage it can drive. Everything above the load voltage is burned in Q1. VBE drops about 2 mV/°C, so the two-transistor version's current falls slightly as it warms. The Zener version drifts less when the Zener is around 5 V.</p>
+  </details></div>
+</section>
+
 <!-- PCB TRACE -->
 <section class="panel" id="trace">
   <div class="block">
@@ -884,7 +1034,7 @@ nav .ngh{display:none}
 <p><b>Ceramic and film capacitors</b> use a similar 3-digit code in picofarads: 104 = 10 followed by four zeros = 100,000 pF = 100 nF = 0.1 µF. A letter after it gives the tolerance: J = ±5%, K = ±10%, M = ±20%. Small SMD capacitors are usually not marked at all, so keep them in labelled packaging.</p>
   </details></div>
 </section>
-<div class="block alltools"><h2>Every calculator on its own page</h2><div class="cols"><div><h3>Basics</h3><ul><li><a href="ohms-law-calculator.html">Ohm&#x27;s law calculator</a></li><li><a href="series-parallel-calculator.html">Series and parallel calculator</a></li><li><a href="voltage-divider-calculator.html">Voltage divider calculator</a></li></ul></div><div><h3>AC, filters and signals</h3><ul><li><a href="reactance-calculator.html">Reactance and impedance calculator</a></li><li><a href="filter-calculator.html">Filter cutoff calculator</a></li><li><a href="active-filter-calculator.html">Active filter calculator</a></li><li><a href="rc-time-constant-calculator.html">RC time constant calculator</a></li><li><a href="db-dbm-converter.html">DB, dBm and ratio converter</a></li><li><a href="rms-peak-average-calculator.html">RMS, peak and average calculator</a></li></ul></div><div><h3>Circuits</h3><ul><li><a href="555-timer-calculator.html">555 timer calculator</a></li><li><a href="op-amp-gain-calculator.html">Op-amp gain calculator</a></li><li><a href="led-resistor-calculator.html">LED resistor calculator</a></li><li><a href="zener-diode-calculator.html">Zener regulator calculator</a></li></ul></div><div><h3>Power devices and thermal</h3><ul><li><a href="linear-regulator-heat-calculator.html">Linear regulator heat calculator</a></li><li><a href="mosfet-power-loss-calculator.html">MOSFET power loss calculator</a></li><li><a href="thermal-resistance-calculator.html">Thermal resistance calculator</a></li><li><a href="current-sense-resistor-calculator.html">Current sense resistor calculator</a></li></ul></div><div><h3>Batteries and wiring</h3><ul><li><a href="battery-pack-calculator.html">Battery pack calculator</a></li><li><a href="battery-life-calculator.html">Battery runtime calculator</a></li><li><a href="wire-resistance-calculator.html">Wire resistance calculator</a></li><li><a href="pcb-trace-width-calculator.html">PCB trace width calculator</a></li></ul></div><div><h3>Component codes</h3><ul><li><a href="resistor-color-code-calculator.html">Resistor color code calculator</a></li><li><a href="smd-capacitor-code-calculator.html">SMD resistor and capacitor code calculator</a></li></ul></div></div></div>
+<div class="block alltools"><h2>Every calculator on its own page</h2><div class="cols"><div><h3>Basics</h3><ul><li><a href="ohms-law-calculator.html">Ohm&#x27;s law calculator</a></li><li><a href="series-parallel-calculator.html">Series and parallel calculator</a></li><li><a href="voltage-divider-calculator.html">Voltage divider calculator</a></li></ul></div><div><h3>AC, filters and signals</h3><ul><li><a href="reactance-calculator.html">Reactance and impedance calculator</a></li><li><a href="filter-calculator.html">Filter cutoff calculator</a></li><li><a href="active-filter-calculator.html">Active filter calculator</a></li><li><a href="rc-time-constant-calculator.html">RC time constant calculator</a></li><li><a href="db-dbm-converter.html">DB, dBm and ratio converter</a></li><li><a href="rms-peak-average-calculator.html">RMS, peak and average calculator</a></li></ul></div><div><h3>Circuits</h3><ul><li><a href="555-timer-calculator.html">555 timer calculator</a></li><li><a href="op-amp-gain-calculator.html">Op-amp gain calculator</a></li><li><a href="led-resistor-calculator.html">LED resistor calculator</a></li><li><a href="zener-diode-calculator.html">Zener regulator calculator</a></li></ul></div><div><h3>Basic circuits</h3><ul><li><a href="transistor-switch-calculator.html">Transistor switch calculator</a></li><li><a href="mosfet-switch-calculator.html">MOSFET logic-level switch calculator</a></li><li><a href="discrete-linear-regulator-calculator.html">Discrete linear regulator calculator</a></li><li><a href="lm317-calculator.html">LM317 resistor calculator</a></li><li><a href="constant-current-source-calculator.html">Constant-current source calculator</a></li></ul></div><div><h3>Power devices and thermal</h3><ul><li><a href="linear-regulator-heat-calculator.html">Linear regulator heat calculator</a></li><li><a href="mosfet-power-loss-calculator.html">MOSFET power loss calculator</a></li><li><a href="thermal-resistance-calculator.html">Thermal resistance calculator</a></li><li><a href="current-sense-resistor-calculator.html">Current sense resistor calculator</a></li></ul></div><div><h3>Batteries and wiring</h3><ul><li><a href="battery-pack-calculator.html">Battery pack calculator</a></li><li><a href="battery-life-calculator.html">Battery runtime calculator</a></li><li><a href="wire-resistance-calculator.html">Wire resistance calculator</a></li><li><a href="pcb-trace-width-calculator.html">PCB trace width calculator</a></li></ul></div><div><h3>Component codes</h3><ul><li><a href="resistor-color-code-calculator.html">Resistor color code calculator</a></li><li><a href="smd-capacitor-code-calculator.html">SMD resistor and capacitor code calculator</a></li></ul></div></div></div>
 </div>
 </div>
 <footer>
@@ -1002,7 +1152,7 @@ function capDia(code){
 }
 
 /* ---------- tabs, groups and links ---------- */
-const GROUP={ohm:'basics',combine:'basics',divider:'basics',react:'ac',filt:'ac',afilt:'ac',db:'ac',wave:'ac',rc:'ac',t555:'circuits',opamp:'circuits',led:'circuits',zener:'circuits',
+const GROUP={ohm:'basics',combine:'basics',divider:'basics',react:'ac',filt:'ac',afilt:'ac',db:'ac',wave:'ac',rc:'ac',t555:'circuits',opamp:'circuits',led:'circuits',zener:'circuits',bjt:'circuits',mosw:'circuits',dreg:'circuits',lm317:'circuits',ccs:'circuits',
   lreg:'power',mosfet:'power',thermal:'power',sense:'power',pack:'power',run:'power',wire:'power',trace:'power',color:'codes',codes:'codes'};
 const lastInGroup={};
 function showTab(id){
@@ -2018,6 +2168,190 @@ function wave(){
 }
 listen(['wv_shape','wv_x','wv_q','wv_d'],wave);
 
+/* ---------- transistor symbols ---------- */
+function npn(x,y,flip){ const k=flip?-1:1, X=d=>x+k*d;
+  return `<circle cx="${X(8)}" cy="${y}" r="21" fill="none" stroke="var(--line)" stroke-width="1.5"/>`+
+    wire(`M${X(-20)} ${y}H${x}M${x} ${y-6}L${X(16)} ${y-17}V${y-30}M${x} ${y+6}L${X(16)} ${y+17}V${y+30}`)+
+    `<path d="M${x} ${y-13}V${y+13}" stroke="var(--silk)" stroke-width="3"/>`+arrow(X(9),y+12.5,flip?146:34);
+}
+function nmos(x,y){
+  return `<circle cx="${x+9}" cy="${y}" r="21" fill="none" stroke="var(--line)" stroke-width="1.5"/>`+
+    wire(`M${x-20} ${y}H${x}M${x} ${y-13}V${y+13}`)+
+    `<path d="M${x+6} ${y-15}V${y-7}M${x+6} ${y-4}V${y+4}M${x+6} ${y+7}V${y+15}" stroke="var(--silk)" stroke-width="3"/>`+
+    wire(`M${x+6} ${y-11}H${x+18}V${y-30}M${x+6} ${y+11}H${x+18}V${y+30}M${x+6} ${y}H${x+18}V${y+11}`)+arrow(x+12,y,180);
+}
+function lbl(x,y,name,val,anc){ return txt(x,y,name,'lb sm',anc||'start')+txt(x,y+14,val,'vl',anc||'start'); }
+const ZENERS=[2.4,2.7,3,3.3,3.6,3.9,4.3,4.7,5.1,5.6,6.2,6.8,7.5,8.2,9.1,10,11,12,13,15,16,18,20,22,24,27,30,33,36,39,43,47];
+function nearestZener(v){ let b=ZENERS[0]; for(const z of ZENERS) if(Math.abs(z-v)<Math.abs(b-v)) b=z; return b; }
+
+/* ---------- TRANSISTOR SWITCH ---------- */
+function bjtDia(L){
+  const b=term(196,14)+txt(208,18,'Vcc '+L.vcc,'lb')+wire('M196 18V30')+
+    '<rect x="172" y="30" width="48" height="36" rx="5" fill="var(--line)" stroke="var(--silk)" stroke-width="1.5"/>'+txt(196,53,'Load','lb','middle')+
+    wire('M196 66V96')+arrow(196,82,90)+txt(208,86,'I = '+L.i,'vl')+npn(180,126)+txt(222,122,'Q','lb')+txt(222,136,'VCE '+L.vce,'lb sm')+
+    term(36,126)+txt(36,112,'Vin '+L.vin,'lb','middle')+wire('M40 126H96')+sym('R',96,126)+wire('M156 126H160')+lbl(126,92,'RB',L.rb,'middle')+
+    txt(126,150,'IB = '+L.ib,'lb sm','middle')+wire('M196 156V168')+gnd(196,168);
+  $('bjt_dia').innerHTML=svg(320,196,b);
+}
+function bjt(){
+  const ids=['bj_vcc','bj_il','bj_vin','bj_hfe','bj_m','bj_vbe','bj_vce','bj_ip'], {v,bad}=read(ids);
+  const Ic=v.bj_il, Vin=v.bj_vin, h=v.bj_hfe, m=v.bj_m>0?v.bj_m:1, vbe=v.bj_vbe!==null?v.bj_vbe:0.7, vce=v.bj_vce!==null?v.bj_vce:0.2;
+  const ok=Ic>0&&Vin>vbe&&h>0, Ib=ok?m*Ic/h:null, Rx=ok?(Vin-vbe)/Ib:null, Rb=ok?prevE96(Rx):null, Iba=ok?(Vin-vbe)/Rb:null;
+  bjtDia({vcc:fv(v.bj_vcc,'V'),i:fv(Ic,'A'),vin:fv(Vin,'V'),rb:fv(Rb,'Ω'),ib:fv(Iba,'A'),vce:fv(vce,'V')});
+  if(bad) return $('bjt_out').innerHTML=msg('Check the highlighted value.',true);
+  if(!(Ic>0&&Vin>0&&h>0)) return $('bjt_out').innerHTML=msg('Enter the load current, drive voltage and minimum hFE.');
+  if(!(Vin>vbe)) return $('bjt_out').innerHTML=msg('The drive voltage must be higher than VBE.',true);
+  const Pq=Ic*vce+Iba*vbe, Pr=Iba*Iba*Rb, list=[['Base current needed',fmt(Ib,'A')],['RB exact',fmt(Rx,'Ω')],['RB (E96, rounded down)',fmt(Rb,'Ω')],
+    ['Actual base current',fmt(Iba,'A')],['Forced gain IC / IB',(Ic/Iba).toFixed(1)],['Transistor power',fmt(Pq,'W')],['RB power',`${fmt(Pr,'W')}, use ${rating(Pr)}`]];
+  if(v.bj_vcc>0) list.push(['Voltage across load',fmt(v.bj_vcc-vce,'V')]);
+  let notes='';
+  if(v.bj_ip>0&&Iba>v.bj_ip) notes+=`<div class="note" style="color:var(--err)">Base current is more than the pin can supply (${fmt(v.bj_ip,'A')}). Use a Darlington, a logic-level MOSFET or a driver IC.</div>`;
+  if(Ic/Iba>h/2) notes+='<div class="note" style="color:var(--copper)">Forced gain is close to hFE, so it may not fully saturate. Increase the overdrive.</div>';
+  if(Pq>0.25) notes+='<div class="note" style="color:var(--copper)">Over 0.25 W in the transistor: a SOT-23 part will run hot. Use a larger package or a MOSFET.</div>';
+  notes+='<div class="note">Add a 10 kΩ to 100 kΩ resistor from base to emitter to keep it off at start-up, and a flyback diode across inductive loads.</div>';
+  $('bjt_out').innerHTML=rows(list)+notes;
+}
+listen(['bj_vcc','bj_il','bj_vin','bj_hfe','bj_m','bj_vbe','bj_vce','bj_ip'],bjt);
+
+/* ---------- MOSFET SWITCH ---------- */
+function moswDia(L){
+  const b=term(196,14)+txt(208,18,'Vcc '+L.vcc,'lb')+wire('M196 18V30')+
+    '<rect x="172" y="30" width="48" height="36" rx="5" fill="var(--line)" stroke="var(--silk)" stroke-width="1.5"/>'+txt(196,53,'Load','lb','middle')+
+    wire('M196 66V96')+arrow(196,82,90)+txt(208,86,'I = '+L.i,'vl')+nmos(178,126)+txt(222,122,'Q','lb')+txt(222,136,L.rds,'lb sm')+
+    term(16,126)+txt(8,148,'Logic '+L.vg,'lb','start')+wire('M20 126H58')+sym('R',58,126)+wire('M118 126H158')+dot(138,126)+lbl(88,92,'Rg',L.rg,'middle')+
+    sym('R',138,126,90)+wire('M138 186V188')+gnd(138,188)+lbl(126,152,'Rpd',L.rpd,'end')+wire('M196 156V168')+gnd(196,168);
+  $('mosw_dia').innerHTML=svg(320,214,b);
+}
+function mosw(){
+  const ids=['ms_vg','ms_vcc','ms_il','ms_vth','ms_vgr','ms_rds','ms_ip','ms_qg','ms_f'], {v,bad}=read(ids);
+  const vg=v.ms_vg, I=v.ms_il, rds=v.ms_rds, vth=v.ms_vth, vgr=v.ms_vgr, ip=v.ms_ip, qg=v.ms_qg||0, f=v.ms_f||0, vcc=v.ms_vcc;
+  const Rg=(vg>0&&ip>0)?Math.max(10,nextE96(vg/ip)):(vg>0?100:null);
+  moswDia({vcc:fv(vcc,'V'),i:fv(I,'A'),vg:fv(vg,'V'),rg:fv(Rg,'Ω'),rpd:'47 kΩ',rds:rds>0?'RDS(on) '+fmt(rds,'Ω'):''});
+  if(bad) return $('mosw_out').innerHTML=msg('Check the highlighted value.',true);
+  if(!(vg>0&&I>0&&rds>0)) return $('mosw_out').innerHTML=msg('Enter the logic voltage, load current and RDS(on).');
+  if(vth>0&&vg<=vth) return $('mosw_out').innerHTML=rows([['Logic voltage',fmt(vg,'V')],['VGS(th) max',fmt(vth,'V')]])+'<div class="note" style="color:var(--err)">The gate voltage is below the threshold, so this MOSFET may not turn on at all. Choose a logic-level MOSFET.</div>';
+  const Pc=I*I*rds*1.5, list=[['Conduction loss (RDS(on) × 1.5 hot)',fmt(Pc,'W')]];
+  let P=Pc;
+  list.push(['Gate resistor Rg',fmt(Rg,'Ω')],['Peak gate current',fmt(vg/Rg,'A')],['Gate pull-down','47 kΩ (10 kΩ to 100 kΩ)']);
+  if(qg>0){ const t=2*qg*Rg/vg; list.push(['Switching time (estimate)',fmt(t,'s')]);
+    if(f>0&&vcc>0){ const Ps=vcc*I*t*f; P+=Ps; list.push(['Switching loss (estimate)',fmt(Ps,'W')]); } }
+  list.push(['Total MOSFET loss',fmt(P,'W')]);
+  if(vcc>0) list.push(['Voltage lost in MOSFET',fmt(I*rds*1.5,'V')]);
+  let notes='';
+  if(vgr>0&&vg<vgr) notes+=`<div class="note" style="color:var(--copper)">RDS(on) is only guaranteed at VGS = ${fmt(vgr,'V')}, above your ${fmt(vg,'V')} logic level. Real resistance will be higher. Pick a MOSFET rated at VGS ≤ ${fmt(vg,'V')} or add a gate driver.</div>`;
+  else if(vgr>0) notes+='<div class="note">Your logic level meets the rated VGS, so the MOSFET turns fully on.</div>';
+  if(P>0.5) notes+='<div class="note" style="color:var(--copper)">Over 0.5 W: check the temperature with the thermal calculator, or use a lower RDS(on) part.</div>';
+  $('mosw_out').innerHTML=rows(list)+notes;
+}
+listen(['ms_vg','ms_vcc','ms_il','ms_vth','ms_vgr','ms_rds','ms_ip','ms_qg','ms_f'],mosw);
+
+/* ---------- DISCRETE REGULATOR ---------- */
+function dregDia(L){
+  const b=term(16,40)+txt(16,26,'Vin '+L.vin,'lb','start')+wire('M20 40H176V96')+dot(80,40)+
+    sym('R',80,40,90)+wire('M80 100V110')+dot(80,110)+lbl(70,62,'Rz',L.rz,'end')+
+    sym('Z',80,110,90)+wire('M80 170V172')+gnd(80,172)+lbl(70,134,'Zener',L.vz,'end')+
+    wire('M80 110H140')+npn(160,126)+txt(200,112,'Q1','lb')+
+    wire('M176 156V166H290')+dot(240,166)+sym('R',240,166,90)+wire('M240 226V228')+gnd(240,228)+txt(252,200,'Load','lb')+
+    term(294,166)+txt(294,152,'Vout','lb','middle')+txt(294,190,L.vout,'vl','middle');
+  $('dreg_dia').innerHTML=svg(320,252,b.replace('wire(','wire('));
+}
+function dreg(){
+  const ids=['dr_vmin','dr_vmax','dr_vout','dr_il','dr_hfe','dr_vbe','dr_iz'], {v,bad}=read(ids);
+  const vmin=v.dr_vmin, vmax=v.dr_vmax>0?v.dr_vmax:vmin, vo=v.dr_vout, I=v.dr_il, h=v.dr_hfe, vbe=v.dr_vbe!==null?v.dr_vbe:0.7, iz=v.dr_iz>0?v.dr_iz:5e-3;
+  const vz=vo>0?nearestZener(vo+vbe):null, vout=vz?vz-vbe:null;
+  const ok=vmin>0&&vz&&I>0&&h>0&&vmin>vz, Ib=ok?I/h:null, Rx=ok?(vmin-vz)/(Ib+iz):null, Rz=ok?prevE96(Rx):null;
+  dregDia({vin:fv(vmin,'V'),rz:fv(Rz,'Ω'),vz:vz?vz+' V':'?',vout:fv(vout,'V')});
+  if(bad) return $('dreg_out').innerHTML=msg('Check the highlighted value.',true);
+  if(!(vmin>0&&vo>0&&I>0&&h>0)) return $('dreg_out').innerHTML=msg('Enter the input, target output, load current and hFE.');
+  if(!(vmin>vz+1)) return $('dreg_out').innerHTML=msg(`The input needs to be at least about 1 V above the ${vz} V Zener.`,true);
+  const izmax=(vmax-vz)/Rz, Pz=vz*izmax, Pr=(vmax-vz)**2/Rz, Pq=(vmax-vout)*I;
+  const list=[['Zener (nearest standard)',vz+' V'],['Actual output',fmt(vout,'V')],['Rz exact',fmt(Rx,'Ω')],['Rz (E96, rounded down)',fmt(Rz,'Ω')],
+    ['Base current at full load',fmt(Ib,'A')],['Zener current, no load at max input',fmt(izmax,'A')],['Zener power',`${fmt(Pz,'W')}, use ${rating(Pz)}`],
+    ['Rz power',`${fmt(Pr,'W')}, use ${rating(Pr)}`],['Transistor power (worst case)',fmt(Pq,'W')],['Efficiency at min input',(100*vout/vmin).toFixed(0)+' %']];
+  let notes='';
+  if(Math.abs(vout-vo)>0.1) notes+=`<div class="note" style="color:var(--copper)">The nearest standard Zener gives ${fmt(vout,'V')} instead of ${fmt(vo,'V')}. For an exact voltage, use the LM317 calculator.</div>`;
+  if(Pq>0.5) notes+='<div class="note" style="color:var(--copper)">The pass transistor needs a TO-220 or similar package with a heatsink. Size it with the thermal calculator.</div>';
+  notes+='<div class="note">Output varies by a few tenths of a volt with load and temperature. Add 10 µF to 100 µF across the Zener to reduce noise.</div>';
+  $('dreg_out').innerHTML=rows(list)+notes;
+}
+listen(['dr_vmin','dr_vmax','dr_vout','dr_il','dr_hfe','dr_vbe','dr_iz'],dreg);
+
+/* ---------- LM317 ---------- */
+function lmDia(L){
+  const b='<rect x="110" y="30" width="90" height="46" rx="6" fill="var(--line)" stroke="var(--silk)" stroke-width="1.5"/>'+txt(155,50,'LM317','lb','middle')+
+    txt(116,70,'IN','lb sm')+txt(194,70,'OUT','lb sm','end')+txt(155,70,'ADJ','lb sm','middle')+
+    term(20,52)+txt(20,30,'Vin '+L.vin,'lb','start')+wire('M24 52H110')+wire('M200 52H290')+dot(240,52)+term(294,52)+txt(294,22,'Vout','lb','middle')+txt(294,38,L.vout,'vl','middle')+
+    sym('R',240,52,90)+dot(240,112)+lbl(252,78,'R1',L.r1)+wire('M155 76V112H240')+sym('R',240,112,90)+wire('M240 172V174')+gnd(240,174)+lbl(252,138,'R2',L.r2);
+  $('lm317_dia').innerHTML=svg(320,200,b);
+}
+function lm317(){
+  const {v,bad}=read(['lm_vout','lm_r1','lm_vin','lm_il','lm_vref']);
+  const vo=v.lm_vout, r1=v.lm_r1, vref=v.lm_vref>0?v.lm_vref:1.25, ia=50e-6;
+  const ok=vo>vref&&r1>0, R2x=ok?(vo-vref)/(vref/r1+ia):null, R2=ok?nearestE96(R2x):null, va=ok?vref*(1+R2/r1)+ia*R2:null;
+  lmDia({vin:fv(v.lm_vin,'V'),vout:fv(va,'V'),r1:fv(r1,'Ω'),r2:fv(R2,'Ω')});
+  if(bad) return $('lm317_out').innerHTML=msg('Check the highlighted value.',true);
+  if(!(vo>0&&r1>0)) return $('lm317_out').innerHTML=msg('Enter the target output and R1.');
+  if(!(vo>vref)) return $('lm317_out').innerHTML=msg(`The output must be above ${vref} V.`,true);
+  let best=null;
+  for(const e of E96N.slice(0,96)){ for(const d of [100]){ const a=+(e*d).toPrecision(3); if(a<100||a>240) continue;
+    const b=nearestE96((vo-vref)/(vref/a+ia)), o=vref*(1+b/a)+ia*b; if(!best||Math.abs(o-vo)<Math.abs(best.o-vo)) best={a,b,o}; } }
+  const list=[['R2 exact',fmt(R2x,'Ω')],['R2 (E96)',fmt(R2,'Ω')],['Output with E96',fmt(va,'V')],['Error',((va-vo)/vo*100).toFixed(2)+' %'],
+    ['Current through R1',fmt(vref/r1,'A')]];
+  if(best&&Math.abs(best.o-vo)<Math.abs(va-vo)-1e-4) list.push(['Closer E96 pair',`R1 ${fmt(best.a,'Ω')}, R2 ${fmt(best.b,'Ω')} → ${fmt(best.o,'V')}`]);
+  else list.push(['Closer E96 pair','None, your R1 is already the best fit']);
+  let notes='';
+  if(v.lm_vin>0){ const hd=v.lm_vin-va; list.push(['Headroom (Vin − Vout)',fmt(hd,'V')]);
+    if(hd<3) notes+='<div class="note" style="color:var(--err)">Less than about 3 V of headroom. The LM317 will drop out of regulation. Raise the input or use an LDO.</div>';
+    if(v.lm_il>0){ const P=hd*v.lm_il; list.push(['Regulator power',fmt(P,'W')]);
+      if(P>1) notes+='<div class="note" style="color:var(--copper)">Over 1 W: a TO-220 needs a heatsink. Check it with the regulator heat or thermal calculator.</div>'; } }
+  if(vref/r1<5e-3) notes+='<div class="note" style="color:var(--copper)">R1 current is below 5 mA. The LM317 needs a minimum load, so use R1 = 240 Ω or less.</div>';
+  $('lm317_out').innerHTML=rows(list)+notes;
+}
+listen(['lm_vout','lm_r1','lm_vin','lm_il','lm_vref'],lm317);
+
+/* ---------- CURRENT SOURCE ---------- */
+function ccsDia(top,L){
+  let b=term(30,20)+txt(42,16,'Vs '+L.vs,'lb')+wire('M34 20H230')+dot(120,20)+
+    sym('D',230,20,90)+txt(244,46,'Load','lb')+txt(244,60,L.vl,'lb sm')+wire('M230 50V96')+arrow(230,84,90)+txt(222,88,'I = '+L.i,'vl','end')+
+    npn(214,126)+txt(250,130,'Q1','lb')+wire('M230 156V166')+dot(230,166)+sym('R',230,166,90)+wire('M230 226V228')+gnd(230,228)+lbl(242,190,top==='two'?'Rs':'Re',L.rs);
+  if(top==='two'){
+    b+=sym('R',120,20,90)+lbl(110,40,'Rb',L.rb,'end')+wire('M120 80V126H194')+dot(170,126)+wire('M170 126V166')+
+      npn(186,196,true)+txt(150,224,'Q2','lb','end')+wire('M206 196H216V166H230')+wire('M170 226V228')+gnd(170,228);
+  } else {
+    b+=sym('R',120,20,90)+lbl(110,40,'Rz',L.rb,'end')+wire('M120 80V126H194')+dot(120,126)+
+      sym('Z',120,126,90)+wire('M120 186V188')+gnd(120,188)+lbl(110,150,'Zener',L.vz,'end');
+  }
+  $('ccs_dia').innerHTML=svg(320,252,b);
+}
+function ccs(){
+  const top=$('cc_top').value, two=top==='two';
+  showL('cc_vzl',!two);
+  const ids=['cc_i','cc_vs','cc_vl','cc_vbe','cc_hfe'].concat(two?[]:['cc_vz']), {v,bad}=read(ids);
+  const I=v.cc_i, vs=v.cc_vs, vl=v.cc_vl, vbe=v.cc_vbe!==null?v.cc_vbe:0.65, h=v.cc_hfe>0?v.cc_hfe:100, vz=v.cc_vz;
+  let Rs=null,Rsx=null,Rb=null,Rbx=null,Ia=null,ve=null;
+  if(I>0&&vs>0){
+    if(two){ Rsx=vbe/I; Rs=nearestE96(Rsx); Ia=vbe/Rs; ve=vbe; Rbx=(vs-2*vbe)/(3*Ia/h); Rb=Rbx>0?prevE96(Rbx):null; }
+    else if(vz>vbe){ Rsx=(vz-vbe)/I; Rs=nearestE96(Rsx); Ia=(vz-vbe)/Rs; ve=vz-vbe; Rbx=(vs-vz)/(5e-3+Ia/h); Rb=Rbx>0?prevE96(Rbx):null; }
+  }
+  ccsDia(top,{vs:fv(vs,'V'),vl:vl>0?fmt(vl,'V'):'',i:fv(Ia,'A'),rs:fv(Rs,'Ω'),rb:fv(Rb,'Ω'),vz:vz>0?fmt(vz,'V'):'?'});
+  if(bad) return $('ccs_out').innerHTML=msg('Check the highlighted value.',true);
+  if(!(I>0&&vs>0)) return $('ccs_out').innerHTML=msg('Enter the target current and supply voltage.');
+  if(!two&&!(vz>vbe)) return $('ccs_out').innerHTML=msg('Enter a Zener voltage above VBE.');
+  if(!Rb) return $('ccs_out').innerHTML=msg('The supply is too low for this circuit.',true);
+  const comp=vs-ve-0.3, nm=two?'Rs':'Re';
+  const list=[[nm+' exact',fmt(Rsx,'Ω')],[nm+' (E96)',fmt(Rs,'Ω')],['Actual current',fmt(Ia,'A')],[nm+' power',`${fmt(Ia*Ia*Rs,'W')}, use ${rating(Ia*Ia*Rs)}`],
+    [(two?'Rb':'Rz')+' (E96, rounded down)',fmt(Rb,'Ω')],['Max load voltage (compliance)',fmt(comp,'V')]];
+  let notes='';
+  if(vl>0){ const pq=(vs-vl-ve)*Ia; list.push(['Q1 power',fmt(Math.max(0,pq),'W')]);
+    if(vl>comp) notes+='<div class="note" style="color:var(--err)">The load voltage is above the compliance limit, so the current will be lower than set. Raise the supply.</div>';
+    if(pq>0.5) notes+='<div class="note" style="color:var(--copper)">Over 0.5 W in Q1: use a TO-220 or similar with a heatsink, or lower the supply.</div>';
+    else if(pq>0.25) notes+='<div class="note" style="color:var(--copper)">Over 0.25 W in Q1: avoid SOT-23 and use TO-92, SOT-89 or larger.</div>'; }
+  else list.push(['Q1 power with a shorted load',fmt((vs-ve)*Ia,'W')]);
+  if(two) notes+='<div class="note">VBE falls about 2 mV/°C, so the current drops roughly 0.3 % per °C as Q2 warms.</div>';
+  $('ccs_out').innerHTML=rows(list)+notes;
+}
+listen(['cc_top','cc_i','cc_vs','cc_vl','cc_vbe','cc_vz','cc_hfe'],ccs);
+
 /* ---------- PCB TRACE ---------- */
 function traceDia(ext,wtxt,ttxt,I){
   let b=txt(20,16,ext?'External layer (cross-section)':'Internal layer (cross-section)','lb');
@@ -2093,6 +2427,11 @@ const EX={
   t555:[['t_mode','a'],['t_r1','1k'],['t_r2','10k'],['t_c','10u']],
   opamp:[['oa_mode','inv'],['oa_r1','10k'],['oa_rf','47k'],['oa_r2',''],['oa_v1','0.5'],['oa_v2',''],['oa_vs','12'],['oa_g','']],
   led:[['l_vs','12'],['l_vf','2'],['l_if','20m'],['l_n','10'],['l_per','']],
+  bjt:[['bj_vcc','12'],['bj_il','100m'],['bj_vin','3.3'],['bj_hfe','100'],['bj_m','5'],['bj_vbe','0.7'],['bj_vce','0.2'],['bj_ip','20m']],
+  mosw:[['ms_vg','3.3'],['ms_vcc','12'],['ms_il','2'],['ms_vth','1.5'],['ms_vgr','2.5'],['ms_rds','30m'],['ms_ip','20m'],['ms_qg','10n'],['ms_f','20k']],
+  dreg:[['dr_vmin','12'],['dr_vmax','15'],['dr_vout','5'],['dr_il','500m'],['dr_hfe','50'],['dr_vbe','0.7'],['dr_iz','5m']],
+  lm317:[['lm_vout','5'],['lm_r1','240'],['lm_vin','9'],['lm_il','500m'],['lm_vref','1.25']],
+  ccs:[['cc_top','two'],['cc_i','20m'],['cc_vs','12'],['cc_vl','6.4'],['cc_vbe','0.65'],['cc_hfe','100']],
   zener:[['z_vmin','9'],['z_vmax','12'],['z_vz','5.1'],['z_il','20m'],['z_izm','5m']],
   lreg:[['g_part','7805'],['g_vin','12'],['g_vout','5'],['g_i','300m'],['g_ta','30']],
   pack:[['p_s','4'],['p_p','2'],['p_cap','2600'],['p_v','3.7'],['p_full','4.2'],['p_empty','3.0'],['p_imax','10']],
@@ -2135,6 +2474,21 @@ Object.keys(EX).forEach(id=>{
 <script>
 /* phones: start with "How it works" folded so the results stay close */
 if(matchMedia('(max-width:999px)').matches) document.querySelectorAll('.learn details[open]').forEach(d=>d.removeAttribute('open'));
+</script>
+<script>
+/* bookmark button: browsers can't bookmark for you, so show the right shortcut for this device */
+(function(){
+  const b=document.querySelector('.bmbtn'), h=document.querySelector('.bmhint'); if(!b||!h) return;
+  const ua=navigator.userAgent, ios=/iPad|iPhone|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1), and=/Android/.test(ua), mac=/Mac/.test(navigator.platform||ua);
+  let t;
+  b.addEventListener('click',()=>{
+    h.textContent=ios?'Tap the Share button, then “Add to Home Screen” or “Add Bookmark”.'
+      :and?'Tap ⋮ in your browser, then “Add to Home screen”, or tap ☆ to bookmark.'
+      :'Press '+(mac?'⌘+D':'Ctrl+D')+' to bookmark this page.';
+    h.hidden=false; clearTimeout(t); t=setTimeout(()=>{h.hidden=true},9000);
+    try{ if(typeof gtag==='function') gtag('event','bookmark_click'); }catch(e){}
+  });
+})();
 </script>
 </body>
 </html>
