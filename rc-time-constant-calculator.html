@@ -119,6 +119,12 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);color:v
 footer a{color:var(--copper);text-decoration:none;font-weight:600}
 footer a:hover{text-decoration:underline}
 .note{color:var(--muted);font-size:.84rem;margin-top:8px}
+.awgtab{position:relative;max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:8px}
+.awgtab table{width:100%;border-collapse:collapse;font-size:.86rem;font-variant-numeric:tabular-nums}
+.awgtab th{position:sticky;top:0;background:var(--mask2);color:var(--muted);font-weight:600;text-align:right;padding:7px 10px;border-bottom:1px solid var(--line)}
+.awgtab td{text-align:right;padding:5px 10px;border-bottom:1px solid var(--line);color:var(--silk)}
+.awgtab th:first-child,.awgtab td:first-child{text-align:left;font-weight:700}
+.awgtab tr.on td{background:var(--copper);color:var(--ontab)}
 
 nav a{flex:0 0 auto;font-size:.92rem;color:var(--muted);background:var(--mask2);border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;text-decoration:none}
 nav a:hover{border-color:var(--copper);color:var(--silk)}
@@ -246,6 +252,7 @@ header p.pfx{font-size:.84rem}
     <a href="battery-pack-calculator.html">Battery pack</a>
     <a href="battery-life-calculator.html">Battery runtime</a>
     <a href="wire-resistance-calculator.html">Wire resistance</a>
+    <a href="awg-wire-gauge-calculator.html">AWG gauge</a>
     <a href="pcb-trace-width-calculator.html">PCB trace</a>
   </div>
   <div class="ng"><span class="ngh" aria-hidden="true">Component codes</span>
@@ -282,7 +289,7 @@ header p.pfx{font-size:.84rem}
 <p>RC timing is used for switch debouncing, power-on reset delays, simple timers and smoothing. Note that electrolytic capacitors often have a ±20% tolerance, so the timing will be equally loose. Use film or ceramic capacitors where accuracy matters.</p>
   </details></div>
 </section>
-<div class="block alltools"><h2>More calculators</h2><div class="cols"><div><h3>Basics</h3><ul><li><a href="ohms-law-calculator.html">Ohm&#x27;s law calculator</a></li><li><a href="series-parallel-calculator.html">Series and parallel calculator</a></li><li><a href="voltage-divider-calculator.html">Voltage divider calculator</a></li></ul></div><div><h3>AC, filters and signals</h3><ul><li><a href="reactance-calculator.html">Reactance and impedance calculator</a></li><li><a href="filter-calculator.html">Filter cutoff calculator</a></li><li><a href="active-filter-calculator.html">Active filter calculator</a></li><li><a href="rc-time-constant-calculator.html" aria-current="page">RC time constant calculator</a></li><li><a href="db-dbm-converter.html">DB, dBm and ratio converter</a></li><li><a href="rms-peak-average-calculator.html">RMS, peak and average calculator</a></li></ul></div><div><h3>Circuits</h3><ul><li><a href="555-timer-calculator.html">555 timer calculator</a></li><li><a href="op-amp-gain-calculator.html">Op-amp gain calculator</a></li><li><a href="led-resistor-calculator.html">LED resistor calculator</a></li><li><a href="zener-diode-calculator.html">Zener regulator calculator</a></li></ul></div><div><h3>Basic circuits</h3><ul><li><a href="transistor-switch-calculator.html">Transistor switch calculator</a></li><li><a href="mosfet-switch-calculator.html">MOSFET logic-level switch calculator</a></li><li><a href="discrete-linear-regulator-calculator.html">Discrete linear regulator calculator</a></li><li><a href="lm317-calculator.html">LM317 resistor calculator</a></li><li><a href="constant-current-source-calculator.html">Constant-current source calculator</a></li></ul></div><div><h3>Power devices and thermal</h3><ul><li><a href="linear-regulator-heat-calculator.html">Linear regulator heat calculator</a></li><li><a href="mosfet-power-loss-calculator.html">MOSFET power loss calculator</a></li><li><a href="thermal-resistance-calculator.html">Thermal resistance calculator</a></li><li><a href="current-sense-resistor-calculator.html">Current sense resistor calculator</a></li></ul></div><div><h3>Batteries and wiring</h3><ul><li><a href="battery-pack-calculator.html">Battery pack calculator</a></li><li><a href="battery-life-calculator.html">Battery runtime calculator</a></li><li><a href="wire-resistance-calculator.html">Wire resistance calculator</a></li><li><a href="pcb-trace-width-calculator.html">PCB trace width calculator</a></li></ul></div><div><h3>Component codes</h3><ul><li><a href="resistor-color-code-calculator.html">Resistor color code calculator</a></li><li><a href="smd-capacitor-code-calculator.html">SMD resistor and capacitor code calculator</a></li></ul></div></div></div>
+<div class="block alltools"><h2>More calculators</h2><div class="cols"><div><h3>Basics</h3><ul><li><a href="ohms-law-calculator.html">Ohm&#x27;s law calculator</a></li><li><a href="series-parallel-calculator.html">Series and parallel calculator</a></li><li><a href="voltage-divider-calculator.html">Voltage divider calculator</a></li></ul></div><div><h3>AC, filters and signals</h3><ul><li><a href="reactance-calculator.html">Reactance and impedance calculator</a></li><li><a href="filter-calculator.html">Filter cutoff calculator</a></li><li><a href="active-filter-calculator.html">Active filter calculator</a></li><li><a href="rc-time-constant-calculator.html" aria-current="page">RC time constant calculator</a></li><li><a href="db-dbm-converter.html">DB, dBm and ratio converter</a></li><li><a href="rms-peak-average-calculator.html">RMS, peak and average calculator</a></li></ul></div><div><h3>Circuits</h3><ul><li><a href="555-timer-calculator.html">555 timer calculator</a></li><li><a href="op-amp-gain-calculator.html">Op-amp gain calculator</a></li><li><a href="led-resistor-calculator.html">LED resistor calculator</a></li><li><a href="zener-diode-calculator.html">Zener regulator calculator</a></li></ul></div><div><h3>Basic circuits</h3><ul><li><a href="transistor-switch-calculator.html">Transistor switch calculator</a></li><li><a href="mosfet-switch-calculator.html">MOSFET logic-level switch calculator</a></li><li><a href="discrete-linear-regulator-calculator.html">Discrete linear regulator calculator</a></li><li><a href="lm317-calculator.html">LM317 resistor calculator</a></li><li><a href="constant-current-source-calculator.html">Constant-current source calculator</a></li></ul></div><div><h3>Power devices and thermal</h3><ul><li><a href="linear-regulator-heat-calculator.html">Linear regulator heat calculator</a></li><li><a href="mosfet-power-loss-calculator.html">MOSFET power loss calculator</a></li><li><a href="thermal-resistance-calculator.html">Thermal resistance calculator</a></li><li><a href="current-sense-resistor-calculator.html">Current sense resistor calculator</a></li></ul></div><div><h3>Batteries and wiring</h3><ul><li><a href="battery-pack-calculator.html">Battery pack calculator</a></li><li><a href="battery-life-calculator.html">Battery runtime calculator</a></li><li><a href="wire-resistance-calculator.html">Wire resistance calculator</a></li><li><a href="awg-wire-gauge-calculator.html">AWG wire gauge calculator</a></li><li><a href="pcb-trace-width-calculator.html">PCB trace width calculator</a></li></ul></div><div><h3>Component codes</h3><ul><li><a href="resistor-color-code-calculator.html">Resistor color code calculator</a></li><li><a href="smd-capacitor-code-calculator.html">SMD resistor and capacitor code calculator</a></li></ul></div></div></div>
 </div>
 </div>
 <footer>
@@ -401,7 +408,7 @@ function capDia(code){
 
 /* ---------- tabs, groups and links ---------- */
 const GROUP={ohm:'basics',combine:'basics',divider:'basics',react:'ac',filt:'ac',afilt:'ac',db:'ac',wave:'ac',rc:'ac',t555:'circuits',opamp:'circuits',led:'circuits',zener:'circuits',bjt:'circuits',mosw:'circuits',dreg:'circuits',lm317:'circuits',ccs:'circuits',
-  lreg:'power',mosfet:'power',thermal:'power',sense:'power',pack:'power',run:'power',wire:'power',trace:'power',color:'codes',codes:'codes'};
+  lreg:'power',mosfet:'power',thermal:'power',sense:'power',pack:'power',run:'power',wire:'power',awg:'power',trace:'power',color:'codes',codes:'codes'};
 const lastInGroup={};
 function showTab(id){
   if(!GROUP[id]) id='ohm';
@@ -544,6 +551,7 @@ const EX={
   dreg:[['dr_vmin','12'],['dr_vmax','15'],['dr_vout','5'],['dr_il','500m'],['dr_hfe','50'],['dr_vbe','0.7'],['dr_iz','5m']],
   lm317:[['lm_vout','5'],['lm_r1','240'],['lm_vin','9'],['lm_il','500m'],['lm_vref','1.25']],
   ccs:[['cc_top','two'],['cc_i','20m'],['cc_vs','12'],['cc_vl','6.4'],['cc_vbe','0.65'],['cc_hfe','100']],
+  awg:[['awg_mode','awg'],['awg_x','18'],['awg_use','5']],
   zener:[['z_vmin','9'],['z_vmax','12'],['z_vz','5.1'],['z_il','20m'],['z_izm','5m']],
   lreg:[['g_part','7805'],['g_vin','12'],['g_vout','5'],['g_i','300m'],['g_ta','30']],
   pack:[['p_s','4'],['p_p','2'],['p_cap','2600'],['p_v','3.7'],['p_full','4.2'],['p_empty','3.0'],['p_imax','10']],

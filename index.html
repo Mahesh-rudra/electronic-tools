@@ -12,13 +12,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>EE Calculator: Electronics Engineering Tools</title>
-<meta name="description" content="Free electronics engineering calculators with live circuit diagrams: Ohm's law, voltage dividers, filters, reactance, 555 timer, op-amp gain, LED resistors, Zener and regulator heat, MOSFET power loss, thermal resistance, current sense resistors, active filters, dB and dBm, RMS and peak, transistor and MOSFET switches, discrete and LM317 regulators, constant-current sources, PCB trace width, battery packs, wire resistance and resistor codes.">
+<meta name="description" content="Free electronics engineering calculators with live circuit diagrams: Ohm's law, voltage dividers, filters, reactance, 555 timer, op-amp gain, LED resistors, Zener and regulator heat, MOSFET power loss, thermal resistance, current sense resistors, active filters, dB and dBm, RMS and peak, transistor and MOSFET switches, discrete and LM317 regulators, constant-current sources, PCB trace width, battery packs, wire resistance, AWG wire gauge and resistor codes.">
 <link rel="canonical" href="https://eecalc.vedaxglobal.com/">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23B45309'/%3E%3Cpath d='M3 16h5l2-6 4 12 4-12 4 12 2-6h5' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
 <meta name="theme-color" content="#B45309">
 <meta property="og:type" content="website">
 <meta property="og:title" content="EE Calculator: Electronics Engineering Tools">
-<meta property="og:description" content="Your everyday toolkit for electronics design: 28 free calculators with live circuit diagrams and simple explanations.">
+<meta property="og:description" content="Your everyday toolkit for electronics design: 29 free calculators with live circuit diagrams and simple explanations.">
 <meta property="og:url" content="https://eecalc.vedaxglobal.com/">
 <meta property="og:image" content="https://eecalc.vedaxglobal.com/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -119,6 +119,12 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);color:v
 footer a{color:var(--copper);text-decoration:none;font-weight:600}
 footer a:hover{text-decoration:underline}
 .note{color:var(--muted);font-size:.84rem;margin-top:8px}
+.awgtab{position:relative;max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:8px}
+.awgtab table{width:100%;border-collapse:collapse;font-size:.86rem;font-variant-numeric:tabular-nums}
+.awgtab th{position:sticky;top:0;background:var(--mask2);color:var(--muted);font-weight:600;text-align:right;padding:7px 10px;border-bottom:1px solid var(--line)}
+.awgtab td{text-align:right;padding:5px 10px;border-bottom:1px solid var(--line);color:var(--silk)}
+.awgtab th:first-child,.awgtab td:first-child{text-align:left;font-weight:700}
+.awgtab tr.on td{background:var(--copper);color:var(--ontab)}
 
 nav a{flex:0 0 auto;font-size:.92rem;color:var(--muted);background:var(--mask2);border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;text-decoration:none}
 nav a:hover{border-color:var(--copper);color:var(--silk)}
@@ -180,6 +186,10 @@ header p.tagline{font-size:1.05rem;color:var(--silk);font-weight:500;margin:0 0 
 .bmbtn:focus-visible{outline:2px solid var(--silk);outline-offset:2px}
 header p.bmhint{font-size:.86rem;color:var(--silk);background:var(--mask2);border:1px solid var(--line);border-left:3px solid var(--copper);border-radius:6px;padding:6px 10px;margin:0 0 10px;max-width:520px}
 header p.pfx{font-size:.84rem}
+
+/* datasheet-v1 */
+.dsnote{font-size:.84rem;color:var(--silk);background:var(--mask);border:1px solid var(--line);border-left:3px solid var(--copper);border-radius:6px;padding:7px 10px;margin:4px 0 12px;line-height:1.45}
+.dsnote b{color:var(--copper)}
 </style>
 </head>
 <body>
@@ -239,6 +249,7 @@ header p.pfx{font-size:.84rem}
     <button role="tab" aria-selected="false" data-tab="pack">Battery pack</button>
     <button role="tab" aria-selected="false" data-tab="run">Battery runtime</button>
     <button role="tab" aria-selected="false" data-tab="wire">Wire resistance</button>
+    <button role="tab" aria-selected="false" data-tab="awg">AWG gauge</button>
     <button role="tab" aria-selected="false" data-tab="trace">PCB trace</button>
   </div>
   <div class="ng"><span class="ngh" aria-hidden="true">Component codes</span>
@@ -825,6 +836,7 @@ header p.pfx{font-size:.84rem}
   <div class="block">
     <h2>NPN transistor switch</h2>
     <p class="hint">Low-side switch driven from a logic pin. Use the minimum hFE from the datasheet at your load current.</p>
+    <p class="dsnote"><b>Check the datasheet:</b> results depend on the hFE, VBE(sat) and VCE(sat) of the exact transistor you choose. The example values are typical, not guaranteed.</p>
     <div class="grid">
       <label>Load supply (V)<input id="bj_vcc" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="12"></label>
       <label>Load current (A)<input id="bj_il" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="100m"></label>
@@ -852,6 +864,7 @@ header p.pfx{font-size:.84rem}
   <div class="block">
     <h2>MOSFET logic-level switch</h2>
     <p class="hint">N-channel MOSFET as a low-side switch from a logic pin. Take VGS(th) max and RDS(on) from the datasheet.</p>
+    <p class="dsnote"><b>Check the datasheet:</b> results depend on the VGS(th), RDS(on) and gate charge of the exact MOSFET you choose. The example values are typical, not guaranteed.</p>
     <div class="grid">
       <label>Logic high voltage (V)<input id="ms_vg" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="3.3"></label>
       <label>Load supply (V)<input id="ms_vcc" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="12"></label>
@@ -880,6 +893,7 @@ header p.pfx{font-size:.84rem}
   <div class="block">
     <h2>Discrete linear regulator</h2>
     <p class="hint">A Zener diode sets the voltage and an NPN pass transistor (emitter follower) supplies the current.</p>
+    <p class="dsnote"><b>Check the datasheet:</b> results depend on the hFE and VBE of your transistor, and the tolerance and power rating of your Zener. The example values are typical, not guaranteed.</p>
     <div class="grid">
       <label>Input minimum (V)<input id="dr_vmin" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="12"></label>
       <label>Input maximum (V)<input id="dr_vmax" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="optional"></label>
@@ -905,6 +919,7 @@ header p.pfx{font-size:.84rem}
   <div class="block">
     <h2>LM317 adjustable regulator</h2>
     <p class="hint">Find R1 and R2 for any output voltage, rounded to E96.</p>
+    <p class="dsnote"><b>Check the datasheet:</b> results depend on the reference voltage, dropout and minimum load of your regulator, as they differ between makers. The example values are typical, not guaranteed.</p>
     <div class="grid">
       <label>Target output (V)<input id="lm_vout" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="5"></label>
       <label>R1 (Ω)<input id="lm_r1" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" value="240"></label>
@@ -929,6 +944,7 @@ header p.pfx{font-size:.84rem}
   <div class="block">
     <h2>Transistor constant-current source</h2>
     <p class="hint">Keeps the load current fixed even when the supply or load voltage changes. Great for LED strings.</p>
+    <p class="dsnote"><b>Check the datasheet:</b> results depend on the hFE, VBE and power rating of the exact transistor you choose. The example values are typical, not guaranteed.</p>
     <div class="grid">
       <label>Circuit<select id="cc_top"><option value="two">Two transistors</option><option value="zener">Zener and one transistor</option></select></label>
       <label>Target current (A)<input id="cc_i" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="20m"></label>
@@ -948,6 +964,80 @@ header p.pfx{font-size:.84rem}
 <p>In the <b>Zener</b> circuit, the Zener holds Q1's base at a fixed voltage, so the emitter resistor sees Vz − VBE:</p>
 <code class="fx">I = (Vz − VBE) / Re</code>
 <p>The circuit only regulates while Q1 has some voltage left across it, about 0.3 V or more. That limit is the <b>compliance</b>: the highest load voltage it can drive. Everything above the load voltage is burned in Q1. VBE drops about 2 mV/°C, so the two-transistor version's current falls slightly as it warms. The Zener version drifts less when the Zener is around 5 V.</p>
+  </details></div>
+</section>
+
+<!-- AWG -->
+<section class="panel" id="awg">
+  <div class="block">
+    <h2>AWG wire gauge</h2>
+    <p class="hint">Convert between AWG, diameter and mm², or find the gauge for a current. Accepts 0–40 and 1/0 to 4/0.</p>
+    <div class="grid">
+      <label>Find from<select id="awg_mode"><option value="awg">AWG number</option><option value="mm2">Area (mm²)</option><option value="d">Diameter (mm)</option><option value="i">Current (A)</option></select></label>
+      <label id="awg_xl">AWG<input id="awg_x" placeholder="18"></label>
+      <label>Use<select id="awg_use"><option value="3">Power, long runs (3 A/mm²)</option><option value="5" selected>General wiring (5 A/mm²)</option><option value="10">Short chassis wiring, free air (10 A/mm²)</option></select></label>
+    </div>
+    <div class="dia" id="awg_dia"></div>
+    <div class="out" id="awg_out"></div>
+  </div>
+  <div class="block">
+    <h2>AWG reference table</h2>
+    <p class="hint">Solid copper at 20 °C. Current at 5 A/mm², general wiring.</p>
+    <div class="awgtab"><table>
+      <thead><tr><th>AWG</th><th>Dia. (mm)</th><th>Dia. (in)</th><th>Area (mm²)</th><th>Ω/km</th><th>Current (A)</th></tr></thead>
+      <tbody>
+<tr data-g="-3"><td>4/0</td><td>11.684</td><td>0.4600</td><td>107</td><td>0.161</td><td>536</td></tr>
+<tr data-g="-2"><td>3/0</td><td>10.405</td><td>0.4096</td><td>85</td><td>0.203</td><td>425</td></tr>
+<tr data-g="-1"><td>2/0</td><td>9.266</td><td>0.3648</td><td>67.4</td><td>0.256</td><td>337</td></tr>
+<tr data-g="0"><td>1/0</td><td>8.251</td><td>0.3249</td><td>53.5</td><td>0.322</td><td>267</td></tr>
+<tr data-g="1"><td>1</td><td>7.348</td><td>0.2893</td><td>42.4</td><td>0.407</td><td>212</td></tr>
+<tr data-g="2"><td>2</td><td>6.544</td><td>0.2576</td><td>33.6</td><td>0.513</td><td>168</td></tr>
+<tr data-g="3"><td>3</td><td>5.827</td><td>0.2294</td><td>26.7</td><td>0.646</td><td>133</td></tr>
+<tr data-g="4"><td>4</td><td>5.189</td><td>0.2043</td><td>21.2</td><td>0.815</td><td>106</td></tr>
+<tr data-g="5"><td>5</td><td>4.621</td><td>0.1819</td><td>16.8</td><td>1.03</td><td>83.9</td></tr>
+<tr data-g="6"><td>6</td><td>4.115</td><td>0.1620</td><td>13.3</td><td>1.3</td><td>66.5</td></tr>
+<tr data-g="7"><td>7</td><td>3.665</td><td>0.1443</td><td>10.5</td><td>1.63</td><td>52.7</td></tr>
+<tr data-g="8"><td>8</td><td>3.264</td><td>0.1285</td><td>8.37</td><td>2.06</td><td>41.8</td></tr>
+<tr data-g="9"><td>9</td><td>2.906</td><td>0.1144</td><td>6.63</td><td>2.6</td><td>33.2</td></tr>
+<tr data-g="10"><td>10</td><td>2.588</td><td>0.1019</td><td>5.26</td><td>3.28</td><td>26.3</td></tr>
+<tr data-g="11"><td>11</td><td>2.305</td><td>0.0907</td><td>4.17</td><td>4.13</td><td>20.9</td></tr>
+<tr data-g="12"><td>12</td><td>2.053</td><td>0.0808</td><td>3.31</td><td>5.21</td><td>16.5</td></tr>
+<tr data-g="13"><td>13</td><td>1.828</td><td>0.0720</td><td>2.62</td><td>6.57</td><td>13.1</td></tr>
+<tr data-g="14"><td>14</td><td>1.628</td><td>0.0641</td><td>2.08</td><td>8.28</td><td>10.4</td></tr>
+<tr data-g="15"><td>15</td><td>1.450</td><td>0.0571</td><td>1.65</td><td>10.4</td><td>8.25</td></tr>
+<tr data-g="16"><td>16</td><td>1.291</td><td>0.0508</td><td>1.31</td><td>13.2</td><td>6.54</td></tr>
+<tr data-g="17"><td>17</td><td>1.150</td><td>0.0453</td><td>1.04</td><td>16.6</td><td>5.19</td></tr>
+<tr data-g="18"><td>18</td><td>1.024</td><td>0.0403</td><td>0.823</td><td>20.9</td><td>4.12</td></tr>
+<tr data-g="19"><td>19</td><td>0.912</td><td>0.0359</td><td>0.653</td><td>26.4</td><td>3.26</td></tr>
+<tr data-g="20"><td>20</td><td>0.812</td><td>0.0320</td><td>0.518</td><td>33.3</td><td>2.59</td></tr>
+<tr data-g="21"><td>21</td><td>0.723</td><td>0.0285</td><td>0.41</td><td>42</td><td>2.05</td></tr>
+<tr data-g="22"><td>22</td><td>0.644</td><td>0.0253</td><td>0.326</td><td>53</td><td>1.63</td></tr>
+<tr data-g="23"><td>23</td><td>0.573</td><td>0.0226</td><td>0.258</td><td>66.8</td><td>1.29</td></tr>
+<tr data-g="24"><td>24</td><td>0.511</td><td>0.0201</td><td>0.205</td><td>84.2</td><td>1.02</td></tr>
+<tr data-g="25"><td>25</td><td>0.455</td><td>0.0179</td><td>0.162</td><td>106</td><td>0.812</td></tr>
+<tr data-g="26"><td>26</td><td>0.405</td><td>0.0159</td><td>0.129</td><td>134</td><td>0.644</td></tr>
+<tr data-g="27"><td>27</td><td>0.361</td><td>0.0142</td><td>0.102</td><td>169</td><td>0.511</td></tr>
+<tr data-g="28"><td>28</td><td>0.321</td><td>0.0126</td><td>0.081</td><td>213</td><td>0.405</td></tr>
+<tr data-g="29"><td>29</td><td>0.286</td><td>0.0113</td><td>0.0642</td><td>268</td><td>0.321</td></tr>
+<tr data-g="30"><td>30</td><td>0.255</td><td>0.0100</td><td>0.0509</td><td>339</td><td>0.255</td></tr>
+<tr data-g="31"><td>31</td><td>0.227</td><td>0.0089</td><td>0.0404</td><td>427</td><td>0.202</td></tr>
+<tr data-g="32"><td>32</td><td>0.202</td><td>0.0080</td><td>0.032</td><td>538</td><td>0.16</td></tr>
+<tr data-g="33"><td>33</td><td>0.180</td><td>0.0071</td><td>0.0254</td><td>679</td><td>0.127</td></tr>
+<tr data-g="34"><td>34</td><td>0.160</td><td>0.0063</td><td>0.0201</td><td>856</td><td>0.101</td></tr>
+<tr data-g="35"><td>35</td><td>0.143</td><td>0.0056</td><td>0.016</td><td>1.08e+03</td><td>0.0799</td></tr>
+<tr data-g="36"><td>36</td><td>0.127</td><td>0.0050</td><td>0.0127</td><td>1.36e+03</td><td>0.0633</td></tr>
+<tr data-g="37"><td>37</td><td>0.113</td><td>0.0045</td><td>0.01</td><td>1.72e+03</td><td>0.0502</td></tr>
+<tr data-g="38"><td>38</td><td>0.101</td><td>0.0040</td><td>0.00797</td><td>2.16e+03</td><td>0.0398</td></tr>
+<tr data-g="39"><td>39</td><td>0.090</td><td>0.0035</td><td>0.00632</td><td>2.73e+03</td><td>0.0316</td></tr>
+<tr data-g="40"><td>40</td><td>0.080</td><td>0.0031</td><td>0.00501</td><td>3.44e+03</td><td>0.0251</td></tr>
+      </tbody></table></div>
+  </div>
+  <div class="block learn"><details><summary>How it works</summary>
+<p><b>AWG</b> (American Wire Gauge) numbers go down as the wire gets thicker. Every 6 gauges halves or doubles the diameter, and every 3 gauges roughly halves or doubles the area, and so the resistance and current capacity.</p>
+<code class="fx">d (mm) = 0.127 × 92^((36 − AWG) / 39)<br>Area = π × d² / 4</code>
+<p>Sizes thicker than 0 AWG are written 1/0, 2/0, 3/0 and 4/0 (also called 0, 00, 000 and 0000). Diameters are for solid wire. Stranded wire of the same gauge has the same copper area but is a little thicker overall.</p>
+<p>How much current a wire can carry depends on its insulation rating, the air temperature, whether it is bundled with others, and how much voltage drop you can accept. The current here is a simple guide based on current density. For long runs, check the voltage drop with the wire resistance calculator.</p>
+<p>For mains and building wiring, always follow your local electrical code, such as the NEC in the USA or IS 732 in India.</p>
   </details></div>
 </section>
 
@@ -1034,7 +1124,7 @@ header p.pfx{font-size:.84rem}
 <p><b>Ceramic and film capacitors</b> use a similar 3-digit code in picofarads: 104 = 10 followed by four zeros = 100,000 pF = 100 nF = 0.1 µF. A letter after it gives the tolerance: J = ±5%, K = ±10%, M = ±20%. Small SMD capacitors are usually not marked at all, so keep them in labelled packaging.</p>
   </details></div>
 </section>
-<div class="block alltools"><h2>Every calculator on its own page</h2><div class="cols"><div><h3>Basics</h3><ul><li><a href="ohms-law-calculator.html">Ohm&#x27;s law calculator</a></li><li><a href="series-parallel-calculator.html">Series and parallel calculator</a></li><li><a href="voltage-divider-calculator.html">Voltage divider calculator</a></li></ul></div><div><h3>AC, filters and signals</h3><ul><li><a href="reactance-calculator.html">Reactance and impedance calculator</a></li><li><a href="filter-calculator.html">Filter cutoff calculator</a></li><li><a href="active-filter-calculator.html">Active filter calculator</a></li><li><a href="rc-time-constant-calculator.html">RC time constant calculator</a></li><li><a href="db-dbm-converter.html">DB, dBm and ratio converter</a></li><li><a href="rms-peak-average-calculator.html">RMS, peak and average calculator</a></li></ul></div><div><h3>Circuits</h3><ul><li><a href="555-timer-calculator.html">555 timer calculator</a></li><li><a href="op-amp-gain-calculator.html">Op-amp gain calculator</a></li><li><a href="led-resistor-calculator.html">LED resistor calculator</a></li><li><a href="zener-diode-calculator.html">Zener regulator calculator</a></li></ul></div><div><h3>Basic circuits</h3><ul><li><a href="transistor-switch-calculator.html">Transistor switch calculator</a></li><li><a href="mosfet-switch-calculator.html">MOSFET logic-level switch calculator</a></li><li><a href="discrete-linear-regulator-calculator.html">Discrete linear regulator calculator</a></li><li><a href="lm317-calculator.html">LM317 resistor calculator</a></li><li><a href="constant-current-source-calculator.html">Constant-current source calculator</a></li></ul></div><div><h3>Power devices and thermal</h3><ul><li><a href="linear-regulator-heat-calculator.html">Linear regulator heat calculator</a></li><li><a href="mosfet-power-loss-calculator.html">MOSFET power loss calculator</a></li><li><a href="thermal-resistance-calculator.html">Thermal resistance calculator</a></li><li><a href="current-sense-resistor-calculator.html">Current sense resistor calculator</a></li></ul></div><div><h3>Batteries and wiring</h3><ul><li><a href="battery-pack-calculator.html">Battery pack calculator</a></li><li><a href="battery-life-calculator.html">Battery runtime calculator</a></li><li><a href="wire-resistance-calculator.html">Wire resistance calculator</a></li><li><a href="pcb-trace-width-calculator.html">PCB trace width calculator</a></li></ul></div><div><h3>Component codes</h3><ul><li><a href="resistor-color-code-calculator.html">Resistor color code calculator</a></li><li><a href="smd-capacitor-code-calculator.html">SMD resistor and capacitor code calculator</a></li></ul></div></div></div>
+<div class="block alltools"><h2>Every calculator on its own page</h2><div class="cols"><div><h3>Basics</h3><ul><li><a href="ohms-law-calculator.html">Ohm&#x27;s law calculator</a></li><li><a href="series-parallel-calculator.html">Series and parallel calculator</a></li><li><a href="voltage-divider-calculator.html">Voltage divider calculator</a></li></ul></div><div><h3>AC, filters and signals</h3><ul><li><a href="reactance-calculator.html">Reactance and impedance calculator</a></li><li><a href="filter-calculator.html">Filter cutoff calculator</a></li><li><a href="active-filter-calculator.html">Active filter calculator</a></li><li><a href="rc-time-constant-calculator.html">RC time constant calculator</a></li><li><a href="db-dbm-converter.html">DB, dBm and ratio converter</a></li><li><a href="rms-peak-average-calculator.html">RMS, peak and average calculator</a></li></ul></div><div><h3>Circuits</h3><ul><li><a href="555-timer-calculator.html">555 timer calculator</a></li><li><a href="op-amp-gain-calculator.html">Op-amp gain calculator</a></li><li><a href="led-resistor-calculator.html">LED resistor calculator</a></li><li><a href="zener-diode-calculator.html">Zener regulator calculator</a></li></ul></div><div><h3>Basic circuits</h3><ul><li><a href="transistor-switch-calculator.html">Transistor switch calculator</a></li><li><a href="mosfet-switch-calculator.html">MOSFET logic-level switch calculator</a></li><li><a href="discrete-linear-regulator-calculator.html">Discrete linear regulator calculator</a></li><li><a href="lm317-calculator.html">LM317 resistor calculator</a></li><li><a href="constant-current-source-calculator.html">Constant-current source calculator</a></li></ul></div><div><h3>Power devices and thermal</h3><ul><li><a href="linear-regulator-heat-calculator.html">Linear regulator heat calculator</a></li><li><a href="mosfet-power-loss-calculator.html">MOSFET power loss calculator</a></li><li><a href="thermal-resistance-calculator.html">Thermal resistance calculator</a></li><li><a href="current-sense-resistor-calculator.html">Current sense resistor calculator</a></li></ul></div><div><h3>Batteries and wiring</h3><ul><li><a href="battery-pack-calculator.html">Battery pack calculator</a></li><li><a href="battery-life-calculator.html">Battery runtime calculator</a></li><li><a href="wire-resistance-calculator.html">Wire resistance calculator</a></li><li><a href="awg-wire-gauge-calculator.html">AWG wire gauge calculator</a></li><li><a href="pcb-trace-width-calculator.html">PCB trace width calculator</a></li></ul></div><div><h3>Component codes</h3><ul><li><a href="resistor-color-code-calculator.html">Resistor color code calculator</a></li><li><a href="smd-capacitor-code-calculator.html">SMD resistor and capacitor code calculator</a></li></ul></div></div></div>
 </div>
 </div>
 <footer>
@@ -1153,7 +1243,7 @@ function capDia(code){
 
 /* ---------- tabs, groups and links ---------- */
 const GROUP={ohm:'basics',combine:'basics',divider:'basics',react:'ac',filt:'ac',afilt:'ac',db:'ac',wave:'ac',rc:'ac',t555:'circuits',opamp:'circuits',led:'circuits',zener:'circuits',bjt:'circuits',mosw:'circuits',dreg:'circuits',lm317:'circuits',ccs:'circuits',
-  lreg:'power',mosfet:'power',thermal:'power',sense:'power',pack:'power',run:'power',wire:'power',trace:'power',color:'codes',codes:'codes'};
+  lreg:'power',mosfet:'power',thermal:'power',sense:'power',pack:'power',run:'power',wire:'power',awg:'power',trace:'power',color:'codes',codes:'codes'};
 const lastInGroup={};
 function showTab(id){
   if(!GROUP[id]) id='ohm';
@@ -2247,13 +2337,13 @@ listen(['ms_vg','ms_vcc','ms_il','ms_vth','ms_vgr','ms_rds','ms_ip','ms_qg','ms_
 
 /* ---------- DISCRETE REGULATOR ---------- */
 function dregDia(L){
-  const b=term(16,40)+txt(16,26,'Vin '+L.vin,'lb','start')+wire('M20 40H176V96')+dot(80,40)+
+  const b=term(16,40)+txt(16,26,'Vin '+L.vin,'lb','start')+wire('M20 40H176V80')+dot(80,40)+
     sym('R',80,40,90)+wire('M80 100V110')+dot(80,110)+lbl(70,62,'Rz',L.rz,'end')+
     sym('Z',80,110,90)+wire('M80 170V172')+gnd(80,172)+lbl(70,134,'Zener',L.vz,'end')+
-    wire('M80 110H140')+npn(160,126)+txt(200,112,'Q1','lb')+
-    wire('M176 156V166H290')+dot(240,166)+sym('R',240,166,90)+wire('M240 226V228')+gnd(240,228)+txt(252,200,'Load','lb')+
+    wire('M80 110H140')+npn(160,110)+txt(200,96,'Q1','lb')+
+    wire('M176 140V166H290')+dot(240,166)+sym('R',240,166,90)+wire('M240 226V228')+gnd(240,228)+txt(252,200,'Load','lb')+
     term(294,166)+txt(294,152,'Vout','lb','middle')+txt(294,190,L.vout,'vl','middle');
-  $('dreg_dia').innerHTML=svg(320,252,b.replace('wire(','wire('));
+  $('dreg_dia').innerHTML=svg(320,252,b);
 }
 function dreg(){
   const ids=['dr_vmin','dr_vmax','dr_vout','dr_il','dr_hfe','dr_vbe','dr_iz'], {v,bad}=read(ids);
@@ -2352,6 +2442,50 @@ function ccs(){
 }
 listen(['cc_top','cc_i','cc_vs','cc_vl','cc_vbe','cc_vz','cc_hfe'],ccs);
 
+/* ---------- AWG ---------- */
+const awgD=n=>0.127*Math.pow(92,(36-n)/39), awgName=n=>n<=0?(1-n)+'/0':String(n);
+const IEC=[0.5,0.75,1,1.5,2.5,4,6,10,16,25,35,50,70,95,120,150,185,240];
+function awgParse(t){ t=t.trim().replace(/\s/g,'');
+  let m=t.match(/^([1-4])\/0$/); if(m) return 1-(+m[1]);
+  if(/^0{2,4}$/.test(t)) return 1-t.length;
+  if(/^\d{1,2}$/.test(t)&&+t<=40) return +t; return null; }
+function awgDia(n){
+  const gs=[n+3,n,n-3].filter(g=>g>=-3&&g<=40), dmax=awgD(Math.min(...gs)), sc=96/dmax;
+  let x=20,b='';
+  gs.forEach(g=>{ const r=Math.max(1.5,awgD(g)*sc/2), cx=x+48;
+    b+=`<circle cx="${cx}" cy="64" r="${r}" fill="${g===n?'var(--copper)':'var(--line)'}" stroke="var(--silk)" stroke-width="1.2"/>`+
+      txt(cx,132,'AWG '+awgName(g),g===n?'vl':'lb','middle')+txt(cx,148,(+(Math.PI*awgD(g)**2/4).toPrecision(3))+' mm²','lb sm','middle');
+    x+=110; });
+  b+=txt(170,170,'Shown to scale','lb sm','middle');
+  $('awg_dia').innerHTML=svg(340,178,b);
+}
+function awg(){
+  const mode=$('awg_mode').value, J=+$('awg_use').value, el=$('awg_x'), raw=el.value;
+  setL('awg_xl',{awg:'AWG',mm2:'Area (mm²)',d:'Diameter (mm)',i:'Current (A)'}[mode]);
+  el.placeholder={awg:'18',mm2:'1.5',d:'1.02',i:'10'}[mode];
+  let n=null, note='';
+  document.querySelectorAll('#awg tr.on').forEach(r=>r.classList.remove('on'));
+  if(!raw.trim()){ $('awg_dia').innerHTML=''; return $('awg_out').innerHTML=msg('Enter a value.'); }
+  if(mode==='awg'){ n=awgParse(raw); if(n===null) return $('awg_out').innerHTML=msg('Enter a gauge from 0 to 40, or 1/0 to 4/0.',true); }
+  else { const x=parse(raw); if(!(x>0)) return $('awg_out').innerHTML=msg('Enter a value greater than 0.',true);
+    const a=mode==='mm2'?x:mode==='d'?Math.PI*x*x/4:x/J, d=Math.sqrt(4*a/Math.PI), exact=36-39*Math.log(d/0.127)/Math.log(92);
+    n=Math.floor(exact+1e-9); if(n>40) n=40;
+    if(n<-3) return $('awg_out').innerHTML=msg('Thicker than 4/0 AWG. Use kcmil or metric sizes, or run cables in parallel.',true);
+    note=mode==='i'?`Needs at least ${(+a.toPrecision(3))} mm² at ${J} A/mm², so AWG ${awgName(n)} or thicker.`:`Exact gauge ${exact.toFixed(2)}, so AWG ${awgName(n)} is the nearest size that is at least as thick.`;
+  }
+  const d=awgD(n), a=Math.PI*d*d/4, rcu=1.724e-8/(a*1e-6), ral=2.82e-8/(a*1e-6), metric=IEC.find(m=>m>=a*0.97);
+  awgDia(n);
+  const row=document.querySelector(`#awg tr[data-g="${n}"]`); if(row){ row.classList.add('on'); const box=row.closest('.awgtab'); box.scrollTop=row.offsetTop-box.clientHeight/2+row.offsetHeight; }
+  const list=[['AWG',awgName(n)],['Diameter',`${d.toFixed(3)} mm (${(d/25.4).toFixed(4)} in)`],['Area',`${(+a.toPrecision(4))} mm² (${(+(a*1973.5/1000).toPrecision(3))} kcmil)`],
+    ['Copper resistance',`${(+(rcu*1000).toPrecision(3))} Ω/km (${(+(rcu*304.8).toPrecision(3))} Ω/1000 ft)`],['Aluminium resistance',`${(+(ral*1000).toPrecision(3))} Ω/km`],
+    ['Current guide',`${(+(a*J).toPrecision(3))} A at ${J} A/mm²`]];
+  if(metric) list.push(['Nearest metric size (at least as thick)',metric+' mm²']);
+  $('awg_out').innerHTML=(note?`<div class="note">${note}</div>`:'')+rows(list)+'<div class="note">The current is a rough guide. Insulation rating, temperature and bundling change it, so check voltage drop too.</div>';
+}
+['awg_mode','awg_x','awg_use'].forEach(id=>{$(id).addEventListener('input',awg);$(id).addEventListener('change',awg);});
+document.querySelectorAll('#awg tbody tr').forEach(r=>r.addEventListener('click',()=>{$('awg_mode').value='awg';$('awg_x').value=r.firstChild.textContent;awg();}));
+awg();
+
 /* ---------- PCB TRACE ---------- */
 function traceDia(ext,wtxt,ttxt,I){
   let b=txt(20,16,ext?'External layer (cross-section)':'Internal layer (cross-section)','lb');
@@ -2432,6 +2566,7 @@ const EX={
   dreg:[['dr_vmin','12'],['dr_vmax','15'],['dr_vout','5'],['dr_il','500m'],['dr_hfe','50'],['dr_vbe','0.7'],['dr_iz','5m']],
   lm317:[['lm_vout','5'],['lm_r1','240'],['lm_vin','9'],['lm_il','500m'],['lm_vref','1.25']],
   ccs:[['cc_top','two'],['cc_i','20m'],['cc_vs','12'],['cc_vl','6.4'],['cc_vbe','0.65'],['cc_hfe','100']],
+  awg:[['awg_mode','awg'],['awg_x','18'],['awg_use','5']],
   zener:[['z_vmin','9'],['z_vmax','12'],['z_vz','5.1'],['z_il','20m'],['z_izm','5m']],
   lreg:[['g_part','7805'],['g_vin','12'],['g_vout','5'],['g_i','300m'],['g_ta','30']],
   pack:[['p_s','4'],['p_p','2'],['p_cap','2600'],['p_v','3.7'],['p_full','4.2'],['p_empty','3.0'],['p_imax','10']],
