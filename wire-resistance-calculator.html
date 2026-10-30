@@ -143,6 +143,23 @@ footer .pages a{margin:0 2px}
 .credit{display:flex;align-items:center;gap:8px}
 .credit img{width:32px;height:32px;border-radius:50%;object-fit:cover;border:1.5px solid var(--line)}
 .credit b{color:var(--silk)}
+
+nav .ng{display:contents}
+nav .ngh{display:none}
+@media (max-width:999px){
+  nav{flex-wrap:nowrap;overflow-x:auto;-webkit-mask-image:linear-gradient(to right,#000 86%,transparent);mask-image:linear-gradient(to right,#000 86%,transparent)}
+}
+@media (min-width:1000px){
+  .wrap{max-width:1320px}
+  .layout{display:grid;grid-template-columns:224px minmax(0,1fr);gap:24px;align-items:start}
+  .layout>nav{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;flex-direction:column;flex-wrap:nowrap;gap:0;margin:0;padding:12px 8px;background:var(--mask2);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);scrollbar-width:thin}
+  .layout>nav .ng{display:flex;flex-direction:column;gap:1px;margin-bottom:12px}
+  .layout>nav .ng:last-child{margin-bottom:0}
+  .layout>nav .ngh{display:block;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:2px 10px 4px}
+  .layout>nav button,.layout>nav a{display:block;width:100%;box-sizing:border-box;border:0;background:transparent;border-radius:6px;padding:6px 10px;text-align:left;font-size:.9rem;color:var(--silk)}
+  .layout>nav button:hover,.layout>nav a:hover{background:var(--line);color:var(--silk)}
+  .layout>nav button[aria-selected="true"],.layout>nav a[aria-current="page"]{background:var(--copper);color:var(--ontab);font-weight:700}
+}
 </style>
 </head>
 <body>
@@ -162,31 +179,45 @@ footer .pages a{margin:0 2px}
   </div>
 </header>
 
+<div class="layout">
 <nav aria-label="Calculators">
-  <a href="ohms-law-calculator.html">Ohm&#x27;s law</a>
-  <a href="series-parallel-calculator.html">Series / parallel</a>
-  <a href="voltage-divider-calculator.html">Dividers</a>
-  <a href="reactance-calculator.html">Reactance</a>
-  <a href="filter-calculator.html">Filters</a>
-  <a href="active-filter-calculator.html">Active filter</a>
-  <a href="rc-time-constant-calculator.html">RC time</a>
-  <a href="db-dbm-converter.html">dB converter</a>
-  <a href="rms-peak-average-calculator.html">RMS &amp; peak</a>
-  <a href="555-timer-calculator.html">555 timer</a>
-  <a href="op-amp-gain-calculator.html">Op-amp</a>
-  <a href="led-resistor-calculator.html">LED designer</a>
-  <a href="zener-diode-calculator.html">Zener</a>
-  <a href="linear-regulator-heat-calculator.html">Regulator heat</a>
-  <a href="battery-pack-calculator.html">Battery pack</a>
-  <a href="battery-life-calculator.html">Battery runtime</a>
-  <a href="wire-resistance-calculator.html" aria-current="page">Wire resistance</a>
-  <a href="mosfet-power-loss-calculator.html">MOSFET loss</a>
-  <a href="thermal-resistance-calculator.html">Thermal</a>
-  <a href="current-sense-resistor-calculator.html">Current sense</a>
-  <a href="pcb-trace-width-calculator.html">PCB trace</a>
-  <a href="resistor-color-code-calculator.html">Color code</a>
-  <a href="smd-capacitor-code-calculator.html">SMD &amp; cap codes</a>
+  <div class="ng"><span class="ngh" aria-hidden="true">Basics</span>
+    <a href="ohms-law-calculator.html">Ohm&#x27;s law</a>
+    <a href="series-parallel-calculator.html">Series / parallel</a>
+    <a href="voltage-divider-calculator.html">Dividers</a>
+  </div>
+  <div class="ng"><span class="ngh" aria-hidden="true">AC, filters and signals</span>
+    <a href="reactance-calculator.html">Reactance</a>
+    <a href="filter-calculator.html">Filters</a>
+    <a href="active-filter-calculator.html">Active filter</a>
+    <a href="rc-time-constant-calculator.html">RC time</a>
+    <a href="db-dbm-converter.html">dB converter</a>
+    <a href="rms-peak-average-calculator.html">RMS &amp; peak</a>
+  </div>
+  <div class="ng"><span class="ngh" aria-hidden="true">Circuits</span>
+    <a href="555-timer-calculator.html">555 timer</a>
+    <a href="op-amp-gain-calculator.html">Op-amp</a>
+    <a href="led-resistor-calculator.html">LED designer</a>
+    <a href="zener-diode-calculator.html">Zener</a>
+  </div>
+  <div class="ng"><span class="ngh" aria-hidden="true">Power devices and thermal</span>
+    <a href="linear-regulator-heat-calculator.html">Regulator heat</a>
+    <a href="mosfet-power-loss-calculator.html">MOSFET loss</a>
+    <a href="thermal-resistance-calculator.html">Thermal</a>
+    <a href="current-sense-resistor-calculator.html">Current sense</a>
+  </div>
+  <div class="ng"><span class="ngh" aria-hidden="true">Batteries and wiring</span>
+    <a href="battery-pack-calculator.html">Battery pack</a>
+    <a href="battery-life-calculator.html">Battery runtime</a>
+    <a href="wire-resistance-calculator.html" aria-current="page">Wire resistance</a>
+    <a href="pcb-trace-width-calculator.html">PCB trace</a>
+  </div>
+  <div class="ng"><span class="ngh" aria-hidden="true">Component codes</span>
+    <a href="resistor-color-code-calculator.html">Color code</a>
+    <a href="smd-capacitor-code-calculator.html">SMD &amp; cap codes</a>
+  </div>
 </nav>
+<div class="main">
 
 <section class="panel active" id="wire">
   <div class="block">
@@ -226,6 +257,8 @@ footer .pages a{margin:0 2px}
   </details></div>
 </section>
 <div class="block alltools"><h2>More calculators</h2><div class="cols"><div><h3>Basics</h3><ul><li><a href="ohms-law-calculator.html">Ohm&#x27;s law calculator</a></li><li><a href="series-parallel-calculator.html">Series and parallel calculator</a></li><li><a href="voltage-divider-calculator.html">Voltage divider calculator</a></li></ul></div><div><h3>AC, filters and signals</h3><ul><li><a href="reactance-calculator.html">Reactance and impedance calculator</a></li><li><a href="filter-calculator.html">Filter cutoff calculator</a></li><li><a href="active-filter-calculator.html">Active filter calculator</a></li><li><a href="rc-time-constant-calculator.html">RC time constant calculator</a></li><li><a href="db-dbm-converter.html">DB, dBm and ratio converter</a></li><li><a href="rms-peak-average-calculator.html">RMS, peak and average calculator</a></li></ul></div><div><h3>Circuits</h3><ul><li><a href="555-timer-calculator.html">555 timer calculator</a></li><li><a href="op-amp-gain-calculator.html">Op-amp gain calculator</a></li><li><a href="led-resistor-calculator.html">LED resistor calculator</a></li><li><a href="zener-diode-calculator.html">Zener regulator calculator</a></li></ul></div><div><h3>Power devices and thermal</h3><ul><li><a href="linear-regulator-heat-calculator.html">Linear regulator heat calculator</a></li><li><a href="mosfet-power-loss-calculator.html">MOSFET power loss calculator</a></li><li><a href="thermal-resistance-calculator.html">Thermal resistance calculator</a></li><li><a href="current-sense-resistor-calculator.html">Current sense resistor calculator</a></li></ul></div><div><h3>Batteries and wiring</h3><ul><li><a href="battery-pack-calculator.html">Battery pack calculator</a></li><li><a href="battery-life-calculator.html">Battery runtime calculator</a></li><li><a href="wire-resistance-calculator.html" aria-current="page">Wire resistance calculator</a></li><li><a href="pcb-trace-width-calculator.html">PCB trace width calculator</a></li></ul></div><div><h3>Component codes</h3><ul><li><a href="resistor-color-code-calculator.html">Resistor color code calculator</a></li><li><a href="smd-capacitor-code-calculator.html">SMD resistor and capacitor code calculator</a></li></ul></div></div></div>
+</div>
+</div>
 <footer>
   <div class="pages"><a href="about.html">About</a> · <a href="contact.html">Contact</a> · <a href="privacy.html">Privacy policy</a></div>
   <div>Made by Vedax Global. Free to use, no sign-up.</div>
@@ -500,6 +533,16 @@ Object.keys(EX).forEach(id=>{
 try{localStorage.setItem('eecalc-tab','wire')}catch(e){}
 /* ---------- show this calculator's link in the scrolling menu ---------- */
 (function(){const n=document.querySelector('nav[aria-label="Calculators"]'), a=n&&n.querySelector('a[aria-current]'); if(n&&a&&n.scrollWidth>n.clientWidth) n.scrollLeft=a.offsetLeft-n.offsetLeft-(n.clientWidth-a.offsetWidth)/2;})();
+</script>
+<script>
+/* keep the current calculator visible in the menu */
+(function(){const n=document.querySelector('.layout>nav'); if(!n) return;
+  function c(){const a=n.querySelector('[aria-current="page"],[aria-selected="true"]'); if(!a) return;
+    const ar=a.getBoundingClientRect(), nr=n.getBoundingClientRect();
+    if(n.scrollWidth>n.clientWidth+1) n.scrollLeft+=(ar.left+ar.width/2)-(nr.left+nr.width/2);
+    else if(n.scrollHeight>n.clientHeight+1){const bot=Math.min(nr.bottom,innerHeight); if(ar.bottom>bot) n.scrollTop+=ar.bottom-bot+48; else if(ar.top<nr.top) n.scrollTop-=nr.top-ar.top+48;}}
+  if(document.readyState==='complete') requestAnimationFrame(c); else addEventListener('load',()=>requestAnimationFrame(c)); n.addEventListener('click',()=>setTimeout(c,0)); window.addEventListener('hashchange',()=>setTimeout(c,0)); window.addEventListener('resize',c);
+})();
 </script>
 </body>
 </html>
